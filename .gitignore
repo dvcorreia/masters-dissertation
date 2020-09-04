@@ -93,3 +93,8 @@ oscrypto-ca-bundle.crt
 sftp-config.json
 tags
 tramp
+
+# From vscode latex workshop linter
+__latexindent_temp.tex
+./**/*_temp.tex
+*_temp.tex
