@@ -39,6 +39,9 @@ An \ac{rfid} system is a collection of components that implement an \ac{rfid} so
 
 \section{\acl{em} Concepts}
 
+% Readers Notes:
+% - Edgar: no inicio parece que as regions são completamente separadas e só nas boundaries é que se percebe que é uma cena progressiva. Ver se re-radiating é uma cena "valida" ou arranjar uma melhor forma de dizer 
+
 \ac{rfid} technologies use \ac{em} fields or \ac{em} waves to transmit information back and forward between reader and tag.
 Designing a well performant system requires a good understanding of \ac{em} concepts.
 Reading distance, costs, material properties of tagged object and \ac{rf} environments are a few points where engineers need a good understanding of \ac{em} fields and \ac{em} waves to come up with a good \ac{rfid} solution.
@@ -48,10 +51,9 @@ Reading distance, costs, material properties of tagged object and \ac{rf} enviro
 An \ac{em} field is the phenomenon produced by moving electric charges. It can be described through Maxwell's equations and mathematical abstracted as a combination of an electric field ($\vec{E}$) and a magnetic field ($\vec{B}$) that interact with each other and their surroundings.
 These interactions behavior differently as the distance from the source changes and are usually defined as two main regions: \emph{near-field} and \emph{far-field}.
 
-\subsubsection{\emph{Near-field}}
+\subsubsection{Near-field}
 
 \emph{Near-field} manifests from the electric and magnetic fields near the charges and current that directly produced them. It is the region where phenomena like \ac{em} induction and electrostatic occur.
-
 This field can be further split in two regions: reactive \emph{near-field} and radiative \emph{near-field}.
 
 Is in the reactive region that \emph{near-field} \ac{rfid} technologies are defined for. It is the closest to the transmitting antenna and is characterized by non-radiative behaviors. In this region, if the energy is not absorbed by a receiver, self-capacitance and self-inductive effects cause the antenna to store energy very near its surface. When electrons from a nearby conductor are placed in this region, field reactive \emph{near-field} energy is transferred to them, resulting in an energy drain on the transmitter by a change in the impedance viewed by the reader.
@@ -61,27 +63,25 @@ In this region conductive objects, such as shelve metal structures, can behave a
 
 In the context of \ac{rfid} technologies, only the reactive zone is considered when referring to the \emph{near-field} region. The radiative zone is \textit{ineffective} and rather unpredictable and usually not accounted referring to \ac{rfid}.
 
-\subsubsection{\emph{Far-field}}
+The power of the field differers between components with the distance ($d$) from the antenna. The magnetic field strength is proportional to $1/d^3$ and the electric to $1/d^2$. The \emph{near-field} components are quite powerful but usually only suited for close range \ac{rfid} technologies due to the rapid fall-off with the distance.
+
+\subsubsection{Far-field}
 
 The \emph{far-field} region is the area where the field behaviors as a \textit{normal} radiating field, composed of \ac{em} waves that propagate outwards - i.e.\ electromagnetic radiation.
 
 \ac{em} waves are created as result of uniform vibrations between an electric field and a magnetic field. In other words, \ac{em} waves are composed of oscillating magnetic and electric fields. A change in one of the field components reflects an equal change of the other and one can not exist independently.
 These waves are detached from any feedback from the moving charges that produced it. Means that, after the waves leave the transmitter, they are completely independent of both transmitter and receiver, as opposed to the phenomena in the \emph{near-field} region.
 
-In this region the radiated power decreases $1/d^2$ as the distance ($d$) from the reader antenna increases, being the best option for \ac{rfid} technologies requiring high reading distances (e.g.\ \ac{uhfrfid}).
+In this region the radiation amplitude decreases $1/d$ as the distance ($d$) from the reader antenna increases, being the best option for \ac{rfid} technologies requiring high reading distances (e.g.\ \ac{uhfrfid}).
 
 \subsubsection{Boundaries}
 
-The boundaries between these regions are characterized by locations where the activity of the associated field components are the strongest. They can be roughly defined by a few rules of thumb.
+The boundaries between these regions are characterized by locations where the activity of the associated field components are the strongest. This doesn't mean that the other components aren't present. The transition between regions is progressive.
 
-Boundaries between fields are roughly delimited by approximately one full wavelength of the \ac{rf} wave emitted from a reader antenna.
+The \emph{near-field} and \emph{far-field} are roughly delimited by approximately one full wavelength of the \ac{rf} wave emitted from a reader antenna.
 This can be more precisely defined taking in account the transmitting antenna characteristics.
 
-For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrfid}), the \emph{far-fields} boundary can be delimited by the Fraunhofer distance, radial from the antenna. The Fraunhofer distance is described by equation~\ref{eq:fraunhofer}, where $D$ is the largest dimension of the radiator and $\lambda$ the wavelength~\cite{balanisAntennaTheoryAnalysis2005}.
-
-\begin{equation} \label{eq:fraunhofer}
-    d_F = \frac{2D^2}{\lambda}
-\end{equation}
+For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrfid}), the borders between regions can be seen in figure~\ref{fig:fieldregionsbigantenna}. The \emph{far-field} boundary can be delimited by the Fraunhofer distance, radial from the antenna. The Fraunhofer distance is described by $2D^2 / \lambda$, where $D$ is the largest dimension of the radiator and $\lambda$ the wavelength~\cite{balanisAntennaTheoryAnalysis2005}.
 
 \begin{figure}[!ht]
     \centering
@@ -90,7 +90,8 @@ For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrf
     \label{fig:fieldregionsbigantenna}
 \end{figure}
 
-Small antennas, shorter than half of the wavelength of the emitting radiation, (used in \ac{lf}/\ac{hf} \ac{rfid}), the delimited range between regions is given by $r = \lambda / 2\pi = 0.159\lambda$~\cite{nikitinOverviewFieldUHF2007a}. 
+Small antennas, shorter than half of the wavelength of the emitting radiation, (used in \ac{lf}/\ac{hf} \ac{rfid}), the delimitation of fields can be seen in figure~\ref{fig:fieldregionsshortantenna}. The \emph{near-field} for \ac{rfid} applications is usually upper limited by $\lambda / 2\pi = 0.159\lambda$~\cite{nikitinOverviewFieldUHF2007a}. 
+For \ac{rfid} technologies that depend upon the \emph{near-field}, these ranges are the physical limit between antenna and transponder.
 
 \begin{figure}[!ht]
     \centering
@@ -99,20 +100,9 @@ Small antennas, shorter than half of the wavelength of the emitting radiation, (
     \label{fig:fieldregionsshortantenna}
 \end{figure}
 
-
-
-For \ac{rfid} technologies that depend upon the \emph{near-field}, these ranges are the physical limit between antenna and transponder.
-
-
 \section{Tag}
 
 An \ac{rfid} tag is a transponder composed by a microchip and an attached antenna that can store and transmit data in a contactless manner using radio waves.
-
-% Near-field (Inductive coupling), Far-field (Backscatter coupling)- Read range depends on:
-%- transmitter (reader) power
-%- energy requirements of the tags (for passive tags)
-%- absorption factor of materials to which the tag is attached
-%- tag size: the smaller the tag, the smaller the energy capture area, the shorter the read range
 
 \begin{figure}[!ht]
     \centering
@@ -120,6 +110,33 @@ An \ac{rfid} tag is a transponder composed by a microchip and an attached antenn
     \caption{Components of a passive tag~\cite{lahiriRFIDSourcebook2005}} 
     \label{fig:passivetag}
 \end{figure}
+
+\subsection{Types}
+\subsubsection{Passive}
+\subsubsection{Semi-passive}
+\subsubsection{Active}
+
+\subsection{Coupling}
+% Inductive and capacitive coupling (Near-field), Backscatter coupling (Far-field)
+\subsubsection{Inductive}
+\subsubsection{Capacitive}
+\subsubsection{Backscatter}
+\subsubsection{SAW}
+
+\subsection{Communication}
+
+\subsubsection{Classification}
+% 1-bit transponder e n-bit transponder
+% Hardware explanation between each other
+
+\subsubsection{Modulated Backscatter}
+\subsubsection{Transmitter type}
+\subsubsection{Transponder type}
+
+\subsection{Practical considerations}
+% Read range depends on, transmitter (reader) power, energy requirements of the tags (for passive tags), absorption factor of materials to which the tag is attached, tag size: the smaller the tag, the smaller the energy capture area, the shorter the read range
+
+% ------------------------------------------------
 
 %The most common classification characteristics are: power - which is based on whether the tag contains on-board power supply and/or harvest energy from the transmitter \ac{rf} waves; and frequency of operation
 
@@ -138,7 +155,7 @@ An \ac{rfid} tag is a transponder composed by a microchip and an attached antenn
 %    \varepsilon = -\frac{d \Phi_B}{dt}
 %\end{equation}
 
-\subsection{Antennas}
+\section{Antennas}
 
 % Types: circular, linear .. caracteristics of UHF RFID antenna design 
 
