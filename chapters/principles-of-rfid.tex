@@ -26,16 +26,32 @@ Another big issue was the standardization of coding schemes in RF tags. The figh
 
 In the last decade, despite the advancements in the industry and the adoption by big apparel retailers like Zara, Decathlon and Marks \& Spencer~\cite{RFIDRetailApparel}, there are issues that could inhibit wide-scale use which will be discussed in section~\ref{currentproblems}.
 
-\section{RFID System}
+\section{\ac{rfid} System}
 
-\ac{rfid} is an automatic identification technology that uses radio waves or magnetic fields to identify physical objects.
+\ac{rfid} is an identification technology that uses radio waves or electromagnetic fields to automatically identify physical objects and collect data about them.
+As such, an \ac{rfid} system is a collection of components that implement an \ac{rfid} solution.
 
-\emph{Automatic identification} technology refers to technology that automatically identify objects and collects data about them.
-Under these technologies we can find the bar code, QR code, biometric (e.g. fingerprint and retina scan), voice identification, \ac{ocr} and the focus of this dissertation, \acl{rfid}. 
+The simplest and most elementary \ac{rfid} system starts with a radio device called tag. The tag is attached to the object that needs to be identified. When such a object is presented in front of an antenna connected to a suitable \ac{rfid} reader, the tag transmits this data to the reader via the reader antenna. The reader then forward the information through a communication channel to a software application running on a computer.
 
-In fact, currently, \ac{rfid} is more than just an \emph{identification} technology. Tags have a good amount of storage which can be used to keep information about all kinds of business information, e.g. expiration date, batch number, technical and maintenance information, etc.
+Different references describe different specifications of which components comprise an \ac{rfid} system and where they are implemented in concrete terms.
+In fact, depending on the use case and requirements, these components can be implemented in different places or not implemented at all.
 
-An \ac{rfid} system is a collection of components that implement an \ac{rfid} solution. In the most simplified demonstration, an \ac{rfid} system starts with a radio device called tag~\footnote{the technical term is transponder, but the common term and most used transponder is a tag, which will be used through out the thesis instead}. The tag is attached to the object that needs to be identified. When such a object is presented in front of an antenna connected to a suitable \ac{rfid} reader, the tag transmits this data to the reader via the reader antenna. The reader then forward the information through a communication channel to a software application running on a computer. This information then can be used for all kids of applications.
+In the most simplified description, an \ac{rfid} system is composed of three physical blocks: \emph{Transponder}, \emph{Reader} and \emph{Software system}. 
+From these, all components can specified and clearly added to one of them.
+The prevalent components used in \ac{rfid} system are:
+
+\begin{description}
+    \item[Tag] \ac{rf} device that can store and transmit data in a contactless manner using radio waves. Is mandatory and will be further discussed in section~\ref{sec:tag}
+    \item[Reader] also called \emph{interrogator}, is a device that can read from and write data to compatible \ac{rfid} tags. Is mandatory in any \ac{rfid} system and will be discussed section~\ref{sec:reader}
+    \item[Reader Antenna] is a device that is attached to a reader and is responsible for the \ac{rf} interface with the tag. Is mandatory and will be further discussed in section~\ref{sec:antenna}
+    \item[Controller] controller
+    \item[Sensor, actuator and annunciator] hey 
+    \item[Host and software system]
+    \item[Communication infrastructure]     
+\end{description}
+
+The \emph{Transponder} block is what we commonly refer as tag. It is a device that can store and transmit data to a reader in a contactless manner using radio waves.
+This block is the easiest to define, 
 
 \section{\acl{em} Concepts}
 
@@ -100,9 +116,11 @@ For \ac{rfid} technologies that depend upon the \emph{near-field}, these ranges 
     \label{fig:fieldregionsshortantenna}
 \end{figure}
 
-\section{Tag}
+\section{Tag} \label{sec:tag}
 
 An \ac{rfid} tag is a transponder composed by a microchip and an attached antenna that can store and transmit data in a contactless manner using radio waves.
+
+In fact, currently, \ac{rfid} is more than just an \emph{identification} technology. Tags have a good amount of storage which can be used to keep information about all kinds of business information, e.g. expiration date, batch number, technical and maintenance information, etc.
 
 \begin{figure}[!ht]
     \centering
@@ -155,9 +173,11 @@ An \ac{rfid} tag is a transponder composed by a microchip and an attached antenn
 %    \varepsilon = -\frac{d \Phi_B}{dt}
 %\end{equation}
 
-\section{Antennas}
+\section{Antennas} \label{sec:antenna}
 
 % Types: circular, linear .. caracteristics of UHF RFID antenna design 
+
+\section{Reader} \label{sec:reader}
 
 \section{Technologies}
 
