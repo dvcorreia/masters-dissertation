@@ -32,6 +32,10 @@ In the last decade, despite the advancements in the industry and the adoption by
 
 \section{\ac{rfid} System}
 
+% Reader notes:
+% Eu:   talk about the range denomination for systems? close range, long range, ...
+%       maybe talk about read range dependance of things (see slides on UHF) - pass the practical considerations section to here as a subsection
+
 \ac{rfid} is an identification technology that uses radio waves or electro-magnetic fields to automatically identify physical objects and collect data about them.
 As such, an \ac{rfid} system is a collection of components that implement an \ac{rfid} solution.
 
@@ -61,17 +65,16 @@ A run through the specificities of most of the components will be done in the fo
 
 % Readers Notes:
 % - Edgar: no inicio parece que as regions são completamente separadas e só nas boundaries é que se percebe que é uma cena progressiva. Ver se re-radiating é uma cena "valida" ou arranjar uma melhor forma de dizer 
+% - Eu: rever com o livro RFID Handbook pag. 102, melhorar a escrita, referenciar no texto as imagens e tabelas
 
-\ac{rfid} technologies use \ac{em} fields or \ac{em} waves to transmit information back and forward between reader and tag.
-Designing a well performant system requires a good understanding of \ac{em} concepts.
-Reading distance, costs, material properties of tagged object and \ac{rf} environments are a few points where engineers need a good understanding of \ac{em} fields and \ac{em} waves to come up with a good \ac{rfid} solution.
+In like manner to other wireless technologies, \ac{rfid} technologies use \acp{emf} or \acp{emw} as interface to transmit information back and forward between reader and transponder.
+Designing well performant systems requires a good understanding of electromagnetism fundaments and its peculiarities.
+Engineers have to grasp how \acp{emf} and \acp{emw} behave with distance, how materials in tagged objects can interfere with \ac{rf} signals, how unaccounted poor \ac{rf} environments can compromise deployment of \ac{rfid} systems, to say a few.
 
-\subsection{\emph{Near-field} and \emph{Far-field}}
-
-An \ac{em} field is the phenomenon produced by moving electric charges. It can be described through Maxwell's equations and mathematical abstracted as a combination of an electric field ($\vec{E}$) and a magnetic field ($\vec{B}$) that interact with each other and their surroundings.
+An \ac{emf} is the phenomenon produced by moving electric charges. It can be described through Maxwell's equations and mathematical abstracted as a combination of an electric field and a magnetic field that interact with each other and their surroundings.
 These interactions behavior differently as the distance from the source changes and are usually defined as two main regions: \emph{near-field} and \emph{far-field}.
 
-\subsubsection{Near-field}
+\subsection{\emph{Near-field}}
 
 \emph{Near-field} manifests from the electric and magnetic fields near the charges and current that directly produced them. It is the region where phenomena like \ac{em} induction and electrostatic occur.
 This field can be further split in two regions: reactive \emph{near-field} and radiative \emph{near-field}.
@@ -85,7 +88,7 @@ In the context of \ac{rfid} technologies, only the reactive zone is considered w
 
 The power of the field differers between components with the distance ($d$) from the antenna. The magnetic field strength is proportional to $1/d^3$ and the electric to $1/d^2$. The \emph{near-field} components are quite powerful but usually only suited for close range \ac{rfid} technologies due to the rapid fall-off with the distance.
 
-\subsubsection{Far-field}
+\subsection{\emph{Far-field}}
 
 The \emph{far-field} region is the area where the field behaviors as a \textit{normal} radiating field, composed of \ac{em} waves that propagate outwards - i.e.\ electromagnetic radiation.
 
@@ -94,7 +97,7 @@ These waves are detached from any feedback from the moving charges that produced
 
 In this region the radiation amplitude decreases $1/d$ as the distance ($d$) from the reader antenna increases, being the best option for \ac{rfid} technologies requiring high reading distances (e.g.\ \ac{uhfrfid}).
 
-\subsubsection{Boundaries}
+\subsection{Boundaries}
 
 The boundaries between these regions are characterized by locations where the activity of the associated field components are the strongest. This doesn't mean that the other components aren't present. The transition between regions is progressive.
 
@@ -112,6 +115,20 @@ For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrf
 
 Small antennas, shorter than half of the wavelength of the emitting radiation, (used in \ac{lf}/\ac{hf} \ac{rfid}), the delimitation of fields can be seen in figure~\ref{fig:fieldregionsshortantenna}. The \emph{near-field} for \ac{rfid} applications is usually upper limited by $\lambda / 2\pi = 0.159\lambda$~\cite{nikitinOverviewFieldUHF2007a}. 
 For \ac{rfid} technologies that depend upon the \emph{near-field}, these ranges are the physical limit between antenna and transponder.
+
+\begin{table}[!htb]
+    \centering
+    \caption{$r_F$ and $\lambda$ for different frequency ranges~\cite{finkenzellerRFIDHandbookFundamentals2003}}
+    \begin{tabular}{@{}lll@{}}
+    \toprule
+    \textbf{Frequency} & Wavelength $\lambda$ & $\lambda/2\pi$     \\ \midrule
+    \textless 135 kHz  & \textgreater 2222 m  & \textgreater 353 m \\
+    6.78 MHz           & 44.7 m               & 7.1 m              \\
+    13.56 MHz          & 22.1 m               & 3.5 m              \\
+    27.125 MHz         & 11.0 m               & 1.7 m              \\ \bottomrule
+    \end{tabular}
+    \label{tab:lambdafreqranges}
+\end{table}
 
 \begin{figure}[!ht]
     \centering
@@ -196,8 +213,8 @@ The method of coupling and the operating frequency are the defining parameters o
 
 There are three types of coupling techniques: inductive, capacitive and backscatter. These make use of the different field components and radio waves discussed previously.
 
-This dissertation focuses on passive tag systems operating in the remote-couple (i.e.\ range from 1cm to 100cm) and long-range (i.e further than 100cm).
-Capacitive coupling is only exploited for capacitive data transmission in close coupling systems (i.e.\ range less than 1cm). Therefore, this type of coupling will not be discussed.
+This dissertation focuses on passive tag systems operating in the \emph{remote-couple} (i.e.\ range from 1cm to 100cm) and \emph{long-range} (i.e further than 100cm).
+Capacitive coupling is only exploited for capacitive data transmission in \emph{close coupling systems} (i.e.\ range less than 1cm). Therefore, this type of coupling will not be discussed.
 
 \subsubsection{Inductive}
 
@@ -230,17 +247,44 @@ Some systems (e.g. 13.58MHz) use what is called load modulation with subcarrier.
     \label{fig:loadmodulationsidebands}
 \end{figure}
 
+Despite wide scale use and established global standardization, this type of coupling presents a few drawbacks. The reading distance is physically limited by the size of the reader antenna and the reactive \emph{near-field} boundary discussed through out section~\ref{sec:em}. The shrinkage of tag size is technically challenging due to the power emissions regulations and the dependence with the variation of the magnetic flux through the cross-section of the tag antenna coil that excites the tag circuitry. The power consumption is also much higher that the next coupling technique we will look at, making it unsuitable for \emph{long-range systems}.  
+
 \subsubsection{Backscatter}
 
+Backscatter coupling harvests energy from the \ac{emw}, transmitted by the reader antenna, to power the tag circuitry. It is mainly used in \emph{long-range systems} since it is the primarily coupling technique capable of operate in the \emph{far-field} region.
+To transmit data back to the reader, the tag \textit{reflects} back some of the power as a modulated signal through what is called \emph{modulated reflection cross-section}.
 
+\emph{Modulated reflection cross-section} operates in the same fundamental principles as the first \ac{rfid} system invented, presented in section~\ref{sec:contextualization}.
+\ac{emw} are reflected by objects with dimensions greater than around half the wavelength of the wave.
+The efficiency with which an object reflects \ac{emw} is described by its \emph{reflection cross-section}. Objects that are in resonance with the wave front that hits them, as is the case for antennas tuned to the appropriate frequency, have a particularly large \emph{reflection cross-section}.
+
+The modulation of the \ac{rf} signal is created in the similar manner as in inductive coupling systems, by changing the impedance viewed from the tag antenna. 
+Depicted in figure~\ref{fig:backscatter}, a load resistor, connected in parallel with the antenna, is switched on and off in time with the data stream to be transmitted.
+The power reflected back changes in amplitude with the changing of impedance of the tag.
+The reflected signal is picked by the reader antenna. decoupled using a \emph{directional coupler} and demodulated~\cite{finkenzellerRFIDHandbookFundamentals2003, RFIDCouplingTechniques}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./figs/02-state-of-the-art/backscatter.pdf}
+    \caption{Passive backscatter RFID system~\cite{finkenzellerRFIDHandbookFundamentals2003}} 
+    \label{fig:backscatter}
+\end{figure}
 
 \subsection{Technologies} \label{sec:opfrequency}
 
-% absorbent - opaque
+When categorizing systems, the main characteristic that defines \ac{rfid} technologies is its operating frequency.
+It is not accidental that this happened. In the previous sections we saw a clear relation between operating frequency, through the wavelength, and few of systems requirements (e.g.\ reading distance and data transfer speeds).
+Being so, it is common in \ac{rfid} slang to refer to systems by the frequency band they operate in.
+There are five preeminent frequency groups, starting in the \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and ending with \ac{uwb} which will not further discussed begin in early phases of technology development.
 
-\ac{rfid} systems are classified by the frequency band they are used in, which differs between applications:
 
-\begin{table}[]
+
+
+
+
+\begin{table}[!htb]
+    \centering
+    \caption{\ac{rf} properties in different materials~\cite{lahiriRFIDSourcebook2005}}
     \begin{tabular}{|l|l|l|l|l|}
     \hline
     \textbf{Material}     & \textbf{LF} & \textbf{HF} & \textbf{UHF} & \textbf{Microwave} \\ \hline
@@ -256,7 +300,23 @@ Some systems (e.g. 13.58MHz) use what is called load modulation with subcarrier.
     Water                 & RF-lucent   & RF-lucent   & RF-absorbent & RF-absorbent       \\ \hline
     Wet wood              & RF-lucent   & RF-lucent   & RF-absorbent & RF-absorbent       \\ \hline
     \end{tabular}
+    \label{tab:rfproperties}
 \end{table}
+
+\begin{landscape}
+    \begin{table}[]
+        \begin{tabular}{@{}lllllll@{}}
+        \toprule
+        \textbf{Name} & Frequencies                                                                   & Coupling                                                         & Range           & Protocols                                                                                     & Price                                                                       & Disadvantages                                                                     \\ \midrule
+        LF            & 125 - 135 KHz                                                                 & \begin{tabular}[c]{@{}l@{}}Inductive, \\ Capacitive\end{tabular} & \textless 0.5 m & \begin{tabular}[c]{@{}l@{}}Animal ID,\\ factory data collection\end{tabular}                  & US\$1                                                                       & \begin{tabular}[c]{@{}l@{}}Short reading range,\\ Slow reading speed\end{tabular} \\
+        HF            & 13.553 - 13.567 MHz                                                           & \begin{tabular}[c]{@{}l@{}}Inductive,\\ Capacitive\end{tabular}  & \textless 1 m   & \begin{tabular}[c]{@{}l@{}}Smart cards (ISO/IEC 15693, ISO/IEC 14443 A, B)\\ ...\end{tabular} & US\$0.50 to US\$5                                                             &                                                                                   \\
+        UHF           & \begin{tabular}[c]{@{}l@{}}433 MHz, \\ 858-960 MHz\end{tabular}               & Backscatter                                                      & \textless 9 m   & ...                                                                                           & \begin{tabular}[c]{@{}l@{}}US\$5 (active), \\ US\$0.15 (passive)\end{tabular} &                                                                                   \\
+        Microwave     & \begin{tabular}[c]{@{}l@{}}2.4 - 2.454 GHz, \\ 5.725 - 5.875 GHz\end{tabular} & Backscatter                                                      & \textless 10 m  & ...                                                                                           & US\$5 projected                                                             &                                                                                   \\ \bottomrule
+        \end{tabular}
+    \end{table}
+\end{landscape}
+
+
 
 \subsection{Practical considerations}
 % Read range depends on, transmitter (reader) power, energy requirements of the tags (for passive tags), absorption factor of materials to which the tag is attached, tag size: the smaller the tag, the smaller the energy capture area, the shorter the read range
