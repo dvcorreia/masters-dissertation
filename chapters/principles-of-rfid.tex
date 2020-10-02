@@ -272,15 +272,27 @@ The reflected signal is picked by the reader antenna. decoupled using a \emph{di
 
 \subsection{Technologies} \label{sec:opfrequency}
 
-When categorizing systems, the main characteristic that defines \ac{rfid} technologies is its operating frequency.
-It is not accidental that this happened. In the previous sections we saw a clear relation between operating frequency, through the wavelength, and few of systems requirements (e.g.\ reading distance and data transfer speeds).
-Being so, it is common in \ac{rfid} slang to refer to systems by the frequency band they operate in.
-There are five preeminent frequency groups, starting in the \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and ending with \ac{uwb} which will not further discussed begin in early phases of technology development.
+When categorizing systems, the main aspect that defines \ac{rfid} technologies is the operating frequency.
+In the previous sections we saw a clear relation between operating frequency, through the wavelength, and systems requirements like reading distance and data transfer speeds.
+So, it is no accident that this spontaneous categorization happened. \ac{rfid} technologies tend to mature in a very clear path, being encompassed under use case specific standards with fixed operating frequencies carefully assigned by regulatory \ac{rf} authorities. 
+It is definitely a decent classification method to summarize a set of specifications that usually established a priori.
+
+Being so, is common in \ac{rfid} slang to refer to systems by the frequency band they operate in.
+There are five preeminent frequency groups, starting in the \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and ending with \ac{uwb} which will not further discussed being in early phases of technology development.
+Each of the frequency groups presents characteristics inherent to their physical limitations that should be considered when choosing a technology.
+
+\paragraph*{\ac{lf}} usually operate in the $125KHz$ to $134KHz$ frequency range, using passive tags through inductive coupling. This does not allow fast data transfers and limits reading range to around $0.5m$. Despite the drawbacks, they have a good behavior in metals and liquids and are the most mature technology, probably having the largest installed based system.
+It is widely used in animal identification (ISO 11784/5~\cite{isoISO117841996, isoISO117851996}, ISO 14223~\cite{isoISO1422332018}), access control, logistics and data collection~\cite{isoISOIEC180002} and automotive industry in car ignition keys, to say a few.
+
+\paragraph*{\ac{hf}} operates mostly in the $13.54MHz$ frequency band. In the same manner as \ac{lf}, it uses inductive coupling. The higher operating frequency allows faster data read speeds while maintaining semi-decent behavior in metals and liquids.
+Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of applications and as the basis of \ac{nfc}~\cite{isoISOIEC144434, isoISOIEC180003} technology. The big attention around \ac{nfc}, due to being a global communication standard and affordable with a mature market (being in ruffly any smartphone nowadays), convened big companies promoting wide scale manufacturing, making the technology affordable (\$0.35 - \$10.00 per tag).
+
+\paragraph*{\ac{uhf}} operates in the band of $315$ to $433MHz$~\cite{isoISOIEC180007}, when using active tags, and $860$ to $956$~\cite{isoISOIEC180006} using passive ones. It is known for the promises it brings to \ac{scm} and logistics - a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications.I uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
+
+\paragraph*{Microwave} typically operates in $2.45GHz$~\cite{isoISOIEC180004} ($5.8GHz$ was withdrawn).
 
 
-
-
-
+For concise information related to each group, consult table~\ref{tab:} for \ac{rf} properties in different materials and tables~\ref{tab:} for an abridgment of much general information.
 
 \begin{table}[!htb]
     \centering
@@ -319,26 +331,12 @@ There are five preeminent frequency groups, starting in the \ac{lf}, \ac{hf}, \a
 
 
 \subsection{Practical considerations}
-% Read range depends on, transmitter (reader) power, energy requirements of the tags (for passive tags), absorption factor of materials to which the tag is attached, tag size: the smaller the tag, the smaller the energy capture area, the shorter the read range
 
-% ------------------------------------------------
+% See: 1.1.1 Type of tags on D'Alessandro
 
-%The most common classification characteristics are: power - which is based on whether the tag contains on-board power supply and/or harvest energy from the transmitter \ac{rf} waves; and frequency of operation
+\section{Reader Antenna} \label{sec:antenna}
 
-%Electromagnetic induction if the production of voltage a conductor situated in a changing magnetic flux
-
-%Faraday found that the voltage produced around closed path conductor is proportional to the rate of change of the magnetic flux through any surface
-
-%A antenna of the reader generates a magnetic fields
-%The field induces voltage in the coil of the tag and supplies the tag with energy (Faraday's Law)
-
-%Electromagnetic induction if the production of voltage a conductor situated in a changing magnetic flux
-
-%Faraday found that the voltage produced around closed path conductor is proportional to the rate of change of the magnetic flux through any surface
-
-
-
-\section{Antennas} \label{sec:antenna}
+ 
 
 % Types: circular, linear .. caracteristics of UHF RFID antenna design 
 
@@ -358,8 +356,6 @@ There are five preeminent frequency groups, starting in the \ac{lf}, \ac{hf}, \a
 %The receiving or transmitting energy is related to the antenna aperture, which related to the wavelength of the sine-wave
 
 %At this frequencies (UHF) we can control the direction of waves, and thus improve the readability in certain areas \dots
-
-
 
 %Antennas can also use different polarization for each wave, and this maximize the transmission of information
 
