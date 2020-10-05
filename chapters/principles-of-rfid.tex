@@ -251,6 +251,8 @@ Despite wide scale use and established global standardization, this type of coup
 
 \subsubsection{Backscatter}
 
+% Me: finish tables
+
 Backscatter coupling harvests energy from the \ac{emw}, transmitted by the reader antenna, to power the tag circuitry. It is mainly used in \emph{long-range systems} since it is the primarily coupling technique capable of operate in the \emph{far-field} region.
 To transmit data back to the reader, the tag \textit{reflects} back some of the power as a modulated signal through what is called \emph{modulated reflection cross-section}.
 
@@ -287,12 +289,11 @@ It is widely used in animal identification (ISO 11784/5~\cite{isoISO117841996, i
 \paragraph*{\ac{hf}} operates mostly in the $13.54MHz$ frequency band. In the same manner as \ac{lf}, it uses inductive coupling. The higher operating frequency allows faster data read speeds while maintaining semi-decent behavior in metals and liquids.
 Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of applications and as the basis of \ac{nfc}~\cite{isoISOIEC144434, isoISOIEC180003} technology. The big attention around \ac{nfc}, due to being a global communication standard and affordable with a mature market (being in ruffly any smartphone nowadays), convened big companies promoting wide scale manufacturing, making the technology affordable (\$0.35 - \$10.00 per tag).
 
-\paragraph*{\ac{uhf}} operates in the band of $315$ to $433MHz$~\cite{isoISOIEC180007}, when using active tags, and $860$ to $956$~\cite{isoISOIEC180006} using passive ones. It is known for the promises it brings to \ac{scm} and logistics - a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications.I uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
+\paragraph*{\ac{uhf}} operates in the band of $315$ to $433MHz$~\cite{isoISOIEC180007}, when using active tags, and $860$ to $956MHz$~\cite{isoISOIEC180006} using passive ones. It is known for the promises it brings to \ac{scm} and logistics - a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications.I uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
 
-\paragraph*{Microwave} typically operates in $2.45GHz$~\cite{isoISOIEC180004} ($5.8GHz$ was withdrawn).
+\paragraph*{Microwave} typically operates at $2.45GHz$~\footnote{$5.8GHz$ was withdrawn}~\cite{isoISOIEC180004} which is usually called \emph{Industry, Scientific, and Medical (ISM)} band, accepted globally. Uses backscatter coupling with passive, semi-passive and active tags. It performs very poorly in the presence of metals and liquids. 
 
-
-For concise information related to each group, consult table~\ref{tab:} for \ac{rf} properties in different materials and tables~\ref{tab:} for an abridgment of much general information.
+For concise information related to each band, consult table~\ref{tab:} for \ac{rf} properties in different materials and tables~\ref{tab:} for an abridgment of much general information.
 
 \begin{table}[!htb]
     \centering
@@ -328,19 +329,22 @@ For concise information related to each group, consult table~\ref{tab:} for \ac{
     \end{table}
 \end{landscape}
 
+\section{Reader} \label{sec:reader}
 
+A reader is a device that can read from and write data to compatible \ac{rfid} tags. It is responsible for sending and receiving \ac{rf} signals to and from tags.
+If we strip down all the features modern readers offer, we can isolate three main components: \ac{rf} front-end, processor, I/O interface.
 
-\subsection{Practical considerations}
+The \ac{rf} front-end interfaces with the reader antenna. 
+It is responsible for transmitting power and clock cycle via the antenna to tags in the reading zone, and demodulate \ac{rf} signals received from tags to be further handled by the processor. 
+Readers must implement \ac{rf} modulation requirements and \ac{eirp} regulations. This fact promotes the implementation of the front-end by a dedicated transceiver microchip and complementary electronics, which is usually used.
 
-% See: 1.1.1 Type of tags on D'Alessandro
+The processor is responsible for all logic necessary in the reader. Readers differ in architecture design between manufacturers, but the processor must at least implement the reader protocol to communicate with compatible tags. This includes decoding and error checking of the analog signals from the \ac{rf} front-end. The processor must also provide a controller interface to allow external entities to communicate with it, to transfer stored data, issue and accept commands and control the reader functions.
+
 
 \section{Reader Antenna} \label{sec:antenna}
 
- 
-
 % Types: circular, linear .. caracteristics of UHF RFID antenna design 
 
-\section{Reader} \label{sec:reader}
 
 
 \section{Advantages and Limitations}
