@@ -2,33 +2,31 @@
 
 \section{Contextualization} \label{sec:contextualization}
 
-The concept of identification with the aid of \ac{rf} dates back to the late 1930s. 
-The primitive biplanes made of wood and fabric used in Word War I, evolved to all-metal monoplanes by the time of World War II. They were capable of carrying heavy quantities of explosives and travel at hundreds of km per hour, making visual identification of incoming aircrafts obsolete.
-This triggered the investment and science in microwave radar.
+The concept of identification using \ac{rf} dates back to the late 1930s.
+By this time, the primitive biplanes made of wood and fabric used in Word War I, had evolved to all-metal monoplanes. They were capable of carrying heavy quantities of explosives and travel at hundreds of kilometers per hour, making the conventional method of visual identification of incoming aircrafts obsolete.
+To counteract this issue, nations invested in research and development that culminated in the development of the microwave radar.
 By the time of the World War II, both fronts were using radar technologies to detect approaching planes. 
-Still, remained the problem of identifying allies and enemies planes.
-The attack at Pearl Harbor in $1941$ was possible due to a mistaken assignment of incoming Japanese aircraft to an unrelated \ac{us} bomber flight.
-The German aircraft force, \emph{Luftwaffe}, found out that as pilots rolled their planes, it would change the radio signal reflected back. This ingeniously simple maneuver became a system that could identify German aircrafts from Allies, being roughly the first \ac{rfid} passive application.~\cite{dobkinRFRFIDSecond2012}
+Still, it remained the problem of identifying allies aircrafts from enemies ones~\footnote{The attack at Pearl Harbor in $1941$ was possible due to a mistaken assignment of incoming Japanese aircraft to an unrelated \ac{us} bomber flight.}.
+The German aircraft force, \emph{Luftwaffe}, observed that as pilots rolled their planes, it would change the radio signal reflected back. With this ingeniously simple maneuver, they were capable of discriminate allied aircrafts, being roughly the first \ac{rfid} passive application.~\cite{dobkinRFRFIDSecond2012}
 
-It was soon later, that Watson-Watt, under a British project, developed the first \ac{rfid} active application for \ac{iff} system. An active \ac{rf} transmitter was attached to British planes, which on receiving radar signals from base stations, broadcasted a signal identifying the aircraft has allied.~\cite{HistoryRFIDTechnology}
+It was soon later, that Watson-Watt, under a British project, developed the first active \ac{rfid} application to be used in \ac{iff} system. An active \ac{rf} transmitter was attached to British planes, which on receiving radar signals from base stations, broadcasted a signal identifying the aircraft has allied.~\cite{HistoryRFIDTechnology}
 
-This established the core concept of today's systems that make this dissertation possible - the over the air identification of transponders~\footnote{a device that, upon receiving a signal, emits a different signal in response}.
+% This established the core concept of today's systems that make this dissertation possible - the over the air identification of transponders~\footnote{a device that, upon receiving a signal, emits a different signal in response}.
 
-The technology kept advancing through the 1950s and 1960s, mainly in the academic field. Companies started to commercialize anti-theft systems based on 1-bit tag~\footnote{a simple inductive RC resonant circuit that detects transponders in field by changes in the reader coil voltage~\cite{andreventuradacruzmarnotozuqueteIdentificacaoPorRFID2018}}.
+The technology kept advancing through the 1950s and 1960s mainly in the academic field, but with private companies starting to commercialize anti-theft systems based on 1-bit transponders~\footnote{a simple inductive RC resonant circuit that detects transponders in field by changes in the reader coil voltage~\cite{andreventuradacruzmarnotozuqueteIdentificacaoPorRFID2018}}.
 
-In the 1970s the first patents were registered on active tag with rewritable memory and a passive transponder for door lockers. The \ac{us} National Laboratory of Los Alamos was asked, by the Energy Department, to developed a tracking system for nuclear materials. The Agricultural Department also requested Los Alamos for a animal tracking system that was design based on \ac{uhfrfid}. These technologies were also transposed by the same engineers to automated toll payment systems in the private market~\cite{landtHistoryRFID2005, HistoryRFIDTechnology,casierAnalogCircuitDesign2011}.
+In the 1970s the first \ac{rfid} patents were registered. Kudos to the active tag with rewritable memory and a passive transponder for door lockers. It was during this time that the \ac{us} National Laboratory of Los Alamos was commissioned, by the Energy Department, to develop a tracking system for nuclear materials. The system revolved around transponders in trucks that would transmit information to readers at the gates of secure facilities. The Agricultural Department also requested Los Alamos for an animal tracking system, which was designed in the \ac{uhf} band with passive transponders, marking the beginning of the \ac{uhfrfid} technologies. These systems were also transposed by the same engineers to automated toll payment systems in the private market~\cite{landtHistoryRFID2005, HistoryRFIDTechnology,casierAnalogCircuitDesign2011}.
 
-The 1980s experienced the boom of \ac{rfid} development with wager by the private industries and the development of the personal computer.
-
-The 1990s, with the growing and high deployment of the technology, the first standards were developed. 
+In the 1980s there was a boom of investment. Private industries wagered in \ac{rfid}, fueled by the development of the personal computer and promises of the technology.
+By the 1990s, with the grow and high deployment of \ac{rfid} systems, the first standards were developed and established. 
 
 The 2000s followed the same maturation process but with slow adoption rate in the late part of the decade. 
-Despite the interest presented by the retail giants, like Wal-Mart, and investment by the \ac{dod}, the compromises created by the \ac{rfid} industry didn't justified the commitment. The high cost for investment, technical performance difficulties, conflicting standards, security issues and privacy concerns made the investment stale~\cite{RFIDAdoptionStalls}. 
+Despite the interest presented by retail giants, like Wal-Mart, and investment by the \ac{dod}, compromises created by the \ac{rfid} industry didn't justified the commitment. The high cost for investment, technical performance difficulties, conflicting standards, security issues and privacy concerns made the investment stale~\cite{RFIDAdoptionStalls}. 
 Companies had to strangle \ac{rnd} resources due to inexistent tools and complex implementations, which were required to develop tools for the marketing/sales departments, that truly make use of the \ac{rfid} infrastructure to increase revenue.
 Making suppliers adapt to \ac{rfid} also seemed to be a problem, since many companies don't have \ac{rnd} resources at all to begin with~\cite{gaudinSuppliersGainFailed2008}.
 Another big issue was the standardization of coding schemes in RF tags. The fight for dominance in the \ac{uhfrfid} market led to multiple coding standards and protocols that made inter-operation among vendor and suppliers infeasible, if not impossible.
 
-In the last decade, despite the advancements in the industry and the adoption by big apparel retailers like Zara, Decathlon and Marks \& Spencer~\cite{RFIDRetailApparel}, there are issues that could inhibit wide-scale use which will be discussed in section~\ref{currentproblems}.
+In the last decade, despite the advancements in the industry and the adoption by big apparel retailers like Zara, Decathlon and Marks \& Spencer~\cite{RFIDRetailApparel}, there are issues that could inhibit wide-scale use which will be discussed in section~\ref{currentproblems}
 
 \section{\ac{rfid} System}
 
@@ -60,6 +58,8 @@ The prevalent components used in \ac{rfid} systems can be encompassed under one 
 \end{description}
 
 A run through the specificities of most of the components will be done in the following sections. Will only addressed components that are required or desirable for understanding this dissertation.
+
+%\section{Advantages and Limitations}
 
 \section{\acl{em} Concepts} \label{sec:em}
 
@@ -332,41 +332,86 @@ For concise information related to each band, consult table~\ref{tab:} for \ac{r
 \section{Reader} \label{sec:reader}
 
 A reader is a device that can read from and write data to compatible \ac{rfid} tags. It is responsible for sending and receiving \ac{rf} signals to and from tags.
-If we strip down all the features modern readers offer, we can isolate three main components: \ac{rf} front-end, processor, I/O interface.
+If we strip down all the features modern readers offer, we can isolate three main components: \ac{rf} front-end, processor, communication interface.
 
 The \ac{rf} front-end interfaces with the reader antenna. 
 It is responsible for transmitting power and clock cycle via the antenna to tags in the reading zone, and demodulate \ac{rf} signals received from tags to be further handled by the processor. 
 Readers must implement \ac{rf} modulation requirements and \ac{eirp} regulations. This fact promotes the implementation of the front-end by a dedicated transceiver microchip and complementary electronics, which is usually used.
 
-The processor is responsible for all logic necessary in the reader. Readers differ in architecture design between manufacturers, but the processor must at least implement the reader protocol to communicate with compatible tags. This includes decoding and error checking of the analog signals from the \ac{rf} front-end. The processor must also provide a controller interface to allow external entities to communicate with it, to transfer stored data, issue and accept commands and control the reader functions.
+The processor is responsible for all logic necessary in the reader. It often comes with other support components like memory and dedicated IC for specific tasks. Readers differ in architecture design between manufacturers, but the processor must at least implement the reader protocol to communicate with compatible tags, this includes decoding and error checking of the analog signals from the \ac{rf} front-end, and also provide a controller interface to allow external entities to communicate with it, to transfer stored data, issue and accept commands and control the reader functions.
 
+Communication interface is the component that provides communication instruction to a reader which allows external entities to interact with it.
+It usually comes inside microprocessors and microcontrollers \acp{ic}. It usually seen in commercial readers as serial communication interface or ethernet.
+
+Commercial readers come a variety of types which are suited for different applications.
+The most common are stationary readers. Also called, \emph{fixed} readers, they are what the name implies, used for making fixed reading zones. They also can be mounted on forklifts and inside of trucks.
+Other types are handheld readers, for a portable reading device and \ac{rfid} printers which are used to print smart labels.
 
 \section{Reader Antenna} \label{sec:antenna}
 
-% Types: circular, linear .. caracteristics of UHF RFID antenna design 
+% Types: circular, linear .. characteristics of UHF RFID antenna design 
 
+A reader communicates with tags through its antenna. 
+Antennas are responsible for converting guided \ac{cw} in radiating \ac{emw} and vice-versa.
+It will only be covered radiating antenna theory for it is the necessary to follow this dissertation.
 
+In handheld readers, the antenna is generally integrated in the device, but in stationary readers is most commonly find as a separate device that is attached to a reader by an antenna port by means of a cable.
+There are different groups of antenna design: antennas composed of a wire, which encompass the dipole, monopole and loop antennas; constituted of an opening, like the horn and cavity backed slot antennas; and printed circuit antennas like path antennas, commonly used in \ac{uhfrfid}.
 
-\section{Advantages and Limitations}
+Evaluating antennas for \ac{rfid} systems can be done through the parameters specified by the manufacturer, a few rules of thumb and engineering sensibility.
+At \ac{uhf} we can control the direction of waves and other parameters, and thus improve the readability of tags.
+Let run through some notions around \ac{uhufrfid} antenna which help design better systems.
 
-% --------------------------------------------------------------------------------------------------------------
+\subsection{Radiation pattern}
 
-%Electromagnetic wave propagation is used for data transmission (and powering transponders in the case of passive tags)
+An important parameter in antenna selection is the radiation pattern. 
+Radiation pattern is the mathematical description or representation of the radiation properties of the antenna as a function of space coordinates.
+It illustrates the regions where the antenna's energy is most effective.
+In \ac{rfid} is usually called the footprint of the antenna and determines the read zone.
+Manufacturers usually provide the radiation patterns for \ac{rfid} antennas in the datasheet.
 
-%The reader transmits and electromagnetic (EM) wave which propagates outward
+Different antenna designs radiate different patterns. These radiation patterns are classified in three main classes: isotropic, directional and omnidirectional.
+For \ac{uhfrfid}, directional antennas are really useful since it is possible o maximize directivity, that is, how well the radiation emitted is concentrated in a single direction. This increases reading distances and defines boundaries in reading zones. \ac{uhfrfid} directional antennas are commonly patch antennas, also called \emph{microstrip} or \emph{planar antennas}. They consist of rectangular metal foil or a plate mounted on a substrate such as Teflon or FR-4 (i.e.\ woven fiberglass cloth with an epoxy resin binder).
 
-%The amount of energy available is decreasing, $1/d^2$, as the distance from the reader increases
+It is also important to have a brief notion of the deformations that exist in the radiation patterns.
+\emph{Multi-path} phenomena - the reflection of \ac{emw} in \ac{rf}-opaque objects which causes waves to be scattered and arrive back at the reader in different paths and times - results in \emph{phase} shifts as constructive and destructive interference.
+This creates protrusions and dead zones that will inevitably exist in most \ac{uhfrfid} and microwave systems deployments. 
 
-%The receiving or transmitting energy is related to the antenna aperture, which related to the wavelength of the sine-wave
+%\subsection{Gain}
 
-%At this frequencies (UHF) we can control the direction of waves, and thus improve the readability in certain areas \dots
+%They gain parameter is also "important" when selecting an \ac{rfid} antenna.
+%It characterizes the performance of the antenna by mathematically describing how well it converts input power into radio waves radiated in a specified direction. It relates directivity and efficiency.
 
-%Antennas can also use different polarization for each wave, and this maximize the transmission of information
+\subsection{Polarization}
 
-%The received power can be related to the transmitted power by using the Friis formula that states:
+Antennas radiate \ac{emw} into surrounding space.
+Polarization is the direction of oscillation of the \ac{emw} and has a great importance in tag readability.
 
-%\begin{equation}
-    %P_T = A_{e2} \frac{P_{in}}{4\pi r^2} G_1 = \frac{\lambda^2}{4\pi} G_2 \frac{P_{in}}{4\pi r^2} G_1 \Leftrightarrow P_T = P_{in}  \bigg(\frac{\lambda}{4\pi r} \bigg)^2 G_t G_r
-%\end{equation}
+\acp{emw} behaves similarly to a wave of water. When a wave from a source, like a boat, reaches a buoy, the buoy moves mostly up and down.
+Analogously, \ac{emw} moves electrons in the plane perpendicular to the direction of propagation. The direction in which the field points, determines the polarization of the \ac{emw}.
+Unlike water waves, \acp{emw} are not influenced by gravity, so the electric field can point in any direction in the plane perpendicular to the direction of propagation, and so have different polarizations~\cite{dobkinRFRFIDSecond2012}.
+
+The main types of polarization are known as linear and circular. Both types derive from the elliptical polarization, being linear and circular special cases of such.
+
+\subsubsection{Linear polarization}
+
+Linear polarized antenna emanate \acp{emw} in a linear pattern, that is, emits \ac{emw} with only one field of energy.
+
+These antennas have a narrower radiation beam with better directivity compared to circular polarized antennas. This results in longer reading distances and well-defined reading regions, which are essential to good \ac{rfid} system design.
+
+These advantages can sometimes fall short to the disadvantages. Linear antennas are sensitive to tag orientation with respect to its polarization direction. 
+\ac{rfid} tag antennas are usually dipoles constituted of narrow metal traces aligned in one direction. If the electric field is directed along the traces, it can push electrons back and forth inducing the voltage necessary to energize the tag \ac{ic}. If the electric field is directed perpendicular to the trace axis, it moves electrons across the diameter of the trance, producing negligible current, insufficient to power the tag \ac{ic}.
+These antennas generally used in applications where tag orientation is fixed and predictable or in conjunction with other complementary linear antennas.
+
+\subsubsection{Circular polarization}
+
+Circular polarized antennas solve to certain degree this orientation dependence problem with the detriment of reading distance and a wider radiation beam.
+These antennas have two constituting energy fields that are equal in amplitude and magnitude, but have a phase difference of $90^\circ$. This results in the electric field vector to be seen as helix like trace. 
+
+Because the nature of circular polarized antennas, they are, to a certain extent, unaffected by tag orientation.
+A circularly polarized \ac{emw} interacts with the linear antenna of a tag, tilted at any angle within the plane perpendicular to the axis of propagation, but in every case only half the transmitted power can be received.
+A good antenna design in tags can modestly improve energy harvesting performance, e.g.\ incorporate two dipole antennas on the tag directed orthogonally to one another or physically larger bow-tie antenna.
+
+These antennas are widely used in passive \ac{uhfrfid}, specially in \ac{rf} environment with high degree of \ac{rf} reflectance, like due to presence of metals.
 
 \cleardoublepage
