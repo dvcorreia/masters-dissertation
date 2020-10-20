@@ -35,17 +35,25 @@ In the last decade, despite the advancements in the industry and adoption by big
 %       maybe talk about read range dependance of things (see slides on UHF) - pass the practical considerations section to here as a subsection
 
 \ac{rfid} is an identification technology that uses radio waves or electro-magnetic fields to automatically identify physical objects and collect data about them.
-As such, an \ac{rfid} system is a collection of components that implement an \ac{rfid} solution.
+Generally, \ac{rfid} solutions start with a radio device called tag. The tag is attached to the object that needs to be identified. When such a object is presented in front of an antenna connected to a suitable \ac{rfid} reader, the tag transmits data to the reader via the reader antenna. The reader then forward the information through a communication channel to a software application running on a computer.
 
-The simplest and most elementary \ac{rfid} system starts with a radio device called tag. The tag is attached to the object that needs to be identified. When such a object is presented in front of an antenna connected to a suitable \ac{rfid} reader, the tag transmits this data to the reader via the reader antenna. The reader then forward the information through a communication channel to a software application running on a computer.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/rfid_system.pdf}
+    \caption{\ac{rfid} system~\cite{finkenzellerRFIDHandbookFundamentals2003}} 
+    \label{fig:rfidsystem}
+\end{figure}
 
-Different references describe different specifications of which components comprise an \ac{rfid} system and where they are implemented in concrete terms.
-In fact, depending on the use case and requirements, these components can be implemented in different places or not implemented at all.
+\subsection{Components}
 
-In the most simplified description, an \ac{rfid} system is usually composed of three physical blocks: \emph{Transponder} that is attached to the physical object and is responsible for storing and transmitting data about it, \emph{Reader} which interact with the transponder to read and write data, and \emph{Software system} that encompass all kinds of hardware and software components that are separated from the reader and support back-end infrastructures and business logic.
+An \ac{rfid} system is a collection of components that implement an \ac{rfid} solution.
+Different references present different descriptions of \ac{rfid} systems. Many specify where and which components should be implemented.
+The fact is, depending on the use case and requirements, these components can be implemented in different physical places or not implemented at all. With the current paradigm of \ac{iot}, machine learning and cloud computing, the discrimination of these components is even more difficult to establish. It is naive and intricate to predict what \ac{rfid} system architecture will be like in the next few years.
 
-From these, all components can be specified and clearly added to one of the blocks.
-The prevalent components used in \ac{rfid} systems can be encompassed under one of the following descriptions:
+The component description of \ac{rfid} systems can be simplified to three physical blocks: \emph{Transponder} which is attached to the physical object to be identification, and is responsible for storing and transmitting appropriate data about the object; \emph{Reader} which interacts with transponders to read and write data; and \emph{Software system} that encompass all kinds of hardware and software components that are separated from the reader and support back-end infrastructures and business logic of a system.
+
+From these, all components described in the literature can be specified and clearly added to one of the blocks.
+The prevalent components used in \ac{rfid} systems:
 
 \begin{description}
     \item[Tag] \ac{rf} device that can store and transmit data in a contactless manner using radio waves.
@@ -57,9 +65,11 @@ The prevalent components used in \ac{rfid} systems can be encompassed under one 
     \item[Communication infrastructure] is the wired and wireless network and serial connection infrastructure needed to connect the previously listed components
 \end{description}
 
-A run through the specificities of most of the components will be done in the following sections. Will only addressed components that are required or desirable for understanding this dissertation.
+%\subsection{Advantages and Limitations}
+%\subsection{Performance factors}
+% read range dependance of transmitted power, ... ..
 
-%\section{Advantages and Limitations}
+A run through the specificities of most of the components will be done in the following sections.
 
 \section{\acl{em} Concepts} \label{sec:em}
 
@@ -67,44 +77,52 @@ A run through the specificities of most of the components will be done in the fo
 % - Edgar: no inicio parece que as regions são completamente separadas e só nas boundaries é que se percebe que é uma cena progressiva. Ver se re-radiating é uma cena "valida" ou arranjar uma melhor forma de dizer 
 % - Eu: rever com o livro RFID Handbook pag. 102, melhorar a escrita, referenciar no texto as imagens e tabelas
 
-In like manner to other wireless technologies, \ac{rfid} technologies use \acp{emf} or \acp{emw} as interface to transmit information back and forward between reader and transponder.
+Before presenting the intrinsics around \ac{rfid} system components, a basic expertise in \ac{em} concepts is paramount.
 Designing well performant systems requires a good understanding of electromagnetism fundaments and its peculiarities.
-Engineers have to grasp how \acp{emf} and \acp{emw} behave with distance, how materials in tagged objects can interfere with \ac{rf} signals, how unaccounted poor \ac{rf} environments can compromise deployment of \ac{rfid} systems, to say a few.
+
+In like manner to other wireless technologies, \ac{rfid} uses \acp{emf} or \acp{emw} as interface to transmit information back and forward between reader and transponder.
+Engineers have to grasp how \acp{emf} and \acp{emw} behave within distance to the reader antenna, how materials in tagged objects can interfere with \ac{rf} signals, how unaccounted poor \ac{rf} environments can compromise deployment of \ac{rfid} systems, to say a few.
 
 An \ac{emf} is the phenomenon produced by moving electric charges. It can be described through Maxwell's equations and mathematical abstracted as a combination of an electric field and a magnetic field that interact with each other and their surroundings.
-These interactions behavior differently as the distance from the source changes and are usually defined as two main regions: \emph{near-field} and \emph{far-field}.
+
+The behavior of the fields changes as the distance from the source increases and are usually defined as two main regions: \emph{near-field} and \emph{far-field}. These regions separate \ac{rfid} technologies in a very concrete way, but should not misled to think that the boundaries are precisely defined. The regions change their behavior in a progressive manner. The rough discrimination between regions in \ac{rfid} exist to separate mutual coupling and radiation based technologies. 
 
 \subsection{\emph{Near-field}}
 
 \emph{Near-field} manifests from the electric and magnetic fields near the charges and current that directly produced them. It is the region where phenomena like \ac{em} induction and electrostatic occur.
 This field can be further split in two regions: reactive \emph{near-field} and radiative \emph{near-field}.
 
-Is in the reactive region that \emph{near-field} \ac{rfid} technologies are defined for. It is the closest to the transmitting antenna and is characterized by non-radiative behaviors. In this region, if the energy is not absorbed by a receiver, self-capacitance and self-inductive effects cause the antenna to store energy very near its surface. When electrons from a nearby conductor are placed in this region, field reactive \emph{near-field} energy is transferred to them, resulting in an energy drain on the transmitter by a change in the impedance viewed by the reader.
+%Due to the variation of the electric rotational field, a magnetic field with closed field lines occurs in space, called rotational field.
+%It surrounds the electric field and itself varies over time thus generating another electric field.
+%Due to the mutual dependance of the time varying fields there is a chain effect of electric and magnetic fields in space~\cite{finkenzellerRFIDHandbookFundamentals2003}. 
+
+Is in the reactive region that \emph{near-field} \ac{rfid} technologies are defined for. It is the closest to the transmitting antenna and is characterized by non-radiative behaviors. In this region, if the energy is not absorbed by a receiver, self-capacitance and self-inductive effects cause the antenna to store energy very near its surface. When electrons from a nearby conductor are placed in this region, field reactive \emph{near-field} energy is transferred to them, resulting in an energy drain on the transmitter by a change in the impedance viewed by the reader~\cite{finkenzellerRFIDHandbookFundamentals2003, balanisAntennaTheoryAnalysis2005}.
 
 In the radiative \emph{near-field}, i.e.\ Fresnel region, the back-coupling of the fields becomes out of phase with the antenna signal, and thus cannot efficiently return inductive or capacitive energy from antenna currents or charges.
-In this region conductive objects, such as shelve metal structures, can behave as antennas by inductively receiving and then "re-radiating" some of the energy~\cite{ElectromagneticRadiationField}.
+In this region conductive objects, such as metal structures, can behave as antennas by inductively receiving and then \emph{re-radiating} some of the energy~\cite{ElectromagneticRadiationField}.
 
 In the context of \ac{rfid} technologies, only the reactive zone is considered when referring to the \emph{near-field} region. The radiative zone is \textit{ineffective} and rather unpredictable and usually not accounted referring to \ac{rfid}.
 
-The power of the field differers between components with the distance ($d$) from the antenna. The magnetic field strength is proportional to $1/d^3$ and the electric to $1/d^2$. The \emph{near-field} components are quite powerful but usually only suited for close range \ac{rfid} technologies due to the rapid fall-off with the distance.
+The power of the field differers between field components with the distance ($d$) from the antenna. The magnetic field strength is proportional to $1/d^3$ and the electric to $1/d^2$. The \emph{near-field} components are quite powerful but usually only suited for close range \ac{rfid} technologies due to the rapid fall-off with the distance~\cite{balanisAntennaTheoryAnalysis2005}.
 
 \subsection{\emph{Far-field}}
 
-The \emph{far-field} region is the area where the field behaviors as a \textit{normal} radiating field, composed of \ac{em} waves that propagate outwards - i.e.\ electromagnetic radiation.
+The \emph{far-field} region is the region where the \ac{em} field behaves as a \textit{normal} radiating field, composed of \ac{em} waves that propagate outwards - i.e.\ electromagnetic radiation.
 
 \ac{em} waves are created as result of uniform vibrations between an electric field and a magnetic field. In other words, \ac{em} waves are composed of oscillating magnetic and electric fields. A change in one of the field components reflects an equal change of the other and one can not exist independently.
 These waves are detached from any feedback from the moving charges that produced it. Means that, after the waves leave the transmitter, they are completely independent of both transmitter and receiver, as opposed to the phenomena in the \emph{near-field} region.
 
-In this region the radiation amplitude decreases $1/d$ as the distance ($d$) from the reader antenna increases, being the best option for \ac{rfid} technologies requiring high reading distances (e.g.\ \ac{uhfrfid}).
+In this region the radiation amplitude decreases $1/d$ as the distance ($d$) from the reader antenna increases, being the suitable option for \ac{rfid} technologies requiring high reading distances (e.g.\ \ac{uhfrfid}).
 
 \subsection{Boundaries}
 
-The boundaries between these regions are characterized by locations where the activity of the associated field components are the strongest. This doesn't mean that the other components aren't present. The transition between regions is progressive.
+The boundaries between these regions are characterized by locations where the activity of the associated field components are strongest. It does not mean that the other components aren't present, because they are. The transition between regions is progressive.
 
-The \emph{near-field} and \emph{far-field} are roughly delimited by approximately one full wavelength of the \ac{rf} wave emitted from a reader antenna.
+The \emph{near} and \emph{far fields} are roughly delimited by approximately one full wavelength of the \ac{rf} wave emitted from a reader antenna.
 This can be more precisely defined taking in account the transmitting antenna characteristics.
 
-For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrfid}), the borders between regions can be seen in figure~\ref{fig:fieldregionsbigantenna}. The \emph{far-field} boundary can be delimited by the Fraunhofer distance, radial from the antenna. The Fraunhofer distance is described by $2D^2 / \lambda$, where $D$ is the largest dimension of the radiator and $\lambda$ the wavelength~\cite{balanisAntennaTheoryAnalysis2005}.
+For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrfid}), the \emph{far-field} boundary is delimited by the Fraunhofer distance, radial from the antenna. The Fraunhofer distance is described by $2D^2 / \lambda$, where $D$ is the largest dimension of the radiator and $\lambda$ the wavelength~\cite{balanisAntennaTheoryAnalysis2005}.
+A representation of the borders between regions can be seen in figure~\ref{fig:fieldregionsbigantenna}
 
 \begin{figure}[!ht]
     \centering
@@ -113,22 +131,10 @@ For antennas whose size is comparable to wavelength or bigger (used in \ac{uhfrf
     \label{fig:fieldregionsbigantenna}
 \end{figure}
 
-Small antennas, shorter than half of the wavelength of the emitting radiation, (used in \ac{lf}/\ac{hf} \ac{rfid}), the delimitation of fields can be seen in figure~\ref{fig:fieldregionsshortantenna}. The \emph{near-field} for \ac{rfid} applications is usually upper limited by $\lambda / 2\pi = 0.159\lambda$~\cite{nikitinOverviewFieldUHF2007a}. 
-For \ac{rfid} technologies that depend upon the \emph{near-field}, these ranges are the physical limit between antenna and transponder.
-
-\begin{table}[!htb]
-    \centering
-    \caption{$r_F$ and $\lambda$ for different frequency ranges~\cite{finkenzellerRFIDHandbookFundamentals2003}}
-    \begin{tabular}{@{}lll@{}}
-    \toprule
-    \textbf{Frequency} & Wavelength $\lambda$ & $\lambda/2\pi$     \\ \midrule
-    \textless 135 kHz  & \textgreater 2222 m  & \textgreater 353 m \\
-    6.78 MHz           & 44.7 m               & 7.1 m              \\
-    13.56 MHz          & 22.1 m               & 3.5 m              \\
-    27.125 MHz         & 11.0 m               & 1.7 m              \\ \bottomrule
-    \end{tabular}
-    \label{tab:lambdafreqranges}
-\end{table}
+For small antennas, shorter than half of the wavelength of the emitting radiation, the \emph{near-field} for \ac{rfid} applications is usually upper limited by $\lambda / 2\pi = 0.159\lambda$~\cite{nikitinOverviewFieldUHF2007a}.
+Small antennas are used in \ac{lf} and \ac{hf} \ac{rfid} technologies.
+For these technologies, which depend on the \emph{near-field} for mutual coupling, the limit of the reactive region is theoretical limit for the read distance.
+A delimitation of field regions for small antennas can be seen in figure~\ref{fig:fieldregionsshortantenna}.
 
 \begin{figure}[!ht]
     \centering
@@ -139,35 +145,34 @@ For \ac{rfid} technologies that depend upon the \emph{near-field}, these ranges 
 
 \section{Tag} \label{sec:tag}
 
-An \ac{rfid} tag is a device that can store and transmit data to a compatible reader in a contactless manner using radio waves of electro-magnetic fields.
-It is the center piece of \ac{rfid} systems and essentially what characterizes \ac{rfid} technologies. 
+An \ac{rfid} tag is a device that can store and transmit data to a compatible reader in a contactless manner using radio waves or electro-magnetic fields.
 
-Tag cost is the focus of long term return on investment in \ac{rfid} systems. It is the most important consideration in system design. After the initial investment in infrastructure, the expenses are mainly in the acquirement of tags.
+Tag cost is the main factor in long term return on investment in \ac{rfid} systems. It is the most important consideration when designing systems. After the initial investment in infrastructure, the expenses are mainly the acquirement of new tags.
 The reduction of cost per tag is the central focus of manufacturers and what allows the technology to be competitive in the world of \ac{scm}.
 
-At its simplest composition, a tag contains a microchip and an antenna.
+At its simplest composition~\footnote{an inductive RC resonant tag used in anti-theft systems is considered an \ac{rfid} device, but is far from the requirements of modern \ac{rfid} paradigms}, a tag contains a microchip and an antenna.
 Depending on the technology the tag architecture and operation varies.
 Tags are characterized by their chip, power source, memory characteristics and operating frequency. The following subsections will discussed these in detail.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.2\textwidth]{./figs/02-state-of-the-art/tag.jpg}
-    \caption{Components of a passive tag~\cite{lahiriRFIDSourcebook2005}} 
+    \includegraphics[width=0.65\textwidth]{./figs/02-state-of-the-art/tag.pdf}
+    \caption{Components of a passive tag~\cite{finkenzellerRFIDHandbookFundamentals2003}} 
     \label{fig:passivetag}
 \end{figure}
 
 \subsection{Data Quantities}
 
-In the contextualization of \ac{rfid} technologies presented in section~\ref{sec:contextualization}, we discussed the concept of identification and how it can be as simple as \ac{iff} systems. 
-An unidentified aircraft presents upon radar lightening its identification as being friend or foe. In computing language can be abstracted as true or false, or 1 or 0. This kind of systems does not exchange more than a bit of information, the smallest unit of information that can represent only two states.
-This type of transponders are called 1-bit transponders and despite the limitations they are still widely used in surveillance and and anti-theft systems. Apparel retailers and other goods retailers have been using them for almost 6 decades and are still well established nowadays. 
-This dissertation requires the identification of more than 2 types of objects, so the following content will jump over technical explanations of this type of transponder. 
+In the contextualization of \ac{rfid} technologies presented in section~\ref{sec:contextualization}, we discussed the concept of identification and how it can be as simple as World War II \ac{iff} systems. 
+An unidentified aircraft presents, upon radar lightening, its identification as being friend or foe. In computing language this can be abstracted as true or false, or $1$ or $0$. This kind of systems does not exchange more than a bit of information, the smallest unit of information, that can represent only two states.
+This type of transponders are called $1$-bit transponders. Despite the limitations, they are still widely used in surveillance and and anti-theft systems. Apparel retailers and other goods retailers have been using them for almost $6$ decades and are still well established nowadays. 
+This dissertation requires the identification of more than $2$ types of objects, so the following content will jump over technical explanations of this type of transponder~\cite{finkenzellerRFIDHandbookFundamentals2003}. 
 
 The type of transponder discussed through out this dissertation are n-bit transponders which use an electronic microchip as the data carrying device.
 These transponders can transfer data in different methods and are currently used in a variety of standards all over the globe.
 
 The following sections of this chapter will approach concepts that are required to understand systems using n-bit tags, specifically \ac{uhfrfid}.
-For a deeper analysis of other \ac{rfid} systems you can refer to \emph{The RFID Handbook by Klaus Finkenzeller}~\cite{finkenzellerRFIDHandbookFundamentals2003}.
+For a deeper analysis of other \ac{rfid} systems refer to \emph{The RFID Handbook by Klaus Finkenzeller}.
 
 \subsection{Power Supply}
 
@@ -177,14 +182,21 @@ Passive tags are characterized for not having an on-board power source.
 Instead they use the power emitted from the reader antenna to energize itself and transmit the stored data to the reader.
 As such, tag-to-reader communication is always started by a reader, since it needs to energize the tag.
 
-This makes tags simple and cheap to manufacture, a microchip and an antenna is all there is to it.
+This makes tags simple and cheap to manufacture, a microchip and an antenna is all there is to it. A few examples of state of the art passive \ac{uhf} tag inlays can be seen in figure~\ref{fig:alienAlienProductFamily2020}.
 The simple constitution makes these tags robust, capable of withstanding corrosive chemicals such as acid and high temperatures~\footnote{The new Impinj M730 and M750 \ac{uhf} regular tags for item tagging sustains \ang{206}C for 1 minute and can retain data at \ang{125}C for 1 year~\cite[Tab. 18]{ImpinjM730M750}}.
 These are the type of tags that underwent most technology advancements in the last decade in order to meet performance, compatibility and cost expectations that make mass deployment feasible for companies.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/tag_examples.pdf}
+    \caption{Selection of passive tag inlays for distinct applications from \textit{Alien Technology, LLC} 2020 Product Family~\cite{alienAlienProductFamily2020}} 
+    \label{fig:alienAlienProductFamily2020}
+\end{figure}
+
 \subsubsection{Active}
 
-Active tags have on-board power source and uses it to transmit its data to the reader.
-These type of tags don't need the reader's emitted power for data transmission, therefore, in tag-to-reader communication, these tags can either communicate first or be interrogated by a reader.
+Active tags have on-board power source and use it to transmit its data to the reader.
+These type of tags does not need the reader's emitted power for data transmission, therefore, in tag-to-reader communication, these tags can either communicate first or be interrogated by a reader.
 Usually, active tags stay in a low-power state (i.e.\ sleep) in the absence of interrogation by the reader. When a reader wants to interact with a tag, issues a wake up command. The tag transits out the low-power state and resolves the interrogation.
 The \ac{rf} environment generated by systems with these type of tags have much lower \ac{rf} noise, since usually
  they only transmit when interrogated.
