@@ -304,25 +304,25 @@ The reflected signal is picked by the reader antenna. decoupled using a \emph{di
 \subsection{Technologies} \label{sec:opfrequency}
 
 When categorizing systems, the main aspect that defines \ac{rfid} technologies is the operating frequency.
-In the previous sections we saw a clear relation between operating frequency, through the wavelength, and systems requirements like reading distance and data transfer speeds.
-So, it is no accident that this spontaneous categorization happened. \ac{rfid} technologies tend to mature in a very clear path, being encompassed under use case specific standards with fixed operating frequencies carefully assigned by regulatory \ac{rf} authorities. 
-It is definitely a decent classification method to summarize a set of specifications that usually established a priori.
+In the previous sections we noticed a clear relation between operating frequency, through the wavelength, and system specifications like reading distance and data transfer speeds.
+So, it is no accident that this spontaneous categorization happened. \ac{rfid} technologies tend to mature in a very clear path, being encompassed under use case specific standards with fixed operating frequencies carefully assigned by regulatory \ac{rf} authorities in each country. 
+It is indeed a useful classification method to summarize a set of specifications that usually need to established a priori to system design.
 
-Being so, is common in \ac{rfid} slang to refer to systems by the frequency band they operate in.
-There are five preeminent frequency groups, starting in the \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and ending with \ac{uwb} which will not further discussed being in early phases of technology development.
+Being so, it is common in \ac{rfid} slang to name systems by the frequency band they operate in.
+There are five preeminent frequency groups: \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and \ac{uwb} which will not further discussed being in early phases of technological development.
 Each of the frequency groups presents characteristics inherent to their physical limitations that should be considered when choosing a technology.
 
-\paragraph*{\ac{lf}} usually operate in the $125KHz$ to $134KHz$ frequency range, using passive tags through inductive coupling. This does not allow fast data transfers and limits reading range to around $0.5m$. Despite the drawbacks, they have a good behavior in metals and liquids and are the most mature technology, probably having the largest installed based system.
+\paragraph*{\ac{lf}} usually operate in the $125$KHz to $134$KHz frequency range, using passive tags through inductive coupling. Inherently, it has slow read speed and the reading range is limited to around $0.5m$. Despite the drawbacks, they have good behavior in metals and liquids and are the most mature technology, probably having the largest installed based system.
 It is widely used in animal identification (ISO 11784/5~\cite{isoISO117841996, isoISO117851996}, ISO 14223~\cite{isoISO1422332018}), access control, logistics and data collection~\cite{isoISOIEC180002} and automotive industry in car ignition keys, to say a few.
 
-\paragraph*{\ac{hf}} operates mostly in the $13.54MHz$ frequency band. In the same manner as \ac{lf}, it uses inductive coupling. The higher operating frequency allows faster data read speeds while maintaining semi-decent behavior in metals and liquids.
-Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of applications and as the basis of \ac{nfc}~\cite{isoISOIEC144434, isoISOIEC180003} technology. The big attention around \ac{nfc}, due to being a global communication standard and affordable with a mature market (being in ruffly any smartphone nowadays), convened big companies promoting wide scale manufacturing, making the technology affordable (\$0.35 - \$10.00 per tag).
+\paragraph*{\ac{hf}} operates mostly around the $13.54$MHz frequency band. In same manner as \ac{lf}, it uses inductive coupling. The higher operating frequency allows faster data read speeds while maintaining semi-decent behavior in metals and liquids.
+Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of applications and is the basis of \ac{nfc} technology~\cite{isoISOIEC144434, isoISOIEC180003}. \ac{nfc} has been receiving a lot of attention. It is a global communication standard with a mature market (being in ruffly any smartphone nowadays). This convened big companies to invest in it, which promoted wide scale manufacturing, resulting in the reduction of tag price (\$0.35 - \$10.00 per tag) and increase in system deployments.
 
-\paragraph*{\ac{uhf}} operates in the band of $315$ to $433MHz$~\cite{isoISOIEC180007}, when using active tags, and $860$ to $956MHz$~\cite{isoISOIEC180006} using passive ones. It is known for the promises it brings to \ac{scm} and logistics - a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications.I uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
+\paragraph*{\ac{uhf}} operates in the band of $315$MHz to $433$MHz using active tags~\cite{isoISOIEC180007}, and in $860$MHz to $956$MHz using passive ones~\cite{isoISOIEC180006}. It is known for the promises it brings to \ac{scm} and logistics, being a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications. It uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
 
-\paragraph*{Microwave} typically operates at $2.45GHz$~\footnote{$5.8GHz$ was withdrawn}~\cite{isoISOIEC180004} which is usually called \emph{Industry, Scientific, and Medical (ISM)} band, accepted globally. Uses backscatter coupling with passive, semi-passive and active tags. It performs very poorly in the presence of metals and liquids. 
+\paragraph*{Microwave} typically operates at $2.45$GHz~\footnote{$5.8$GHz ISO standard was withdrawn}~\cite{isoISOIEC180004} which is also called \emph{Industry, Scientific, and Medical (ISM)} band, accepted globally. Uses backscatter coupling with passive, semi-passive and active tags. It performs very poorly in the presence of metals and liquids. 
 
-For concise information related to each band, consult table~\ref{tab:} for \ac{rf} properties in different materials and tables~\ref{tab:} for an abridgment of much general information.
+For concise information related to each band, consult table~\ref{tab:rfproperties} for \ac{rf} properties in different materials and tables~\ref{tab:} for an abridgment of much general information.
 
 \begin{table}[!htb]
     \centering
@@ -365,9 +365,9 @@ If we strip down all the features modern readers offer, we can isolate three mai
 
 The \ac{rf} front-end interfaces with the reader antenna. 
 It is responsible for transmitting power and clock cycle via the antenna to tags in the reading zone, and demodulate \ac{rf} signals received from tags to be further handled by the processor. 
-Readers must implement \ac{rf} modulation requirements and \ac{eirp} regulations. This fact promotes the implementation of the front-end by a dedicated transceiver microchip and complementary electronics, which is usually used.
+Readers must adhere to \ac{rf} modulation requirements and \ac{eirp} regulations if they want to be approved and commercialized. This fact promotes the implementation of the front-end by a dedicated transceiver microchip and complementary electronics, which is usually chosen. There are also efforts in implementing the \ac{rf} front-end in \acp{fpga}, which might change this paradigm in the next few years~\cite{hugomanueloliveirademirandaSistemasRFIDUHF2015}.
 
-The processor is responsible for all logic necessary in the reader. It often comes with other support components like memory and dedicated IC for specific tasks. Readers differ in architecture design between manufacturers, but the processor must at least implement the reader protocol to communicate with compatible tags, this includes decoding and error checking of the analog signals from the \ac{rf} front-end, and also provide a controller interface to allow external entities to communicate with it, to transfer stored data, issue and accept commands and control the reader functions.
+The processor is responsible for all logic necessary in the reader. It often comes with other complementary components like memory and dedicated \acp{ic} for specific tasks. Readers differ in architecture design between manufacturers, but the processor must at least implement the reader protocol to communicate with compatible tags. This includes decoding and error checking of the analog signals from the \ac{rf} front-end, a controller interface to allow external entities to communicate with it, to transfer stored data, issue commands, accept commands and control the reader functions.
 
 Communication interface is the component that provides communication instruction to a reader which allows external entities to interact with it.
 It usually comes inside microprocessors and microcontrollers \acp{ic}. It usually seen in commercial readers as serial communication interface or ethernet.
@@ -378,18 +378,15 @@ Other types are handheld readers, for a portable reading device and \ac{rfid} pr
 
 \section{Reader Antenna} \label{sec:antenna}
 
-% Types: circular, linear .. characteristics of UHF RFID antenna design 
-
 A reader communicates with tags through its antenna. 
-Antennas are responsible for converting guided \ac{cw} in radiating \ac{emw} and vice-versa.
-It will only be covered radiating antenna theory for it is the necessary to follow this dissertation.
+Antennas are responsible for converting guided \acp{cw} in radiating \ac{emw} and vice-versa.
+It will only be covered radiating antenna theory for it is what is necessary to follow this dissertation.
 
-In handheld readers, the antenna is generally integrated in the device, but in stationary readers is most commonly find as a separate device that is attached to a reader by an antenna port by means of a cable.
-There are different groups of antenna design: antennas composed of a wire, which encompass the dipole, monopole and loop antennas; constituted of an opening, like the horn and cavity backed slot antennas; and printed circuit antennas like path antennas, commonly used in \ac{uhfrfid}.
+In handheld readers, the antenna is generally integrated in to the device. In stationary readers is most commonly found as a separate device attached to an antenna port of the reader by means of a cable.
+There are different groups of antenna designs: antennas composed of a wire, which encompass the dipole, monopole and loop antennas; constituted of an opening, like the horn and cavity backed slot antennas; and printed circuit antennas like path antennas, commonly used in \ac{uhfrfid}.
 
 Evaluating antennas for \ac{rfid} systems can be done through the parameters specified by the manufacturer, a few rules of thumb and engineering sensibility.
 At \ac{uhf} we can control the direction of waves and other parameters, and thus improve the readability of tags.
-Let run through some notions around \ac{uhufrfid} antenna which help design better systems.
 
 \subsection{Radiation pattern}
 
@@ -402,7 +399,7 @@ Manufacturers usually provide the radiation patterns for \ac{rfid} antennas in t
 Different antenna designs radiate different patterns. These radiation patterns are classified in three main classes: isotropic, directional and omnidirectional.
 For \ac{uhfrfid}, directional antennas are really useful since it is possible o maximize directivity, that is, how well the radiation emitted is concentrated in a single direction. This increases reading distances and defines boundaries in reading zones. \ac{uhfrfid} directional antennas are commonly patch antennas, also called \emph{microstrip} or \emph{planar antennas}. They consist of rectangular metal foil or a plate mounted on a substrate such as Teflon or FR-4 (i.e.\ woven fiberglass cloth with an epoxy resin binder).
 
-It is also important to have a brief notion of the deformations that exist in the radiation patterns.
+Is also important, when designing \ac{rfid} systems, to have notion of the deformations that occur in the radiation patterns.
 \emph{Multi-path} phenomena - the reflection of \ac{emw} in \ac{rf}-opaque objects which causes waves to be scattered and arrive back at the reader in different paths and times - results in \emph{phase} shifts as constructive and destructive interference.
 This creates protrusions and dead zones that will inevitably exist in most \ac{uhfrfid} and microwave systems deployments. 
 
@@ -416,7 +413,7 @@ This creates protrusions and dead zones that will inevitably exist in most \ac{u
 Antennas radiate \ac{emw} into surrounding space.
 Polarization is the direction of oscillation of the \ac{emw} and has a great importance in tag readability.
 
-\acp{emw} behaves similarly to a wave of water. When a wave from a source, like a boat, reaches a buoy, the buoy moves mostly up and down.
+\acp{emw} behave similarly to a wave of water. When a wave from a source, like a boat, reaches a buoy, the buoy moves mostly up and down.
 Analogously, \ac{emw} moves electrons in the plane perpendicular to the direction of propagation. The direction in which the field points, determines the polarization of the \ac{emw}.
 Unlike water waves, \acp{emw} are not influenced by gravity, so the electric field can point in any direction in the plane perpendicular to the direction of propagation, and so have different polarizations~\cite{dobkinRFRFIDSecond2012}.
 
@@ -430,16 +427,16 @@ These antennas have a narrower radiation beam with better directivity compared t
 
 These advantages can sometimes fall short to the disadvantages. Linear antennas are sensitive to tag orientation with respect to its polarization direction. 
 \ac{rfid} tag antennas are usually dipoles constituted of narrow metal traces aligned in one direction. If the electric field is directed along the traces, it can push electrons back and forth inducing the voltage necessary to energize the tag \ac{ic}. If the electric field is directed perpendicular to the trace axis, it moves electrons across the diameter of the trance, producing negligible current, insufficient to power the tag \ac{ic}.
-These antennas generally used in applications where tag orientation is fixed and predictable or in conjunction with other complementary linear antennas.
+Linear antennas are generally used in applications where tag orientation is fixed and predictable, or in conjunction with other complementary linear antennas.
 
 \subsubsection{Circular polarization}
 
-Circular polarized antennas solve to certain degree this orientation dependence problem with the detriment of reading distance and a wider radiation beam.
-These antennas have two constituting energy fields that are equal in amplitude and magnitude, but have a phase difference of $90^\circ$. This results in the electric field vector to be seen as helix like trace. 
+Circular polarized antennas solve, to certain degree, the orientation dependence problem with detriment of reading distance and a wider radiation beam.
+These antennas have two constituting energy fields that are equal in amplitude and magnitude, with a phase difference of $90^\circ$ between them. This results in the electric field vector to be seen as helix like trace, a circular motion propagating through space. 
 
-Because the nature of circular polarized antennas, they are, to a certain extent, unaffected by tag orientation.
+Because the nature of circular polarized antennas, they are to a certain extent, unaffected by tag orientation.
 A circularly polarized \ac{emw} interacts with the linear antenna of a tag, tilted at any angle within the plane perpendicular to the axis of propagation, but in every case only half the transmitted power can be received.
-A good antenna design in tags can modestly improve energy harvesting performance, e.g.\ incorporate two dipole antennas on the tag directed orthogonally to one another or physically larger bow-tie antenna.
+Good antenna design in tags can modestly improve energy harvesting performance, e.g.\ incorporate two dipole antennas on the tag directed orthogonally to one another or physically larger bow-tie antenna designs.
 
 These antennas are widely used in passive \ac{uhfrfid}, specially in \ac{rf} environment with high degree of \ac{rf} reflectance, like due to presence of metals.
 
