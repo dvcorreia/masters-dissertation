@@ -1,69 +1,31 @@
 \chapter{EPCglobal Architecture Framework}
 
+\section{Context}
+
+Advances in \ac{uhfrfid} gathered a lot of attention and investment in the beginning of the decade. The technology promised, for years, a disruption in the \ac{scm} which was never delivered.
+
+Item level identification allows companies to capture product lifecycle information at remarkable levels of detail. \ac{rfid} readers placed through out the supply chain can automatically capture information about objects while they move from manufactured to consumer.
+An infrastructure that bridges the gap between the physical and the digital world, providing real-time information about current supply chain operations. 
+The instant share of information between intervening companies provides increase supply chain visibility, resulting in reduced uncertainty in operational and tactical supply chain planning~\cite{lorenzDiscoveryServicesEPC2011}.
+
+An utopia ahead of is time. The technology was not mature enough, the return on investment was not appealing and the infrastructure was not ready.
+This did not stoped the conceptualization and development of the architecture capable of delivering the promises we were hoping for.
+
+The architecture that stood relevant through out these uncertain times was the EPCglobal Architecture Framework.
+The architecture showed on paper an appealing concept of a network capable of doing amazing thing for the \ac{scm}.
+Aforementioned aspects regarding company internal processes could be anticipated with company supply chain information sharing.
+The
+
+~\cite{simchi-leviCadeiasSuprimentosProjeto2003}
+
+
 \section{Overview}
 %Activities, Standards, Goals
-
-\section{Global Standardization}
-
-\subsection{Importance}
-
-% The importance of a end-to-end architecture standard (enables comunication between every member in the value chain)
-
-\subsection{Efforts}
-
-Standardization of \ac{uhfrfid} for item level tagging and supply chain, by organizations like GS1, provided a common language to identify, capture and share supply chain data, ensuring important information is accessible, accurate and easy to understand~\cite{anonymousStandardsGS12014}.
-
-The first prominent adoption was by the \ac{dod} with a policy released on July 30th 2004. The policy stated that contracts issued for material delivery would require the use of RFID tags. The policy was later extended to all commodities and commodities pallets shipped to any \ac{dod} facility~\cite{DoDSuppliersPassive, DODReleasesFinal}.
-
-In 2014, Impinj, Intel, Google and Smartrac, joined forces to create the RAIN RFID alliance~\cite{TechnologyCompaniesCreate} after the ratification of GS1's \ac{uhfrfid} Generation 2 version 2 standard in November of 2013. The alliance promotes the universal adoption of GS1's Gen2 \ac{uhfrfid} technologies and the connection with cloud computing, where \ac{RFID}-based data can be stored, managed and shared via the Internet~\cite{WhatRAINRFID}.
-The alliance fortified the adoption of GS1's standards and traced a common path for the the industry to progress.
-
-On October 11th 2018 the European Commission published their positive implementation of the upper band in Europe~\cite{302208v030101pPdf}.
-It extended the power levels to $2W$ in the lower band and added the requested global band from $915$MHz to $921$MHz with power levels up to $4W$. 
-This was the biggest effort by the European Commission to establish a global standardized frequency band for \ac{uhfrfid} supply chain applications.
-
-\subsection{Current Problems} \label{sec:currentproblems}
-
-There are still \ac{rfid} tags that do not conform with the international standards, often presenting proprietary formats and even encoding errors.
-These closed practices and struggle for market supremacy around \ac{uhfrfid} creates a problematic situation that prevent conformity through the global logistics market.
-
-Even in global standards, the adoption depends on the company and field of business. Usually one identification standard is already being used, and the migration cost for supporting multi-code integration can be high.
-
-The information around global standards is also limited and hard to get through. It is divided in multiple specifications, identified with number notation and codification nomenclature. 
-The ISO standards, in specific, are closed and have to be payed before even see it's contents.
-These specifications are extensive and don't provide newcomers a good experience. 
-Companies planning to implement \ac{uhfrfid} systems following legitimate global standardization resort to consultants who have a deep knowledge on the standards complexity.
-
-The closed mentality in the area slowed the industry progression. In comparison with the cloud and web industries, where experience and software is shared and open-sourced, \ac{uhfrfid} tends to keep everything closed. The existent freely available software is old, outdated and out of maintenance. Experience from real-world implementations is unavailable making the industry prone to committing recurrent mistakes. This results in high investments in time and money on engineering resources that could be shared among industry leaders.
-
-The positive implementation of the upper band frequency in Europe for global \ac{uhfrfid} supply chain applications is also dependent on the acceptance by each European members. In particular, Germany and Netherlands are not accepting it~\cite{EUUpperBand}. The conflict with existing adopted bands in the countries makes a global homogeneous system a challenge that will need time to establish.
-
-~\cite{WhatCouldSlow}
-
-\section{GS1 and EPCglobal}
-
-The GS1 is a nonprofit organization dedicated to the development and implementation of standards for global supply chain solutions. 
-The institution mission is to manage the GS1 System of Standards, create open, global, multi-sector standards fostering good business practices.
-
-GS1 established itself in 2005 from the \ac{ean} International, \ac{ucc} and other local organizations from the United States~\cite{PublicationLEBENSMITTELZEITUNGa}.
-The organization took under its umbrella the former \acs{EAN}-\acs{UCC} roles subsuming their technologies. From those, worth mentioning: the barcode identification system (from \ac{ean}), \ac{xml} standards, \ac{edi} transaction sets and supply chain solutions~\cite[p.~212]{lahiriRFIDSourcebook2005}.
-
-The new GS1 organization then adopted much more ambitious projects, developing global standards and services for business communication.
-From those efforts resulted the network for the synchronization of master data \ac{gdsn}, the \ac{epc} integration for \ac{rfid}, traceability and the upstream integration of the consumer goods industry suppliers and EPCglobal Network.
-
-For RFID Technology to become viable in practice, an infrastructure must exist for processing and communicating EPC data. In meeting the goal of creating a common infrastructure, \ac{mit} announced Auto-ID Release $1.0$ in October 2003. At the same time, \ac{mit} entered into an exclusive licensing agreement with GS1.
-In turn, GS1 established a new division called EPCglobal to implement Release $1.0$ and to conduct further development based on industry input. This put forth an initial set of standards that formed the basis of an infra- structure for \ac{epc} data. Later, Auto-ID Release $1.0$ became the starting-point for the EPCglobal Network~\cite[p. 50]{GlobalRFIDValue}. 
-
-% rewrite
-
-% EPCglobal Spec history and context
-
-\section{Foundations and Technical Principles}
 
 %EPC Uniqueness, Identifiers, Decentralized Implementation, Issuing Organization
 %Review text - it is from and ex subsection prior to the revision of the new index
 
-EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards (\emph{EPCglobal Standards}) that interoperate with shared network services (\emph{EPC Network Services}) operated by GS1, its delegates, and others~\cite{Architecture6framework20140414Pdf}.
+EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards that interoperate with shared network services, operated by GS1, its delegates and others, to share and capture \ac{epc} data~\cite{Architecture6framework20140414Pdf}.
 
 The existence of this standards promotes not only the global adoption of \ac{epc}, but also the exchange of information between business partners. 
 
@@ -100,6 +62,59 @@ It provides automatic, real-time identification and data sharing of items both w
 Even doe the network was design mainly for \ac{rfid} sharing of \ac{epc} data, the network does not exclusively runs on \ac{rfid} data carriers. The \emph{EPCglobal Network} can also be fed \ac{epc} data through data carriers like 1D and 2D barcodes. The interoperability with the barcode was one of the most important considerations used during the planning of the network~\cite{RFIDBarcodeInteroperability}.
 
 % GS1 Architecture: organization, advantages and objectives: barcode inoperability
+
+\section{Global Standardization}
+
+\subsection{Importance}
+
+% The importance of a end-to-end architecture standard (enables comunication between every member in the value chain)
+
+\subsection{Efforts}
+
+Standardization of \ac{uhfrfid} for item level tagging and supply chain, by organizations like GS1, provided a common language to identify, capture and share supply chain data, ensuring important information is accessible, accurate and easy to understand~\cite{anonymousStandardsGS12014}.
+
+The first prominent adoption was by the \ac{dod} with a policy released on July 30th 2004. The policy stated that contracts issued for material delivery would require the use of \ac{uhf} tags. The policy was later extended to all commodities and commodities pallets shipped to any \ac{dod} facility~\cite{DoDSuppliersPassive, DODReleasesFinal}.
+
+In 2014, Impinj, Intel, Google and Smartrac, joined forces to create the RAIN RFID alliance after the ratification of GS1's \ac{uhfrfid} Generation 2 version 2 standard in November of 2013. The alliance promotes the universal adoption of GS1's Gen2 \ac{uhfrfid} technologies and cloud computing, where \ac{rfid}-based data can be stored, managed and shared via the Internet~\cite{WhatRAINRFID}.
+The alliance fortified the adoption of GS1's standards and traced a common path for the the industry to progress~\cite{TechnologyCompaniesCreate}.
+
+On October 11th 2018 the European Commission published their positive implementation of the upper band for European countries~\cite{302208v030101pPdf}.
+It extended the power levels to $2W$ in the lower band and added the requested global band from $915$MHz to $921$MHz with power levels up to $4W$. 
+This was the biggest effort by the European Commission to establish a global standardized frequency band for \ac{uhfrfid} supply chain applications.
+
+\subsection{Current Problems} \label{sec:currentproblems}
+
+There are still \ac{rfid} tags that do not conform with the international standards, often presenting proprietary formats and even encoding errors.
+These closed practices and struggle for market supremacy around \ac{uhfrfid} creates a problematic situation that prevents conformity through the global logistics market.
+
+Even in global standards, the adoption depends on the company and field of business. Usually one identification standard is already being used, and the migration cost for supporting multi-code integration can be high.
+
+The information around global standards is also limited and hard to get through. It is divided in multiple specifications, identified with number notation and codification nomenclature. 
+The ISO standards, in specific, are closed and have to be payed before even see it's contents.
+These specifications are extensive and don't provide newcomers a good experience. 
+Companies planning to implement \ac{uhfrfid} systems following legitimate global standardization resort to consultants who have a deep knowledge on the standards complexity.
+
+The closed mentality in the area slowed the industry progression. In comparison with the cloud and web industries, where experience and software is shared and open-sourced, \ac{uhfrfid} tends to keep everything closed~\cite{WhatCouldSlow}. The existent freely available software is old, outdated and out of maintenance. Experience from real-world implementations is unavailable making the industry prone to committing recurrent mistakes. This results in high investments in time and money on engineering resources that could be shared among industry leaders.
+
+The positive implementation of the upper band frequency in Europe for global \ac{uhfrfid} supply chain applications is also dependent on the acceptance by each European members. In particular, Germany and Netherlands are not accepting it~\cite{EUUpperBand}. The conflict with existing adopted bands in the countries makes a global homogeneous system a challenge that will need time to be established.
+
+\section{GS1 and EPCglobal}
+
+The GS1 is a nonprofit organization dedicated to the development and implementation of standards for global supply chain solutions. 
+The institution mission is to manage the GS1 System of Standards, create open, global, multi-sector standards fostering good business practices.
+
+GS1 established itself in 2005 from the \ac{ean} International, \ac{ucc} and other local organizations from the United States~\cite{PublicationLEBENSMITTELZEITUNGa}.
+The organization took under its umbrella the former \acs{ean}-\acs{ucc} roles subsuming their technologies. From those, worth mentioning: the barcode identification system (from \ac{ean}), \ac{xml} standards, \ac{edi} transaction sets and supply chain solutions~\cite{lahiriRFIDSourcebook2005}.
+
+The new GS1 organization then adopted much more ambitious projects, developing global standards and services for business communication.
+From those efforts resulted the network for the synchronization of master data \ac{gdsn}, the \ac{epc} integration for \ac{rfid}, traceability and the upstream integration of the consumer goods industry suppliers and EPCglobal Network.
+
+For RFID Technology to become viable in practice, an infrastructure must exist for processing and communicating EPC data. In meeting the goal of creating a common infrastructure, \ac{mit} announced Auto-ID Release $1.0$ in October 2003. At the same time, \ac{mit} entered into an exclusive licensing agreement with GS1.
+In turn, GS1 established a new division called EPCglobal to implement Release $1.0$ and to conduct further development based on industry input. This put forth an initial set of standards that formed the infrastructure for \ac{epc} data. Later, Auto-ID Release $1.0$ became the starting-point for the EPCglobal Network~\cite{GlobalRFIDValue}.
+
+% rewrite
+
+% EPCglobal Spec history and context
 
 \section{Dissertation Context}
 

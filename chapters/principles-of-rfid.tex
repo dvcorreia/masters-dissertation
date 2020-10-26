@@ -320,9 +320,8 @@ Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of appli
 
 \paragraph*{\ac{uhf}} operates in the band of $315$MHz to $433$MHz using active tags~\cite{isoISOIEC180007}, and in $860$MHz to $956$MHz using passive ones~\cite{isoISOIEC180006}. It is known for the promises it brings to \ac{scm} and logistics, being a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications. It uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
 
-\paragraph*{Microwave} typically operates at $2.45$GHz~\footnote{$5.8$GHz ISO standard was withdrawn}~\cite{isoISOIEC180004} which is also called \emph{Industry, Scientific, and Medical (ISM)} band, accepted globally. Uses backscatter coupling with passive, semi-passive and active tags. It performs very poorly in the presence of metals and liquids. 
-
-For concise information related to each band, consult table~\ref{tab:rfproperties} for \ac{rf} properties in different materials and tables~\ref{tab:} for an abridgment of much general information.
+\paragraph*{Microwave} typically operates at $2.45$GHz~\footnote{$5.8$GHz ISO standard was withdrawn}~\cite{isoISOIEC180004} which is also called \emph{Industry, Scientific, and Medical (ISM)} band, accepted globally. Uses backscatter coupling with passive, semi-passive and active tags. It performs very poorly in the presence of metals and liquids.  
+For concise information related to each band on \ac{rf} properties in different materials consult table~\ref{tab:rfproperties}
 
 \begin{table}[!htb]
     \centering
@@ -345,18 +344,9 @@ For concise information related to each band, consult table~\ref{tab:rfpropertie
     \label{tab:rfproperties}
 \end{table}
 
-\begin{landscape}
-    \begin{table}[]
-        \begin{tabular}{@{}lllllll@{}}
-        \toprule
-        \textbf{Name} & Frequencies                                                                   & Coupling                                                         & Range           & Protocols                                                                                     & Price                                                                       & Disadvantages                                                                     \\ \midrule
-        LF            & 125 - 135 KHz                                                                 & \begin{tabular}[c]{@{}l@{}}Inductive, \\ Capacitive\end{tabular} & \textless 0.5 m & \begin{tabular}[c]{@{}l@{}}Animal ID,\\ factory data collection\end{tabular}                  & US\$1                                                                       & \begin{tabular}[c]{@{}l@{}}Short reading range,\\ Slow reading speed\end{tabular} \\
-        HF            & 13.553 - 13.567 MHz                                                           & \begin{tabular}[c]{@{}l@{}}Inductive,\\ Capacitive\end{tabular}  & \textless 1 m   & \begin{tabular}[c]{@{}l@{}}Smart cards (ISO/IEC 15693, ISO/IEC 14443 A, B)\\ ...\end{tabular} & US\$0.50 to US\$5                                                             &                                                                                   \\
-        UHF           & \begin{tabular}[c]{@{}l@{}}433 MHz, \\ 858-960 MHz\end{tabular}               & Backscatter                                                      & \textless 9 m   & ...                                                                                           & \begin{tabular}[c]{@{}l@{}}US\$5 (active), \\ US\$0.15 (passive)\end{tabular} &                                                                                   \\
-        Microwave     & \begin{tabular}[c]{@{}l@{}}2.4 - 2.454 GHz, \\ 5.725 - 5.875 GHz\end{tabular} & Backscatter                                                      & \textless 10 m  & ...                                                                                           & US\$5 projected                                                             &                                                                                   \\ \bottomrule
-        \end{tabular}
-    \end{table}
-\end{landscape}
+%\begin{landscape} 
+    % resume table
+%\end{landscape}
 
 \section{Reader} \label{sec:reader}
 
