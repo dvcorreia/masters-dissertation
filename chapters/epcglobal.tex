@@ -2,22 +2,20 @@
 
 \section{Context}
 
-Advances in \ac{uhfrfid} gathered a lot of attention and investment in the beginning of the decade. The technology promised, for years, a disruption in the \ac{scm} which was never delivered.
+Advances in \ac{uhfrfid} gathered a lot of attention and investment in the beginning of the decade. The technology promised, for years, a disruption in the \ac{scm} which was never delivered. 
 
-Item level identification allows companies to capture product lifecycle information at remarkable levels of detail. \ac{rfid} readers placed through out the supply chain can automatically capture information about objects while they move from manufactured to consumer.
-An infrastructure that bridges the gap between the physical and the digital world, providing real-time information about current supply chain operations. 
-The instant share of information between intervening companies provides increase supply chain visibility, resulting in reduced uncertainty in operational and tactical supply chain planning~\cite{lorenzDiscoveryServicesEPC2011}.
+Item level identification allows companies to capture product lifecycle information at remarkable levels of detail. \ac{rfid} readers placed through out the supply chain can automatically capture information about tagged objects while they move from manufactured to consumer.
+An infrastructure that bridges the gap between the physical and the digital world, providing real-time information about current supply chain operations.
+Furthermore, the instant share of information between intervening companies increases supply chain visibility, resulting in reduced uncertainty in operational and tactical supply chain planning.
+Stock levels could be precisely controlled and shared with trading partners through the up and downstream, which in turn reduces inventory costs and optimizes intra-company operations~\cite{lorenzDiscoveryServicesEPC2011, simchi-leviCadeiasSuprimentosProjeto2003}.
 
-An utopia ahead of is time. The technology was not mature enough, the return on investment was not appealing and the infrastructure was not ready.
-This did not stoped the conceptualization and development of the architecture capable of delivering the promises we were hoping for.
+It was an utopia ahead of is time. The technology was not mature enough, the return on investment was not appealing and cloud computing had just started to get traction.
 
-The architecture that stood relevant through out these uncertain times was the EPCglobal Architecture Framework.
-The architecture showed on paper an appealing concept of a network capable of doing amazing thing for the \ac{scm}.
-Aforementioned aspects regarding company internal processes could be anticipated with company supply chain information sharing.
-The
-
-~\cite{simchi-leviCadeiasSuprimentosProjeto2003}
-
+This did not stop the conceptualization and development of architectures capable of delivering the promises we were hoping for.
+The architecture that stood relevant through out these uncertain times is the EPCglobal Architecture Framework.
+It was created and maintained by GS1, a non profit organization tasked with developing global standards for business communications.
+The organization has the experience, resources and influence to make this utopia a reality.
+The architecture shows on paper an appealing concept of a network capable of doing amazing thing for the \ac{scm} without restricting businesses \ac{it} architectures implementations.
 
 \section{Overview}
 %Activities, Standards, Goals
@@ -26,27 +24,26 @@ The
 %Review text - it is from and ex subsection prior to the revision of the new index
 
 EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards that interoperate with shared network services, operated by GS1, its delegates and others, to share and capture \ac{epc} data~\cite{Architecture6framework20140414Pdf}.
+The framework defines information systems, interface standards and data models. This approach frees the market of \ac{it} systems to create custom business solutions. Manufacturing can have their custom business logic closed and expose production state information to the clients through the \emph{EPCglobal} interface standards.
+The existence of these standards promote not only the global adoption of \ac{epc}, but also the exchange of information between business partners. 
 
-The existence of this standards promotes not only the global adoption of \ac{epc}, but also the exchange of information between business partners. 
+\subsection{Activities}
 
-The fact that the \emph{EPCglobal Framework} only defines standards for interfaces and data, frees the market of \emph{information systems} to create custom business solutions. Manufacturing can have their custom business logic closed and expose production state information to the clients through the \emph{EPCglobal} standards.
-
-The architecture establishes three core requirements and activities, all of which have a group of standards within the \emph{EPCglobal Architecture Framework}.
+The architecture establishes three core requirements and activities, all of which have a group of standards within the \emph{EPCglobal Architecture Framework}:
 
 \paragraph{Physical Object Exchange} 
 
 \emph{Identify} individual products, cases, loads, assets, return items, among others, so they can be tracked individually.
-The \emph{End Users} parties in a supply chain that exchange physical objects that are identified with \ac{epc}.
+The \emph{End Users} parties in a supply chain that exchange physical objects that are identified with \acp{epc}.
 Physical object exchange consists in operations such as shipping, receiving goods, and so on.
 For many End Users, the physical objects are trade goods, but this could not be the case.
-There are many other uses, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve the requirement for unique identification and tagging of objects. 
+There are many other uses, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve unique identification and tagging of objects. 
 The architecture must be designed to ensure that when one end user delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{Architecture6framework20140414Pdf}.
-The \emph{EPCglobal Architecture Framework} defines \ac{epc} physical object exchange standards.
 
 \paragraph{Infrastructure for Data Capture} 
 
 \emph{Capture data} about the movement of physical assets and creating visibility.
-In order to have gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{Architecture6framework20140414Pdf}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data. This allows \emph{End Users} to develop their internal systems using interoperable components.
+In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{Architecture6framework20140414Pdf}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data..
 
 \paragraph{Data Sharing} 
 
@@ -64,10 +61,6 @@ Even doe the network was design mainly for \ac{rfid} sharing of \ac{epc} data, t
 % GS1 Architecture: organization, advantages and objectives: barcode inoperability
 
 \section{Global Standardization}
-
-\subsection{Importance}
-
-% The importance of a end-to-end architecture standard (enables comunication between every member in the value chain)
 
 \subsection{Efforts}
 
