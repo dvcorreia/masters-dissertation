@@ -7,7 +7,7 @@ Advances in \ac{uhfrfid} gathered a lot of attention and investment in the begin
 Item level identification allows companies to capture product lifecycle information at remarkable levels of detail. \ac{rfid} readers placed through out the supply chain can automatically capture information about tagged objects while they move from manufactured to consumer.
 An infrastructure that bridges the gap between the physical and the digital world, providing real-time information about current supply chain operations.
 Furthermore, the instant share of information between intervening companies increases supply chain visibility, resulting in reduced uncertainty in operational and tactical supply chain planning.
-Stock levels could be precisely controlled and shared with trading partners through the up and downstream, which in turn reduces inventory costs and optimizes intra-company operations~\cite{lorenzDiscoveryServicesEPC2011, simchi-leviCadeiasSuprimentosProjeto2003}.
+Stock levels could be precisely controlled and shared with trading partners, which in turn reduces inventory costs and optimizes intra-company operations~\cite{lorenzDiscoveryServicesEPC2011, simchi-leviCadeiasSuprimentosProjeto2003}.
 
 It was an utopia ahead of is time. The technology was not mature enough, the return on investment was not appealing and cloud computing had just started to get traction.
 
@@ -17,52 +17,7 @@ It was created and maintained by GS1, a non profit organization tasked with deve
 The organization has the experience, resources and influence to make this utopia a reality.
 The architecture shows on paper an appealing concept of a network capable of doing amazing thing for the \ac{scm} without restricting businesses \ac{it} architectures implementations.
 
-\section{Overview}
-%Activities, Standards, Goals
-
-%EPC Uniqueness, Identifiers, Decentralized Implementation, Issuing Organization
-%Review text - it is from and ex subsection prior to the revision of the new index
-
-EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards that interoperate with shared network services, operated by GS1, its delegates and others, to share and capture \ac{epc} data~\cite{Architecture6framework20140414Pdf}.
-The framework defines information systems, interface standards and data models. This approach frees the market of \ac{it} systems to create custom business solutions. Manufacturing can have their custom business logic closed and expose production state information to the clients through the \emph{EPCglobal} interface standards.
-The existence of these standards promote not only the global adoption of \ac{epc}, but also the exchange of information between business partners. 
-
-\subsection{Activities}
-
-The architecture establishes three core requirements and activities, all of which have a group of standards within the \emph{EPCglobal Architecture Framework}:
-
-\paragraph{Physical Object Exchange} 
-
-\emph{Identify} individual products, cases, loads, assets, return items, among others, so they can be tracked individually.
-The \emph{End Users} parties in a supply chain that exchange physical objects that are identified with \acp{epc}.
-Physical object exchange consists in operations such as shipping, receiving goods, and so on.
-For many End Users, the physical objects are trade goods, but this could not be the case.
-There are many other uses, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve unique identification and tagging of objects. 
-The architecture must be designed to ensure that when one end user delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{Architecture6framework20140414Pdf}.
-
-\paragraph{Infrastructure for Data Capture} 
-
-\emph{Capture data} about the movement of physical assets and creating visibility.
-In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{Architecture6framework20140414Pdf}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data..
-
-\paragraph{Data Sharing} 
-
-\emph{Exchange data} with \ac{it} applications and trading partners, to turn visibility into information and action.
-\emph{End Users} benefit from the \emph{EPCglobal Architecture Framework} by sharing data with each other, increasing the visibility they have with respect to the movement of physical objects through the supply chain. 
-The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standards, which provide a means for end users to share data about \acp{epc} within defined user groups or with the general public, and which also provide access to \emph{EPC Network Services} and other shared services that facilitate this sharing. %{change phrasing a bit}
-
-% image: \emph{EPCglobal Architecture Framework} activities~\cite{Architecture6framework20140414Pdf}
-
-The \emph{EPCglobal Network} is a computer network used to share \ac{epc} data between trading partners. 
-It provides automatic, real-time identification and data sharing of items both within and outside of an company~\cite[p. 213]{lahiriRFIDSourcebook2005}.
-
-Even doe the network was design mainly for \ac{rfid} sharing of \ac{epc} data, the network does not exclusively runs on \ac{rfid} data carriers. The \emph{EPCglobal Network} can also be fed \ac{epc} data through data carriers like 1D and 2D barcodes. The interoperability with the barcode was one of the most important considerations used during the planning of the network~\cite{RFIDBarcodeInteroperability}.
-
-% GS1 Architecture: organization, advantages and objectives: barcode inoperability
-
-\section{Global Standardization}
-
-\subsection{Efforts}
+\subsection{Standardization Efforts}
 
 Standardization of \ac{uhfrfid} for item level tagging and supply chain, by organizations like GS1, provided a common language to identify, capture and share supply chain data, ensuring important information is accessible, accurate and easy to understand~\cite{anonymousStandardsGS12014}.
 
@@ -91,9 +46,9 @@ The closed mentality in the area slowed the industry progression. In comparison 
 
 The positive implementation of the upper band frequency in Europe for global \ac{uhfrfid} supply chain applications is also dependent on the acceptance by each European members. In particular, Germany and Netherlands are not accepting it~\cite{EUUpperBand}. The conflict with existing adopted bands in the countries makes a global homogeneous system a challenge that will need time to be established.
 
-\section{GS1 and EPCglobal}
+\subsection{GS1 and EPCglobal}
 
-The GS1 is a nonprofit organization dedicated to the development and implementation of standards for global supply chain solutions. 
+GS1 is a nonprofit organization dedicated to the development and implementation of standards for global supply chain solutions. 
 The institution mission is to manage the GS1 System of Standards, create open, global, multi-sector standards fostering good business practices.
 
 GS1 established itself in 2005 from the \ac{ean} International, \ac{ucc} and other local organizations from the United States~\cite{PublicationLEBENSMITTELZEITUNGa}.
@@ -105,56 +60,151 @@ From those efforts resulted the network for the synchronization of master data \
 For RFID Technology to become viable in practice, an infrastructure must exist for processing and communicating EPC data. In meeting the goal of creating a common infrastructure, \ac{mit} announced Auto-ID Release $1.0$ in October 2003. At the same time, \ac{mit} entered into an exclusive licensing agreement with GS1.
 In turn, GS1 established a new division called EPCglobal to implement Release $1.0$ and to conduct further development based on industry input. This put forth an initial set of standards that formed the infrastructure for \ac{epc} data. Later, Auto-ID Release $1.0$ became the starting-point for the EPCglobal Network~\cite{GlobalRFIDValue}.
 
-% rewrite
+\section{Overview}
+%Activities, Standards, Goals
 
-% EPCglobal Spec history and context
+%EPC Uniqueness, Identifiers, Decentralized Implementation, Issuing Organization
+%Review text - it is from and ex subsection prior to the revision of the new index
 
-\section{Dissertation Context}
+EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards that interoperate with shared network services~\cite{Architecture6framework20140414Pdf}.
+These services are referred to as \emph{EPCglobal Network}, a computer network used to share \ac{epc} data between trading partners.
+They are operated by GS1, its delegates and others to provide automatic, real-time identification and data sharing of items both within and outside of an company~\cite[p. 213]{lahiriRFIDSourcebook2005}.
 
-% What is relevant to the dissertation from the architecture framework, Roles, Interfaces and Standards used and why other things were left out, Outline of what will explained next
+The framework defines information systems, interface standards and data models. This approach frees the market of \ac{it} systems to create custom business solutions. Manufacturing can have their custom business logic closed and expose production state information to the clients through the \emph{EPCglobal Network} with the \emph{EPCglobal} interface standards.
 
-\section{Tag Data Standard (TDS)}
+The existence of these standards promote not only the global adoption of \ac{epc}, but also the exchange of information between business partners.
+Even doe the network was design primarily for \ac{rfid} \ac{epc} data sharing, the network does not exclusively runs on \ac{rfid} data carriers. The Network can also be fed \ac{epc} data through data carriers like 1D and 2D barcodes. The interoperability with the barcode was one of the most important considerations used during the planning of the network~\cite{RFIDBarcodeInteroperability}.
 
-% C1G2 and ISO/IEC18000-6 Type C, Tag memory, EPC Structure, coding schemes and representations, GS1 keys relation, encoding of User memory and TID. Talk about Tag Data Translation (TDT). EPC interoperability with barcode.
+\subsection{Activities}
+
+The architecture defines three core activities, all of which have a group of standards and guidelines within the \emph{EPCglobal Architecture Framework}: \emph{Physical Object Exchange}, \emph{Infrastructure for Data Capture} and \emph{Data Sharing}.
+These activities are helpful in understanding the organization and scope of the framework but should not be interpreted as extremely rigid~\cite{Architecture6framework20140414Pdf}.
+
+\subsubsection{Physical Object Exchange} 
+
+\emph{Identify} individual products, cases, loads, assets, return items, among others, so they can be tracked individually.
+The \textit{End Users} parties in a supply chain that exchange physical objects that are identified with \acp{epc}.
+Physical object exchange consists in operations such as shipping, receiving goods, and so on.
+For many End Users, the physical objects are trade goods, but this could not be the case.
+There are many other uses, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve unique identification and tagging of objects. 
+The architecture must be designed to ensure that when one \textit{End User} delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{Architecture6framework20140414Pdf}.
+
+\subsubsection{Infrastructure for Data Capture} 
+
+\emph{Capture data} about the movement of physical assets and creating visibility.
+In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{Architecture6framework20140414Pdf}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data.
+
+\subsubsection{Data Sharing} 
+
+\emph{Exchange data} with \ac{it} applications and trading partners, to turn visibility into information and action.
+\emph{End Users} benefit from the \emph{EPCglobal Architecture Framework} by sharing data with each other, increasing the visibility they have with respect to the movement of physical objects through the supply chain. 
+The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standards, which provide a means for end users to share data about \acp{epc} within defined user groups or with the general public, and which also provide access to \emph{EPC Network Services} and other shared services that facilitate this sharing.
+
+% image: \emph{EPCglobal Architecture Framework} activities~\cite{Architecture6framework20140414Pdf}
+
+
+\subsection{Standards}
+
+% This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
+
+\section{Generation 2 \ac{uhf} Tag}
+
+The \ac{epc} Generation 2 air interface protocol defines the physical and logical requirements for \ac{rfid} readers and passive tags operating in the \ac{uhf} band~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}.
+In particular, we are interested in Class 1 \ac{uhf} tags. \ac{c1g2} tags operate in the \ac{uhf} or \ac{hf}~\cite{EpcglobalHf3standard20110905r3} bands, in \ac{worm} type \ac{rfid} systems like \ac{scm} and logistics.
+They are cheap, robust, support cryptographic authentication for anti-counterfeiting, functions for traceability protection and most important, are conformable with the ISO/IEC 18000-6 Type C air protocol, conjugating the two most prominent standards in \ac{uhf}.
+
+It is important to address the \ac{c1g2} and ISO/IEC 18000-6 conformability. Despite the interrogation commands and logical memory map being the same, the standards differ in the encoding of data. 
+GS1 and ISO have different formats and encoding rules to represent \acp{id}.
+Systems that want to support both encoding types have to implement interoperability between them~\cite{mizutaniMulticodePortableRFID2016a}.
+In this dissertation we focus on the \emph{EPCGlobal Architecture Framework}, so ISO encodings will not be covered.
+
+\subsection{Memory}
+
+Figure~\ref{fig:logicalmemorymap} depicts the logical memory layout in \ac{epc} Gen2 tags. It has four banks of non-volatile memory: \emph{Reserved Memory}, \emph{\ac{epc} Memory}, \emph{\ac{tid} Memory} and \emph{User Memory}. Banks can be accessed by multiples of 16 bits words.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/logicmemorymap.pdf}
+    \caption{Logical memory map of EPCGlobal Gen2 \ac{uhf} tags~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}} 
+    \label{fig:logicalmemorymap}
+\end{figure}
+
+\subsubsection{Reserved Memory (Bank $00$)}
+
+Reserved Memory (Bank $00$) holds the Access and Kill passwords, if implemented by the manufacturer of the Tag. 
+The \textbf{Kill password} is a 32-bit value used in the \textit{Kill Command} to render a Tag non-responsive thereafter. The \textit{Kill Command} only executes if the password has been set to a value different from the default all-zero password. 
+The \textbf{Access password} is a 32-bit value which allows to transition the Tag in to the Secure state. In the Secure state we can execute all Access commands, including writing to locked blocks. The default password is all zeros and must be changed if access protection is required~\cite{RFIDEPCGen2, Gs1epcgen2v2uhfairinterfaceI2120180904}.
+
+\subsubsection{\ac{epc} Memory (Bank $01$)}
+
+\ac{epc} Memory (Bank $01$) contains a 16-bit \ac{crc} for error correction, a 16-bit \ac{pc} and a \ac{epc}.
+
+The \ac{epc} is the \ac{id} in which the \emph{EPCGlobal Framework} revolves around to identify every item in the world. It has the characteristic of being extensible, being that depending on the application requirements it can be between 96 bits and the maximum \ac{epc} size supported by the tag (some tags can have up to 496 bits). Important to refer, tag cost rises with the amount of \ac{epc} bits. Companies planning on implementing \ac{epc} must devise a serialization plan. This thematic will be discussed further in this dissertation.
+Its encoding is not defined in the \ac{gen2} air protocol standard, but in the \emph{\ac{epc} Tag Data Standard} which will be further discussed with detail on section~\ref{sec:epc}.
+
+The standard also defines \ac{xpc} words, XPC\_W1 and XPC\_W2 respectively. These words are optional and not commonly implemented, depending on tag manufacturer to do so. In fact, the tags used in this dissertation use \textit{Impinj's Monza} chips, widely used in all kinds of tag applications around the globe, which don't implement \ac{xpc} words. These words contain bit indicators for settings like hazardous materials and intractability to say a few.
+
+The \ac{pc} word contains metadata used to interpret the \ac{epc}. A more detailed representation of the \ac{pc} can be seen in table~\ref{tab:pcbits}.
+From $10_h-14_h$, 4 bits with the length of the \ac{epc}/\ac{id} in words, at $15_h$ a toggle bit called \ac{umi} which indicates if \emph{User Bank $11$} has any data in it, and at $16_h$ a toggle bit to indicate if the tag has extended \ac{pc}.
+To distinguish an GS1 from an ISO standard \ac{id}, the most reasonable way is to look at bit $17_h$, which contains a toggle bit to indicate whether the \ac{id} is GS1 or non-GS1 family.
+From bit $18_h$ to $1F_h$ is reserved for future use under the \emph{EPCGlobal} specification. Under some circumstances GS1 EPCglobal may permit another standards body or organization to use one or more of these RFU values for standardization purposes. Also to note, on ISO 18000-6, these bits are used for \acp{id} supplementary meta data called Application Family Identifier.
+
+\begin{table}
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_pcbits.pdf}
+    \caption{\ac{pc} assignments from \ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}} 
+    \label{tab:pcbits}
+\end{table}
+
+\subsubsection{TID Memory (Bank $10$)}
+
+\ac{tid} Memory (Bank $10$) holds chipset manufactured information and tag capability indicators. This memory bank is permalocked at the time of manufacture, being that it can not be changed.
+
+There are misconceptions on the internet about the \ac{tid} "number".
+The \ac{tid} Memory bank in contains two fields dedicated to manufacturer information called \ac{mdid} and \ac{tmn}.
+\ac{mdid} encodes the Tag chip manufacturer \ac{id} which is attributed by GS1 as a unique identifier.
+The \ac{tmn} is attributed by the manufacturer of the chip and describes the chipset number.
+
+In the \ac{tds}, where the encoding of \ac{tid} is specified, it is referred has as \textbf{Short} Tag Identification.
+This is because the \ac{tid} can be extended, which is them called \ac{xtid}.
+
+\ac{xtid} is intended to provide more information about the capabilities of tags. It extends the \ac{tid} format by adding support for serialization and information about key features implemented by the tag~\cite{GS1EPCTDS}.
+Serialization is unique number generated by the tag manufacturer and can be used to uniquely identify one tag from another.
+This identifies the tag itself, rather than item it is applied to.
+The \ac{xtid} format became so common that people started referring to \ac{mdid}, \ac{tmn} and serialization has \emph{\ac{tid} number}.
+The \ac{xtid} is specially useful in cases where the \ac{epc} isn’t serialized or is invalid.
+An example of a \ac{tid} memory bank with \ac{xtid} can be seen in figure~\ref{fig:tid}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/tid.pdf}
+    \caption{\ac{tid} Memory Bank of Monza R6-P Series used in this dissertation~\cite{TIDMemoryMaps}} 
+    \label{fig:tid}
+\end{figure}
+
+\subsubsection{User Memory (Bank $11$)}
+
+
+
+\section{\ac{epc}} \label{sec:epc}
+
+% C1G2 and ISO/IEC18000-6 Type C, Tag memory, EPC Structure, coding schemes and representations, GS1 keys relation. Talk about Tag Data Translation (TDT). EPC interoperability with barcode.
 
 % Check page 24 of the GS1 EPCglobal architecture Framework pdf
 
-\section{identification Key in Transport and Logistics}
+\ac{epc} is a universal identifier used to identify every physical object anywhere in the world.
+Differently from common \ac{uuid} identifiers, \ac{epc} has a set of collective terms for the identification code standardized by GS1~\cite{GS1GeneralSpecifications}, which convey context about the physical object in the \ac{epc} itself.
+
+Specifications on the \ac{epc} are defined under the \ac{tds}~\cite{GS1EPCTDS} in conjunction with the encoding of \acp{epc} and data in Gen 2 \ac{rfid} tags. For this reason
+
+
+\subsection{Identification Key in Transport and Logistics}
 
 \section{Filtering \& Collection}
 
 \subsection{Low Level Reader Protocol (LLRP)}
 
 % Check 2.5 Introduction to LLRP Specs on ImpinjLTKProgrammers
-
-\ac{llrp} is specification standard that defines an interface between \ac{rfid} Readers and \emph{Clients}.
-
-Typically, an \ac{rfid} system consists of network elements that participate in the management and transmission of tag data.
-\emph{Client} network elements (e.g. end-user applications) are the consumers of this data.
-The network elements between tag and \emph{Clients} form the road to transport tag data over the network to the applications, and convey tag operational commands over the network to tags.
-The \ac{llrp} interface specification is the standard that describes the communication between these network elements.
-
-
-The interface recognizes that in some RFID systems, there is a requirement for RFID systems engineers, explicit knowledge of RFID air protocols, to tune the RFID air protocols. 
-The coupling control of the physical layers of an RFID infrastructure may be useful for the purpose of mitigating RFID interference~\cite{Llrp1standard20101013Pdf}.
-The \ac{llrp} interface \emph{low-level} nature of the specification comes from this ability.
-
-The responsibilities and requirements taken by the interface are:
-
-\begin{itemize}
-    \setlength{\parskip}{0pt}
-    \setlength{\itemsep}{0pt}
-    \item Proving means to command \ac{rfid} Readers to read, write inventory tags and perform other protocol-dependent commands as \emph{kill} and \emph{lock} from \emph{EPCglobal} \ac{c1g2};
-    \item Give robust error and status report for tag access operations;
-    \item Provide means for conveying tag passwords needed for protocol commands like \emph{kill} from \emph{EPCglobal} \ac{c1g2};
-    \item Provide means to control and fetch information on the \ac{rf} link: power levels, spectrum utilization, estimation of \ac{rf} interference among Readers;
-    \item Provide means to control parameters and aspects of the Tag Protocol operation;
-    \item Been able to retrieve from Readers their capabilities;
-    \item Provide means for ease addition of new air protocols;
-    \item Support defining of vendor-specific extensions to the protocol from Reader devices vendors. Must be non-interfering  among vendors.
-\end{itemize}
-
-In the context of the \emph{EPCglobal} architecture framework, the elements relevant to the LLRP specification are the Tags, Readers and \ac{fc} Role.
 
 % image: \ac{llrp} in the \emph{EPCglobal} Architecture~\cite{Llrp1standard20101013Pdf}
 
@@ -166,13 +216,13 @@ In the context of the \emph{EPCglobal} architecture framework, the elements rele
 
 % ver sec 5.1.1 da EPCISGuidelinePdf
 
-\section{EPCIS Capture Application}
+\subsection{Capture Application}
 
-\section{EPCIS Capture and Query Interfaces}
+\subsection{Capture and Query Interfaces}
 
-\section{EPCIS Repository}
+\subsection{Repository}
 
-\section{Core Business Vocabulary}
+\subsection{Core Business Vocabulary}
 
 \section{Practical Context}
 
