@@ -107,9 +107,12 @@ The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standa
 
 % This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
 
+Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{GS1EPCTDS} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
+
 \section{Generation 2 \ac{uhf} Tag}
 
-The \ac{epc} Generation 2 air interface protocol defines the physical and logical requirements for \ac{rfid} readers and passive tags operating in the \ac{uhf} band~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}.
+A \ac{gen2} \ac{rfid} tag is a passive \ac{rfid} tag that conforms to the \ac{epc} Class-1 Generation-2 \ac{uhf} \ac{rfid} Protocol for Communications at $860$ MHz - $960$ MHz standard, the ISO/IEC 18000-6:2013 standard (Type C), or related standards currently under development.
+The \ac{epc} Generation 2 Air Interface Protocol defines the physical and logical requirements for \ac{rfid} readers and passive tags operating in the \ac{uhf} band~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}.
 In particular, we are interested in Class 1 \ac{uhf} tags. \ac{c1g2} tags operate in the \ac{uhf} or \ac{hf}~\cite{EpcglobalHf3standard20110905r3} bands, in \ac{worm} type \ac{rfid} systems like \ac{scm} and logistics.
 They are cheap, robust, support cryptographic authentication for anti-counterfeiting, functions for traceability protection and most important, are conformable with the ISO/IEC 18000-6 Type C air protocol, conjugating the two most prominent standards in \ac{uhf}.
 
@@ -125,7 +128,7 @@ Figure~\ref{fig:logicalmemorymap} depicts the logical memory layout in \ac{epc} 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/logicmemorymap.pdf}
-    \caption{Logical memory map of EPCGlobal Gen2 \ac{uhf} tags~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}} 
+    \caption{Logical memory map of EPCGlobal \ac{gen2} \ac{uhf} tags~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}} 
     \label{fig:logicalmemorymap}
 \end{figure}
 
@@ -175,7 +178,7 @@ The \ac{xtid} format became so common that people started referring to \ac{mdid}
 The \ac{xtid} is specially useful in cases where the \ac{epc} isn’t serialized or is invalid.
 An example of a \ac{tid} memory bank with \ac{xtid} can be seen in figure~\ref{fig:tid}.
 
-\begin{figure}
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/tid.pdf}
     \caption{\ac{tid} Memory Bank of Monza R6-P Series used in this dissertation~\cite{TIDMemoryMaps}} 
@@ -184,7 +187,17 @@ An example of a \ac{tid} memory bank with \ac{xtid} can be seen in figure~\ref{f
 
 \subsubsection{User Memory (Bank $11$)}
 
+The User Memory Bank provides a variable size memory to store additional data related to the tagged object.
+The bank implementation is optional and must be indicated in the \ac{umi} bit in the \ac{pc} Word.
+It is frequently used to save information like temperature, maintenance logs, expiration dates and other data.
 
+To ensure compatibility with other protocols, the first eight bits of the Bank shall contain a \ac{dsfid} as specified in ISO15962~\cite{isoISOIEC15962}.
+This dissertation does not make use of the User Memory Bank whereby it will not be covered.
+For further reference, GS1 presents a solution for encoding \ac{scm} data in the User Memory Bank in the \ac{tds}~\cite{GS1EPCTDS}.
+
+The access to the bank is made in blocks, through the \ac{gen2} Air Protocol. The arrangement of the data in the Bank is important as it can impact reading speeds.
+In applications requiring fast reading speeds, User Memory Bank access speed can be a bottle neck when not implemented properly. (find citation for this)
+GS1 provides a user memory encoder, a software that converts application data into a form suitable for storing into the user memory bank of a \ac{gen2} \ac{rfid} tag~\cite{marco.santos.diamondFAQ2020}.
 
 \section{\ac{epc}} \label{sec:epc}
 
@@ -195,14 +208,34 @@ An example of a \ac{tid} memory bank with \ac{xtid} can be seen in figure~\ref{f
 \ac{epc} is a universal identifier used to identify every physical object anywhere in the world.
 Differently from common \ac{uuid} identifiers, \ac{epc} has a set of collective terms for the identification code standardized by GS1~\cite{GS1GeneralSpecifications}, which convey context about the physical object in the \ac{epc} itself.
 
-Specifications on the \ac{epc} are defined under the \ac{tds}~\cite{GS1EPCTDS} in conjunction with the encoding of \acp{epc} and data in Gen 2 \ac{rfid} tags. For this reason
+\subsection{\ac{epc} in EPCGlobal Architecture Framework}
 
+\acp{epc} are presented throughout the EPCGlobal Framework in various levels of abstraction. From low-level binary encoded \acp{epc}, in \ac{gen2} \ac{rfid} tags, to business level applications.
+
+The Framework presents seven representations~\footnote{binary, tag-encoding \ac{uri}, pure-identity \ac{uri}, legacy, legacy AI, element string and \ac{ons} hostname} for a simple \ac{epc}. 
+
+\mintinline{text}{urn:epc:id:sgtin:458960468.0022.86}
+
+
+
+
+
+
+urn~\cite{meallingUniformResourceName}
 
 \subsection{Identification Key in Transport and Logistics}
 
 \section{Filtering \& Collection}
 
 \subsection{Low Level Reader Protocol (LLRP)}
+
+%\begin{listing}
+%    \begin{minted}{bash}
+%    urn:epc:id:sgtin:458960468.0022.86
+%    \end{minted}
+%    \caption{This is below the code.}
+%    \label{lbl:snippet-test}
+%\end{listing}
 
 % Check 2.5 Introduction to LLRP Specs on ImpinjLTKProgrammers
 
