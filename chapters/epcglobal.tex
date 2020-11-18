@@ -109,6 +109,13 @@ The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standa
 
 Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{GS1EPCTDS} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/architecturer_structure.pdf}
+    \caption{EPCglobal Architecture Framework and EPC Structures Used at Each Level~\cite{GS1EPCTDS}} 
+    \label{fig:archstructure}
+\end{figure}
+
 \section{Generation 2 \ac{uhf} Tag}
 
 A \ac{gen2} \ac{rfid} tag is a passive \ac{rfid} tag that conforms to the \ac{epc} Class-1 Generation-2 \ac{uhf} \ac{rfid} Protocol for Communications at $860$ MHz - $960$ MHz standard, the ISO/IEC 18000-6:2013 standard (Type C), or related standards currently under development.
@@ -178,7 +185,7 @@ The \ac{xtid} format became so common that people started referring to \ac{mdid}
 The \ac{xtid} is specially useful in cases where the \ac{epc} isn’t serialized or is invalid.
 An example of a \ac{tid} memory bank with \ac{xtid} can be seen in figure~\ref{fig:tid}.
 
-\begin{figure}[!ht]
+\begin{figure}
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/tid.pdf}
     \caption{\ac{tid} Memory Bank of Monza R6-P Series used in this dissertation~\cite{TIDMemoryMaps}} 
@@ -201,29 +208,75 @@ GS1 provides a user memory encoder, a software that converts application data in
 
 \section{\ac{epc}} \label{sec:epc}
 
-% C1G2 and ISO/IEC18000-6 Type C, Tag memory, EPC Structure, coding schemes and representations, GS1 keys relation. Talk about Tag Data Translation (TDT). EPC interoperability with barcode.
-
 % Check page 24 of the GS1 EPCglobal architecture Framework pdf
 
 \ac{epc} is a universal identifier used to identify every physical object anywhere in the world.
-Differently from common \ac{uuid} identifiers, \ac{epc} has a set of collective terms for the identification code standardized by GS1~\cite{GS1GeneralSpecifications}, which convey context about the physical object in the \ac{epc} itself.
+Differently from common \ac{uuid} identifiers, \ac{epc} has a set of collective terms for the identification code standardized by GS1~\cite{GS1GeneralSpecifications}. These terms convey context about the physical object in the encoding of the \ac{epc} itself.
 
 \subsection{\ac{epc} in EPCGlobal Architecture Framework}
 
-\acp{epc} are presented throughout the EPCGlobal Framework in various levels of abstraction. From low-level binary encoded \acp{epc}, in \ac{gen2} \ac{rfid} tags, to business level applications.
+\acp{epc} are presented throughout the EPCGlobal Framework in various levels of abstraction. From low-level binary encoded, in \ac{gen2} \ac{rfid} tags, to business level applications.
+The Framework presents seven representations~\footnote{binary, tag-encoding \ac{uri}, pure-identity \ac{uri}, legacy, legacy AI, element string and \ac{ons} hostname} for a single \ac{epc}. In general, only three are primarily used: \emph{Pure Identity}, \emph{Tag \ac{uri}} and \emph{Binary Encoding}.
+Referring back to figure~\ref{fig:archstructure}, we can observe that the three representations are used in different contexts.
 
-The Framework presents seven representations~\footnote{binary, tag-encoding \ac{uri}, pure-identity \ac{uri}, legacy, legacy AI, element string and \ac{ons} hostname} for a simple \ac{epc}. 
+The \emph{Pure Identity \ac{epc} \ac{uri}} format is, as the name suggests, represented as an \ac{uri}.
+GS1 uses the \ac{urn} scheme with the \mintinline{python}{epc} \ac{nid} registered for the EPCglobal \ac{epc} and related standards~\cite{meallingUniformResourceName}.
+It is the most platform agnostic representation of an \ac{epc}, offering human readability and compatibility between heterogeneous systems. 
 
-\mintinline{text}{urn:epc:id:sgtin:458960468.0022.86}
+For components, like middlewares, requiring more information about the \ac{epc} memory bank of \ac{gen2} \ac{rfid} tags, the \ac{tds} provides the \emph{Tag \ac{uri}} scheme.
+This representation maintains the \ac{uri} representation, changing the \ac{nss} from \mintinline{python}{id} to \mintinline{python}{tag}, and adding \textit{control information} used to guide the process of data capture from \ac{rfid} tags.
+This scheme preserves information regarding the \ac{epc} Memory Bank in the \ac{urn} namespaces that are usually disregarded in business applications but necessary in middleware operations.
+In other words, the \emph{\ac{epc} Tag \ac{uri}} is a text equivalent of the entire \ac{epc} memory bank contents.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./figs/02-state-of-the-art/SGTIN_First2encodings.jpg}
+    \caption{Shit 1~\cite{SGTININFO}} 
+    \label{fig:1111}
+\end{figure}
+
+The Binary Encoding of \ac{epc} contains a compressed encoding of the EPC and additional \textit{control information} in a compact binary form.
+It will be made a in depth analysis of the encoding in section~\ref{sec:binencoding}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/SGTIN_binaryconv2.jpg}
+    \caption{Shit 2~\cite{SGTININFO}} 
+    \label{fig:2222}
+\end{figure}
+
+\subsection{Relationship between EPCs and GS1 keys}
+
+Before preceding to the encoding of \ac{epc} in \ac{gen2} \ac{rfid} tags, lets understand the underlying concepts of \ac{epc} schemes.
+
+Previously, we mentioned that the \ac{epc} was designed to identify every physical object in the world.
+The EPCGlobal Framework utilize this concept to its very extent.
+A physical object in a \ac{scm} can be a broad term that does not provides much information regarding the object itself.
+For that, the architecture defines \ac{epc} schemes and corresponding GS1 keys.
+Each GS1 key denotes a class or grouping of physical objects. These classes encompass trade items, locations, assets, logistic units, transport groupings to say a few.
+These GS1 keys add valuable information to \ac{scm} operations.
+It allows intervening entities in the supply chain and logistics to retrieve context information about the tagged objects.
+A deeper look in to GS1 keys and implementation guidelines is done in section~\ref{sec:identificationkeys}.
+
+For each GS1 key there is a corresponding \ac{epc} scheme including both an \ac{epc} \ac{uri} and a binary encoding for use in \ac{rfid} tags.
+Each \ac{epc} scheme and corresponding GS1 key can be seen in table~\ref{tab:epcschemes} of the Appendix.
+
+\subsection{GTIN}
+
+For the scope of this dissertation, the \ac{sgtin} scheme is the most important encoding scheme to look at.
+It is used to assign a unique identity to an instance of a trade item, such as a specific instance of a product or \ac{sku}.
 
 
 
+\subsubsection{Barcode Interoperability}
 
 
 
-urn~\cite{meallingUniformResourceName}
+\subsection{Binary Encoding} \label{sec:binencoding}
 
-\subsection{Identification Key in Transport and Logistics}
+
+It begins with the \mintinline{python}{urn:epc} 
+The following namespace identify the representation of the \ac{epc}. The \mintinline{python}{id} stands for \emph{Pure Identity}. 
 
 \section{Filtering \& Collection}
 
@@ -256,6 +309,8 @@ urn~\cite{meallingUniformResourceName}
 \subsection{Repository}
 
 \subsection{Core Business Vocabulary}
+
+\section{Identification Key in Transport and Logistics} \label{sec:identificationkeys}
 
 \section{Practical Context}
 
