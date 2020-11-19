@@ -261,22 +261,43 @@ A deeper look in to GS1 keys and implementation guidelines is done in section~\r
 For each GS1 key there is a corresponding \ac{epc} scheme including both an \ac{epc} \ac{uri} and a binary encoding for use in \ac{rfid} tags.
 Each \ac{epc} scheme and corresponding GS1 key can be seen in table~\ref{tab:epcschemes} of the Appendix.
 
-\subsection{GTIN}
+\subsection{SGTIN}
 
 For the scope of this dissertation, the \ac{sgtin} scheme is the most important encoding scheme to look at.
-It is used to assign a unique identity to an instance of a trade item, such as a specific instance of a product or \ac{sku}.
+The \ac{sgtin} encodes a \ac{gtin} plus a unique product or serial number.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/SGTIN_UPC_Compare.jpg}
+    \caption{Shit 3~\cite{SGTININFO}} 
+    \label{fig:3333}
+\end{figure}
+
+\subsubsection{GTIN}
+
+The \ac{gtin} is used by companies to identify trade items. 
+GS1 defines trade items as products or services that are priced, ordered or invoiced at any point in the supply chain.
+\ac{gtin} can be used to identify types of products at any packaging level (e.g., consumer unit, inner pack, case, pallet~\footnote{even if a \ac{gtin} can be used to identify pallets, the use of \ac{sscc} is preferable~\cite{KeysImplementationGuideline}}).
+
+A \ac{gtin} is composed of a \emph{Company Prefix}, a \emph{Item Reference} and a check digit:
+
+\paragraph{Company Prefix} is a unique identifier licensed by GS1. Nowadays, the registration of Company Prefix is essential procedure for companies whistling   of \acp{gtin} 
+
+It identifies not only the company 
 
 
 
-\subsubsection{Barcode Interoperability}
 
+
+
+~\cite{GS1GTINExecutive, GS1GTINManagement}
+
+
+
+\subsubsection{RFID/Barcode Interoperability}
 
 
 \subsection{Binary Encoding} \label{sec:binencoding}
-
-
-It begins with the \mintinline{python}{urn:epc} 
-The following namespace identify the representation of the \ac{epc}. The \mintinline{python}{id} stands for \emph{Pure Identity}. 
 
 \section{Filtering \& Collection}
 
