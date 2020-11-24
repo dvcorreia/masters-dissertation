@@ -259,7 +259,7 @@ It allows intervening entities in the supply chain and logistics to retrieve con
 A deeper look in to GS1 keys and implementation guidelines is done in section~\ref{sec:identificationkeys}.
 
 For each GS1 key there is a corresponding \ac{epc} scheme including both an \ac{epc} \ac{uri} and a binary encoding for use in \ac{rfid} tags.
-Each \ac{epc} scheme and corresponding GS1 key can be seen in table~\ref{tab:epcschemes} of the Appendix.
+Each \ac{epc} scheme and corresponding GS1 key can be seen in Appendix~\ref{tab:epcschemes}.
 
 \subsection{SGTIN}
 
@@ -273,31 +273,100 @@ The \ac{sgtin} encodes a \ac{gtin} plus a unique product or serial number.
     \label{fig:3333}
 \end{figure}
 
-\subsubsection{GTIN}
-
-The \ac{gtin} is used by companies to identify trade items. 
+The \ac{gtin} is used by companies to identify trade items~\cite{GS1GTINExecutive, GS1GTINManagement}. 
 GS1 defines trade items as products or services that are priced, ordered or invoiced at any point in the supply chain.
 \ac{gtin} can be used to identify types of products at any packaging level (e.g., consumer unit, inner pack, case, pallet~\footnote{even if a \ac{gtin} can be used to identify pallets, the use of \ac{sscc} is preferable~\cite{KeysImplementationGuideline}}).
 
-A \ac{gtin} is composed of a \emph{Company Prefix}, a \emph{Item Reference} and a check digit:
+There are four \ac{gtin} formats: \ac{gtin}-$8$, \ac{gtin}-$12$, \ac{gtin}-$13$ and \ac{gtin}-$14$. In \ac{rfid} applications and general \ac{it} applications, it is used the uniform 14-digit format, \ac{gtin}-$14$. Is is the \ac{gtin} specified for \ac{gen2} \ac{rfid} \ac{sgtin} encoding.
+Other \ac{gtin} formats are mainly used in barcodes in point-of-sale applications: in the \ac{us} is commonly used a \ac{gtin}-$12$ with UPC barcodes for single products and \ac{gtin}-$14$ with ITF-14 barcodes for product grouping. In contrast, in the rest of the world is commonly used \ac{gtin}-$8$ with \ac{ean}-8 barcodes for single products and \ac{gtin}-$13$ with \ac{ean}-13 for single products packaging configurations~\cite{BarcodeGS1General, GS1BARCODECHART}.
 
-\paragraph{Company Prefix} is a unique identifier licensed by GS1. Nowadays, the registration of Company Prefix is essential procedure for companies whistling   of \acp{gtin} 
+A \ac{gtin} is composed of three field: \emph{Company Prefix}, \emph{Item Reference} and check digit. All this fields are encoded in the different N-digit \ac{gtin} formats. 
 
-It identifies not only the company 
+GS1 Company Prefix is a unique identifier licensed by GS1 to identify a company globally. 
+Nowadays, the registration of such is essential to companies whistling to enter digital marketplaces (e.g. Amazon~\cite{ListingRequirementsProduct}, Ebay) and big retail stores.
+Company Prefixes can change and a company can have more than one Company Prefix.
+When licensing a Company Prefix, there is an assessment and plan of unique product items a company shall produce. 
+Depending on that, GS1 attributes a prefix with a length adjusted to company requirements. 
+Companies requiring high quantities of unique item are given a shorter Company Prefix, accommodating more digits for item identification.
+Also worth mentioning, the attribution of Company Prefix is made by one of the GS1 branches. Each branch has a prefix which uses to assign Company Prefixes (e.g.\ GS1 Portugal has $560$, GS1 Schweiz, Suisse and Svizzera have $760$-$769$)~\cite{anonymousGS1CompanyPrefix2014}.
 
-
-
-
-
-
-~\cite{GS1GTINExecutive, GS1GTINManagement}
-
-
-
-\subsubsection{RFID/Barcode Interoperability}
-
+Item References are assign by the managing entity of the product.
+The item references must be concatenated with the Company Prefix to calculate the Check Digit, forming a \ac{gtin}.
+From a \ac{gtin}, an \ac{sgtin} can be commissioned allowing to uniquely identification of a product within its product grouping.
+Important to clarify, when a \ac{gtin} is stored in \ac{rfid} tags, as in \ac{sgtin} coding schemes, the \emph{Check Digit} presented in barcodes does not exist and must be dropped in barcode \ac{gtin} to \ac{epc} \ac{gtin} conversions.
 
 \subsection{Binary Encoding} \label{sec:binencoding}
+
+Lets now see how \acp{epc} are stored in \ac{gen2} \ac{rfid} tags.
+We will focus on \ac{sgtin} encoding scheme, but the encoding method is analogous to other encoding schemes.
+
+The binary encoding of an \ac{epc} consists of a fixed length header followed by a series of fields inherent to the encoding scheme like showed on \ac{sgtin}-$96$ Coding table~\ref{tab:sgtin96codingtable}.
+For instance, lets take the \emph{Tag \ac{uri}}
+\mintinline{python}{urn:epc:tag:sgtin-96:1.76300544.07470.2}
+has example.
+This \emph{Tag \ac{uri}} has \ac{sgtin}-$96$ encoding scheme, \emph{Filter value} of $``1"$, \emph{Company Prefix} $``76300544"$, \emph{Item Reference} $``7470"$ and serial $``2"$.
+
+Following table~\ref{tab:encodingexample}, we first need to address the \ac{epc} header.
+A snippet of the \ac{epc} header values can be seen in table~\ref{tab:epcheaders}. We observe that an \ac{sgtin} with $96$~bit coding scheme encodes a $8$-bit header with binary value of $``00110000"$.
+
+Next, we need to encode the additional \textit{information} included in the \ac{epc} Memory Bank: the \emph{Filter} and \emph{Partition}. 
+
+The \emph{Filter} encodes the packing level. An \ac{epc} \ac{sgtin} can be used to identify different levels of item packaging sharing the same \ac{gtin}. Differently from barcodes, which only encode the \ac{gtin}, an \ac{epc} with \emph{Filter} field allows a coherent \ac{gtin} across item packagings.
+The filter value, has \textit{control information}, allows \ac{rfid} readers to select or deselect tags in the \emph{\ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol} corresponding to certain filter levels. This make it easier to read the desired tags in an environment where there may be other tags present (e.g.\ logistics companies only wanting to read and track Unit Loads like pallets).
+Referencing table~\ref{tab:sgtinfiltervalues} with a , with a filter value of $``1"$, it encodes a \ac{pos} Trade Item with binary encoding of $``001"$.
+
+The \emph{Partition} value encodes a pair of variable-length numeric fields referent to the \emph{Company Prefix} and \emph{Item Reference} memory partition. Previously we mentioned that \emph{Company Prefixes} can vary in length depending on company requirements for unique \emph{Item References}. 
+In barcodes the \emph{Company Prefix} and \emph{Item Reference} are encoded together in a \ac{gtin} value. 
+In \ac{gen2} tags, although there is fixed size memory shared between \emph{Company Prefix} and \emph{Item Reference}, there is also the \emph{Partition} value which specifies the distribution of that partition.
+In the case of the example \emph{Tag \ac{uri}}, \emph{Company prefix} has $27$ bits / $8$ digits and \emph{Item reference} has $17$ bits / $5$ digits. Referring to table~\ref{tab:partitiontable} with the pair of variable-lengths, the \emph{Partition Value} is $``4"$ encoded has $``100"$.
+
+The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded converting from decimal to binary and add leading zeros to fill all bits in each Logical Segment.
+
+\begin{table}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_codingtable.pdf}
+    \caption{Coding Table of \ac{sgtin}-$96$~\cite{GS1EPCTDS}} 
+    \label{tab:sgtin96codingtable}
+\end{table}
+
+\begin{table}[]
+    \begin{adjustwidth}{-0.00\textwidth}{0em}
+    \begin{tabular}{@{}lllrl@{}}
+        \toprule
+        \textbf{Field}                                            & \textbf{Value (dec)} & \textbf{Value (bin)}                                                              & \textbf{\begin{tabular}[c]{@{}r@{}}Length \\ (bits)\end{tabular}} & \textbf{Notes}                                                                                                      \\ \midrule
+        \ac{epc} Header                                                & 48                   & 00110000                                                                          & 8                                                                 & \ac{sgtin}-$96$ encoding                                                                                                 \\
+        Filter Value                                              & 1                    & 001                                                                               & 3                                                                 & \ac{pos} item                                                                                                            \\
+        Partition Value                                           & 4                    & 100                                                                               & 3                                                                 & Company Prefix has 8 digits                                                                                         \\
+        \begin{tabular}[c]{@{}l@{}}Company \\ Prefix\end{tabular} & 76300544             & \begin{tabular}[c]{@{}l@{}}1001000110001000\\ 00100000000\end{tabular}            & 27                                                                &                                                                                                                     \\
+        \begin{tabular}[c]{@{}l@{}}Item\\ Reference\end{tabular}  & 7470                 & 00001110100101110                                                                 & 17                                                                & \begin{tabular}[c]{@{}l@{}}Length depends on the partition\\ MSB zero fill\end{tabular}                             \\
+        Serial                                                    & 2                    & \begin{tabular}[c]{@{}l@{}}0000000000000000\\ 0000000000000000000010\end{tabular} & 38                                                                & \begin{tabular}[c]{@{}l@{}}Serial is of fixed length.\\ Can be extended with \\ bigger EPC Memory Bank\end{tabular} \\ \bottomrule
+        \end{tabular}
+    \end{adjustwidth}
+    \caption{\ac{sgtin}-$96$ binary encoding example of \mintinline{python}{urn:epc:tag:sgtin-96:1.76300544.07470.2} \emph{Tag \ac{uri}} retrieved from the Platform developed in this dissertation} 
+    \label{tab:encodingexample}
+
+\end{table}
+
+\begin{table}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_epcheaders.pdf}
+    \caption{\ac{epc} headers snippet adapted from \ac{tds}~\cite{GS1EPCTDS}} 
+    \label{tab:epcheaders}
+\end{table}
+
+\begin{table}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_sgtin_filtervalues.pdf}
+    \caption{\ac{sgtin} Filter Value Table~\cite{GS1EPCTDS}} 
+    \label{tab:sgtinfiltervalues}
+\end{table}
+
+\begin{table}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_partitionvalues.pdf}
+    \caption{\ac{sgtin} Partition Table~\cite{GS1EPCTDS}} 
+    \label{tab:partitiontable}
+\end{table}
 
 \section{Filtering \& Collection}
 
