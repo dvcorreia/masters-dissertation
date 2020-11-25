@@ -109,6 +109,37 @@ The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standa
 
 Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{GS1EPCTDS} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
 
+\begin{table}[]
+    \begin{adjustwidth}{-0.09\textwidth}{0em}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Activity}                                                                       & \textbf{Standard}                                                                                                                                           & \textbf{Status}                                                                                                                                                                                                                \\ \hline
+    Object Exchange                                                       & \acs{uhf} Gen 2 Tag Air Interface                                                                                                          & Ratified v2.1.0~\cite{UHFGen2Tag}                                                                                                                                                                        \\ \cline{2-3} 
+                                                                                            & \acs{hf} Class 1 Tag Air Interface                                                                                                         & Ratified v2.0.3~\cite{HFClassTag}                                                                                                                                                                        \\ \cline{2-3} 
+                                                                                            & \acs{epc} Tag Data Standard (\acs{tds})                                                                                               & Ratified Nov 2019 v1.13~\cite{EPCTagData}                                                                                                                                               \\ \cline{1-1}
+    \begin{tabular}[c]{@{}l@{}}Data Capture \\ Infrastructure\end{tabular} &                                                                                                                                                             &                                                                                                                                                                                                                                \\ \cline{2-3} 
+                                                                                            & Low Level Reader Protocol (\acs{llrp})                                                                                                     & Ratified Oct 2010 v1.1~\cite{LowLevelReader}                                                                                                                                                             \\ \cline{2-3} 
+                                                                                            & Reader Management (\acs{rm})                                                                                                               & Ratified May 2007 v1.0.1~\cite{ReaderManagementRM}                                                                                                                                                       \\ \cline{2-3} 
+                                                                                            & \begin{tabular}[c]{@{}l@{}}Discovery, Configuration, and \\ Initialization (\acs{dci}) for Reader Operations\end{tabular}                  & Ratified Jun 2009 v1.0~\cite{DiscoveryConfigurationInitialization}                                                                                                                                       \\ \cline{2-3} 
+                                                                                            & Tag Data Translation (\acs{tdt})                                                                                                           & Ratified Oct 2011 v.1.6~\cite{tdtTagDataTranslation}                                                                                                                                                     \\ \cline{2-3} 
+                                                                                            & Application Level Events (\acs{tds})                                                                                                       & Ratified March 2009 v1.1.1~\cite{ApplicationLevelEvents, ApplicationLevelEventsa}                                                                                                                        \\ \cline{2-3} 
+                                                                                            & \acs{epcis} Capture Interface                                                                                                              & \acs{epcis} Ratified                                                                                                                                                                                                                 \\ \cline{2-3} 
+                                                                                            & \begin{tabular}[c]{@{}l@{}}\acs{epcis} Data Standard\\ Core Business Vocabulary (\acs{cbv})\end{tabular} & \begin{tabular}[c]{@{}l@{}}\acs{epcis} Ratified Sep 2016 v1.2~\cite{InformationServicesEPCIS}\\ \acs{cbv} Ratified Oct 2017 v1.2.2~\cite{CoreBusinessVocabulary}\end{tabular} \\ \cline{1-1}
+    Data Sharing                                                           &                                                                                                                                                             &                                                                                                                                                                                                                                \\ \cline{2-3} 
+                                                                                            & \acs{epcis} Query Interface                                                                                                                & \acs{epcis} Ratified Sep 2016 v1.2~\cite{InformationServicesEPCIS}                                                                                                                                             \\ \cline{2-3} 
+                                                                                            & Pedigree Standard                                                                                                                                           & Ratified Jan 2007 v1.0~\cite{PedigreeStandardV1}                                                                                                                                                         \\ \cline{2-3} 
+                                                                                            & EPCglobal Certificate Profile                                                                                                                               & Ratified Jun 2010 v2.0~\cite{EPCglobalCertificateProfile}                                                                                                                                                \\ \cline{2-3} 
+                                                                                            & Object Name Service (\acs{ons})                                                                                                            & Ratified Jan 2013 v2.0.1 ~\cite{deanGS1ObjectName}                                                                                                                                                       \\ \cline{2-3} 
+                                                                                            & Global Data Synchronisation Network (\acs{gdsn})                                                                                           & Ratified Nov 2020 v3.1.14~\cite{joe.horwoodGDSNStandardsMaintenance}                                                                                                                                     \\ \cline{2-3} 
+                                                                                            & \begin{tabular}[c]{@{}l@{}}Lightweigh Verificationt Messaging \\ Standard\end{tabular}                                                                      & Ratified Jul 2019 v1.1~\cite{david.buckleyGS1LightweightVerification2019}                                                                                                                                               \\ \cline{2-3} 
+                                                                                            & GS1 EDI~\cite{anonymousGS1ElectronicData2014}: \acs{xml} standards                                                   & Ratified Nov 2019 v3.4.1~\cite{david.buckleyGS1XMLStandards2019}                                                                                                                                         \\ \cline{2-3} 
+                                                                                            & Discovery Services                                                                                                                                          & In Development                                                                                                                                                                                                                 \\ \hline
+    \end{tabular}
+    \end{adjustwidth}
+    \caption{Standards within the EPCglobal Architecture Framework} 
+    \label{tab:standards}
+\end{table}
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/architecturer_structure.pdf}
@@ -368,9 +399,7 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
     \label{tab:partitiontable}
 \end{table}
 
-\section{Filtering \& Collection}
-
-\subsection{Low Level Reader Protocol (LLRP)}
+\section{Low Level Reader Protocol (LLRP)}
 
 %\begin{listing}
 %    \begin{minted}{bash}
@@ -386,21 +415,19 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
 
 % Talk about LLRP for deployment of multiple readers e reader control and coordination?
 
+\section{Filtering \& Collection}
+
 \section{Application Level Events (ALE)}
+
+\section{Capture Application}
 
 \section{EPCIS}
 
 % ver sec 5.1.1 da EPCISGuidelinePdf
 
-\subsection{Capture Application}
-
 \subsection{Capture and Query Interfaces}
 
-\subsection{Repository}
-
 \subsection{Core Business Vocabulary}
-
-\section{Identification Key in Transport and Logistics} \label{sec:identificationkeys}
 
 \section{Practical Context}
 
