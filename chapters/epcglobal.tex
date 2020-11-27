@@ -66,7 +66,7 @@ In turn, GS1 established a new division called EPCglobal to implement Release $1
 %EPC Uniqueness, Identifiers, Decentralized Implementation, Issuing Organization
 %Review text - it is from and ex subsection prior to the revision of the new index
 
-EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards that interoperate with shared network services~\cite{Architecture6framework20140414Pdf}.
+EPCglobal Architecture Framework is a collection of interrelated hardware, software, and data standards that interoperate with shared network services~\cite{GS1EPCglobalArchitecture}.
 These services are referred to as \emph{EPCglobal Network}, a computer network used to share \ac{epc} data between trading partners.
 They are operated by GS1, its delegates and others to provide automatic, real-time identification and data sharing of items both within and outside of an company~\cite[p. 213]{lahiriRFIDSourcebook2005}.
 
@@ -78,7 +78,7 @@ Even doe the network was design primarily for \ac{rfid} \ac{epc} data sharing, t
 \subsection{Activities}
 
 The architecture defines three core activities, all of which have a group of standards and guidelines within the \emph{EPCglobal Architecture Framework}: \emph{Physical Object Exchange}, \emph{Infrastructure for Data Capture} and \emph{Data Sharing}.
-These activities are helpful in understanding the organization and scope of the framework but should not be interpreted as extremely rigid~\cite{Architecture6framework20140414Pdf}.
+These activities are helpful in understanding the organization and scope of the framework but should not be interpreted as extremely rigid~\cite{GS1EPCglobalArchitecture}.
 
 \subsubsection{Physical Object Exchange} 
 
@@ -87,12 +87,12 @@ The \textit{End Users} parties in a supply chain that exchange physical objects 
 Physical object exchange consists in operations such as shipping, receiving goods, and so on.
 For many End Users, the physical objects are trade goods, but this could not be the case.
 There are many other uses, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve unique identification and tagging of objects. 
-The architecture must be designed to ensure that when one \textit{End User} delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{Architecture6framework20140414Pdf}.
+The architecture must be designed to ensure that when one \textit{End User} delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{GS1EPCglobalArchitecture}.
 
 \subsubsection{Infrastructure for Data Capture} 
 
 \emph{Capture data} about the movement of physical assets and creating visibility.
-In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{Architecture6framework20140414Pdf}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data.
+In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{GS1EPCglobalArchitecture}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data.
 
 \subsubsection{Data Sharing} 
 
@@ -107,26 +107,26 @@ The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standa
 
 % This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
 
-Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{GS1EPCTDS} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
+Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{EPCTagData} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
 
 \begin{table}[]
     \begin{adjustwidth}{-0.09\textwidth}{0em}
     \begin{tabular}{|l|l|l|}
     \hline
     \textbf{Activity}                                                                       & \textbf{Standard}                                                                                                                                           & \textbf{Status}                                                                                                                                                                                                                \\ \hline
-    Object Exchange                                                       & \acs{uhf} Gen 2 Tag Air Interface                                                                                                          & Ratified v2.1.0~\cite{UHFGen2Tag}                                                                                                                                                                        \\ \cline{2-3} 
-                                                                                            & \acs{hf} Class 1 Tag Air Interface                                                                                                         & Ratified v2.0.3~\cite{HFClassTag}                                                                                                                                                                        \\ \cline{2-3} 
-                                                                                            & \acs{epc} Tag Data Standard (\acs{tds})                                                                                               & Ratified Nov 2019 v1.13~\cite{EPCTagData}                                                                                                                                               \\ \cline{1-1}
+    Object Exchange                                                       & \emph{\acs{uhf} Gen 2 Tag Air Interface}                                                                                                          & Ratified Jul 2018 v2.1.0~\cite{UHFGen2Tag}                                                                                                                                                                        \\ \cline{2-3} 
+                                                                                            & \acs{hf} Class 1 Tag Air Interface                                                                                                         & Ratified Sep 2011 v2.0.3~\cite{HFClassTag}                                                                                                                                                                        \\ \cline{2-3} 
+                                                                                            & \emph{\acs{epc} Tag Data Standard (\acs{tds})}                                                                                               & Ratified Nov 2019 v1.13~\cite{EPCTagData}                                                                                                                                               \\ \cline{1-1}
     \begin{tabular}[c]{@{}l@{}}Data Capture \\ Infrastructure\end{tabular} &                                                                                                                                                             &                                                                                                                                                                                                                                \\ \cline{2-3} 
-                                                                                            & Low Level Reader Protocol (\acs{llrp})                                                                                                     & Ratified Oct 2010 v1.1~\cite{LowLevelReader}                                                                                                                                                             \\ \cline{2-3} 
+                                                                                            & \emph{Low Level Reader Protocol (\acs{llrp})}                                                                                                     & Ratified Oct 2010 v1.1~\cite{LowLevelReader}                                                                                                                                                             \\ \cline{2-3} 
                                                                                             & Reader Management (\acs{rm})                                                                                                               & Ratified May 2007 v1.0.1~\cite{ReaderManagementRM}                                                                                                                                                       \\ \cline{2-3} 
                                                                                             & \begin{tabular}[c]{@{}l@{}}Discovery, Configuration, and \\ Initialization (\acs{dci}) for Reader Operations\end{tabular}                  & Ratified Jun 2009 v1.0~\cite{DiscoveryConfigurationInitialization}                                                                                                                                       \\ \cline{2-3} 
-                                                                                            & Tag Data Translation (\acs{tdt})                                                                                                           & Ratified Oct 2011 v.1.6~\cite{tdtTagDataTranslation}                                                                                                                                                     \\ \cline{2-3} 
-                                                                                            & Application Level Events (\acs{tds})                                                                                                       & Ratified March 2009 v1.1.1~\cite{ApplicationLevelEvents, ApplicationLevelEventsa}                                                                                                                        \\ \cline{2-3} 
-                                                                                            & \acs{epcis} Capture Interface                                                                                                              & \acs{epcis} Ratified                                                                                                                                                                                                                 \\ \cline{2-3} 
-                                                                                            & \begin{tabular}[c]{@{}l@{}}\acs{epcis} Data Standard\\ Core Business Vocabulary (\acs{cbv})\end{tabular} & \begin{tabular}[c]{@{}l@{}}\acs{epcis} Ratified Sep 2016 v1.2~\cite{InformationServicesEPCIS}\\ \acs{cbv} Ratified Oct 2017 v1.2.2~\cite{CoreBusinessVocabulary}\end{tabular} \\ \cline{1-1}
+                                                                                            & \emph{Tag Data Translation (\acs{tdt})}                                                                                                           & Ratified Oct 2011 v.1.6~\cite{tdtTagDataTranslation}                                                                                                                                                     \\ \cline{2-3} 
+                                                                                            & \emph{Application Level Events (\acs{tds})}                                                                                                       & Ratified March 2009 v1.1.1~\cite{ApplicationLevelEvents, ApplicationLevelEventsa}                                                                                                                        \\ \cline{2-3} 
+                                                                                            & \emph{\acs{epcis} Capture Interface}                                                                                                              & \acs{epcis} Ratified                                                                                                                                                                                                                 \\ \cline{2-3} 
+                                                                                            & \begin{tabular}[c]{@{}l@{}}\emph{\acs{epcis} Data Standard}\\ \emph{Core Business Vocabulary (\acs{cbv})}\end{tabular} & \begin{tabular}[c]{@{}l@{}}\acs{epcis} Ratified Sep 2016 v1.2~\cite{InformationServicesEPCIS}\\ \acs{cbv} Ratified Oct 2017 v1.2.2~\cite{CoreBusinessVocabulary}\end{tabular} \\ \cline{1-1}
     Data Sharing                                                           &                                                                                                                                                             &                                                                                                                                                                                                                                \\ \cline{2-3} 
-                                                                                            & \acs{epcis} Query Interface                                                                                                                & \acs{epcis} Ratified Sep 2016 v1.2~\cite{InformationServicesEPCIS}                                                                                                                                             \\ \cline{2-3} 
+                                                                                            & \emph{\acs{epcis} Query Interface}                                                                                                                & \acs{epcis} Ratified Sep 2016 v1.2~\cite{InformationServicesEPCIS}                                                                                                                                             \\ \cline{2-3} 
                                                                                             & Pedigree Standard                                                                                                                                           & Ratified Jan 2007 v1.0~\cite{PedigreeStandardV1}                                                                                                                                                         \\ \cline{2-3} 
                                                                                             & EPCglobal Certificate Profile                                                                                                                               & Ratified Jun 2010 v2.0~\cite{EPCglobalCertificateProfile}                                                                                                                                                \\ \cline{2-3} 
                                                                                             & Object Name Service (\acs{ons})                                                                                                            & Ratified Jan 2013 v2.0.1 ~\cite{deanGS1ObjectName}                                                                                                                                                       \\ \cline{2-3} 
@@ -143,15 +143,15 @@ Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{GS1EPCT
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/architecturer_structure.pdf}
-    \caption{EPCglobal Architecture Framework and EPC Structures Used at Each Level~\cite{GS1EPCTDS}} 
+    \caption{EPCglobal Architecture Framework and EPC Structures Used at Each Level~\cite{EPCTagData}} 
     \label{fig:archstructure}
 \end{figure}
 
 \section{Generation 2 \ac{uhf} Tag}
 
 A \ac{gen2} \ac{rfid} tag is a passive \ac{rfid} tag that conforms to the \ac{epc} Class-1 Generation-2 \ac{uhf} \ac{rfid} Protocol for Communications at $860$ MHz - $960$ MHz standard, the ISO/IEC 18000-6:2013 standard (Type C), or related standards currently under development.
-The \ac{epc} Generation 2 Air Interface Protocol defines the physical and logical requirements for \ac{rfid} readers and passive tags operating in the \ac{uhf} band~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}.
-In particular, we are interested in Class 1 \ac{uhf} tags. \ac{c1g2} tags operate in the \ac{uhf} or \ac{hf}~\cite{EpcglobalHf3standard20110905r3} bands, in \ac{worm} type \ac{rfid} systems like \ac{scm} and logistics.
+The \ac{epc} Generation 2 Air Interface Protocol defines the physical and logical requirements for \ac{rfid} readers and passive tags operating in the \ac{uhf} band~\cite{UHFGen2Tag}.
+In particular, we are interested in Class 1 \ac{uhf} tags. \ac{c1g2} tags operate in the \ac{uhf} or \ac{hf}~\cite{HFClassTag} bands, in \ac{worm} type \ac{rfid} systems like \ac{scm} and logistics.
 They are cheap, robust, support cryptographic authentication for anti-counterfeiting, functions for traceability protection and most important, are conformable with the ISO/IEC 18000-6 Type C air protocol, conjugating the two most prominent standards in \ac{uhf}.
 
 It is important to address the \ac{c1g2} and ISO/IEC 18000-6 conformability. Despite the interrogation commands and logical memory map being the same, the standards differ in the encoding of data. 
@@ -166,7 +166,7 @@ Figure~\ref{fig:logicalmemorymap} depicts the logical memory layout in \ac{epc} 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/logicmemorymap.pdf}
-    \caption{Logical memory map of EPCGlobal \ac{gen2} \ac{uhf} tags~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}} 
+    \caption{Logical memory map of EPCGlobal \ac{gen2} \ac{uhf} tags~\cite{UHFGen2Tag}} 
     \label{fig:logicalmemorymap}
 \end{figure}
 
@@ -174,7 +174,7 @@ Figure~\ref{fig:logicalmemorymap} depicts the logical memory layout in \ac{epc} 
 
 Reserved Memory (Bank $00$) holds the Access and Kill passwords, if implemented by the manufacturer of the Tag. 
 The \textbf{Kill password} is a 32-bit value used in the \textit{Kill Command} to render a Tag non-responsive thereafter. The \textit{Kill Command} only executes if the password has been set to a value different from the default all-zero password. 
-The \textbf{Access password} is a 32-bit value which allows to transition the Tag in to the Secure state. In the Secure state we can execute all Access commands, including writing to locked blocks. The default password is all zeros and must be changed if access protection is required~\cite{RFIDEPCGen2, Gs1epcgen2v2uhfairinterfaceI2120180904}.
+The \textbf{Access password} is a 32-bit value which allows to transition the Tag in to the Secure state. In the Secure state we can execute all Access commands, including writing to locked blocks. The default password is all zeros and must be changed if access protection is required~\cite{RFIDEPCGen2,UHFGen2Tag}.
 
 \subsubsection{\ac{epc} Memory (Bank $01$)}
 
@@ -193,7 +193,7 @@ From bit $18_h$ to $1F_h$ is reserved for future use under the \emph{EPCGlobal} 
 \begin{table}
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_pcbits.pdf}
-    \caption{\ac{pc} assignments from \ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol~\cite{Gs1epcgen2v2uhfairinterfaceI2120180904}} 
+    \caption{\ac{pc} assignments from \ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol~\cite{UHFGen2Tag}} 
     \label{tab:pcbits}
 \end{table}
 
@@ -209,7 +209,7 @@ The \ac{tmn} is attributed by the manufacturer of the chip and describes the chi
 In the \ac{tds}, where the encoding of \ac{tid} is specified, it is referred has as \textbf{Short} Tag Identification.
 This is because the \ac{tid} can be extended, which is them called \ac{xtid}.
 
-\ac{xtid} is intended to provide more information about the capabilities of tags. It extends the \ac{tid} format by adding support for serialization and information about key features implemented by the tag~\cite{GS1EPCTDS}.
+\ac{xtid} is intended to provide more information about the capabilities of tags. It extends the \ac{tid} format by adding support for serialization and information about key features implemented by the tag~\cite{EPCTagData}.
 Serialization is unique number generated by the tag manufacturer and can be used to uniquely identify one tag from another.
 This identifies the tag itself, rather than item it is applied to.
 The \ac{xtid} format became so common that people started referring to \ac{mdid}, \ac{tmn} and serialization has \emph{\ac{tid} number}.
@@ -231,7 +231,7 @@ It is frequently used to save information like temperature, maintenance logs, ex
 
 To ensure compatibility with other protocols, the first eight bits of the Bank shall contain a \ac{dsfid} as specified in ISO15962~\cite{isoISOIEC15962}.
 This dissertation does not make use of the User Memory Bank whereby it will not be covered.
-For further reference, GS1 presents a solution for encoding \ac{scm} data in the User Memory Bank in the \ac{tds}~\cite{GS1EPCTDS}.
+For further reference, GS1 presents a solution for encoding \ac{scm} data in the User Memory Bank in the \ac{tds}~\cite{EPCTagData}.
 
 The access to the bank is made in blocks, through the \ac{gen2} Air Protocol. The arrangement of the data in the Bank is important as it can impact reading speeds.
 In applications requiring fast reading speeds, User Memory Bank access speed can be a bottle neck when not implemented properly. (find citation for this)
@@ -306,16 +306,16 @@ The \ac{sgtin} encodes a \ac{gtin} plus a unique product or serial number.
 
 The \ac{gtin} is used by companies to identify trade items~\cite{GS1GTINExecutive, GS1GTINManagement}. 
 GS1 defines trade items as products or services that are priced, ordered or invoiced at any point in the supply chain.
-\ac{gtin} can be used to identify types of products at any packaging level (e.g., consumer unit, inner pack, case, pallet~\footnote{even if a \ac{gtin} can be used to identify pallets, the use of \ac{sscc} is preferable~\cite{KeysImplementationGuideline}}).
+\ac{gtin} can be used to identify types of products at any packaging level (e.g., consumer unit, inner pack, case, pallet~\footnote{even if a \ac{gtin} can be used to identify pallets, the use of \ac{sscc} is preferable~\cite{GS1KeysImplementation}}).
 
 There are four \ac{gtin} formats: \ac{gtin}-$8$, \ac{gtin}-$12$, \ac{gtin}-$13$ and \ac{gtin}-$14$. In \ac{rfid} applications and general \ac{it} applications, it is used the uniform 14-digit format, \ac{gtin}-$14$. Is is the \ac{gtin} specified for \ac{gen2} \ac{rfid} \ac{sgtin} encoding.
-Other \ac{gtin} formats are mainly used in barcodes in point-of-sale applications: in the \ac{us} is commonly used a \ac{gtin}-$12$ with UPC barcodes for single products and \ac{gtin}-$14$ with ITF-14 barcodes for product grouping. In contrast, in the rest of the world is commonly used \ac{gtin}-$8$ with \ac{ean}-8 barcodes for single products and \ac{gtin}-$13$ with \ac{ean}-13 for single products packaging configurations~\cite{BarcodeGS1General, GS1BARCODECHART}.
+Other \ac{gtin} formats are mainly used in barcodes in point-of-sale applications: in the \ac{us} is commonly used a \ac{gtin}-$12$ with UPC barcodes for single products and \ac{gtin}-$14$ with ITF-14 barcodes for product grouping. In contrast, in the rest of the world is commonly used \ac{gtin}-$8$ with \ac{ean}-8 barcodes for single products and \ac{gtin}-$13$ with \ac{ean}-13 for single products packaging configurations~\cite{BarcodeGS1General,GS1BarcodeChart}.
 
 A \ac{gtin} is composed of three field: \emph{Company Prefix}, \emph{Item Reference} and check digit. All this fields are encoded in the different N-digit \ac{gtin} formats. 
 
-GS1 Company Prefix is a unique identifier licensed by GS1 to identify a company globally. 
+GS1 Company Prefix is an identifier licensed by GS1 to identify a company globally. 
 Nowadays, the registration of such is essential to companies whistling to enter digital marketplaces (e.g. Amazon~\cite{ListingRequirementsProduct}, Ebay) and big retail stores.
-Company Prefixes can change and a company can have more than one Company Prefix.
+A Company Prefix does not uniquely identify a manufacturer and a company can register and own more than one~\cite{GS1EPCglobalArchitecture}. In certain circumstances Company Prefix can change.
 When licensing a Company Prefix, there is an assessment and plan of unique product items a company shall produce. 
 Depending on that, GS1 attributes a prefix with a length adjusted to company requirements. 
 Companies requiring high quantities of unique item are given a shorter Company Prefix, accommodating more digits for item identification.
@@ -401,19 +401,31 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
 
 \section{Low Level Reader Protocol (LLRP)}
 
-%\begin{listing}
-%    \begin{minted}{bash}
-%    urn:epc:id:sgtin:458960468.0022.86
-%    \end{minted}
-%    \caption{This is below the code.}
-%    \label{lbl:snippet-test}
-%\end{listing}
-
 % Check 2.5 Introduction to LLRP Specs on ImpinjLTKProgrammers
 
 % image: \ac{llrp} in the \emph{EPCglobal} Architecture~\cite{Llrp1standard20101013Pdf}
 
 % Talk about LLRP for deployment of multiple readers e reader control and coordination?
+
+The \acf{llrp} is specification for the network interface between \ac{rfid} Readers and Client applications~\cite{ImpinjLTKProgrammers}.
+
+\subsection{Design Principles}
+
+In some \ac{rfid} systems, there is a requirement for explicitly tune \ac{rfid} air protocols and the ability to control Readers that implement \ac{rfid} air protocol communications~\cite{LowLevelReader}.
+
+Devices intended to operate \ac{rfid} Readers can vary from software applications, to middleware on local hardware, \acp{plc} and even on the cloud.
+
+\ac{llrp} was design without requiring real-time interaction between the application software and Reader but with time-critical tasks at heart. 
+The Reader application software passes operational rules to the Reader in non-real time.
+The Reader then triggers and runs those operation rules to achieve time-critical requirements. 
+The triggers can come from the application directly, from timers, \ac{gpi} hardware, or any other trigger defined by the Reader. 
+This declarative operation method allows Readers to achieve peak performance without constraints caused by network or host latency.
+
+\subsection{Connection Details}
+
+\ac{llrp} is a binary protocol which runs over \acs{tcp}/\acs{ip} 
+
+\subsection{Specification}
 
 \section{Filtering \& Collection}
 
