@@ -423,9 +423,19 @@ This declarative operation method allows Readers to achieve peak performance wit
 
 \subsection{Connection Details}
 
-\ac{llrp} is a binary protocol which runs over \acs{tcp}/\acs{ip} 
+\ac{llrp} is a binary protocol which runs over the \acs{tcp}/\acs{ip} internet transport protocols.
+It is an asymmetric protocol where the \ac{llrp} client send commands to the Reader.
+
+The protocol supports both reader and client initiated connections. By default, \ac{llrp} clients connect to \ac{tcp} port $5084$. In reader initiated connections, the Reader will actively try to establish a connection with the host application.
+\ac{llrp} does not specify the behavior delivering data when the connection if broken. The reader used in this dissertation and others I've seen will continue to collect tag data and optionally deliver upon resumption of the connection.
+
+Reader only allows one \ac{llrp} connection at any time. The end-to-end \ac{tcp} connection between reader and client stays open till the client closes it or connection drops.
 
 \subsection{Specification}
+
+The primary function of the \ac{llrp} interface is to allow a client to to finely tune the \ac{gen2} Tag Air Standard parameters and commanding the reader to inventory tags and otherwise access tags for read, write, lock, and kill.
+
+
 
 \section{Filtering \& Collection}
 
