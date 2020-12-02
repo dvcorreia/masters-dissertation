@@ -356,7 +356,7 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_codingtable.pdf}
-    \caption{Coding Table of \ac{sgtin}-$96$~\cite{GS1EPCTDS}} 
+    \caption{Coding Table of \ac{sgtin}-$96$~\cite{EPCTagData}} 
     \label{tab:sgtin96codingtable}
 \end{table}
 
@@ -381,31 +381,25 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_epcheaders.pdf}
-    \caption{\ac{epc} headers snippet adapted from \ac{tds}~\cite{GS1EPCTDS}} 
+    \caption{\ac{epc} headers snippet adapted from \ac{tds}~\cite{EPCTagData}} 
     \label{tab:epcheaders}
 \end{table}
 
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_sgtin_filtervalues.pdf}
-    \caption{\ac{sgtin} Filter Value Table~\cite{GS1EPCTDS}} 
+    \caption{\ac{sgtin} Filter Value Table~\cite{EPCTagData}} 
     \label{tab:sgtinfiltervalues}
 \end{table}
 
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_partitionvalues.pdf}
-    \caption{\ac{sgtin} Partition Table~\cite{GS1EPCTDS}} 
+    \caption{\ac{sgtin} Partition Table~\cite{EPCTagData}} 
     \label{tab:partitiontable}
 \end{table}
 
 \section{Low Level Reader Protocol (LLRP)}
-
-% Check 2.5 Introduction to LLRP Specs on ImpinjLTKProgrammers
-
-% image: \ac{llrp} in the \emph{EPCglobal} Architecture~\cite{Llrp1standard20101013Pdf}
-
-% Talk about LLRP for deployment of multiple readers e reader control and coordination?
 
 The \acf{llrp} is specification for the network interface between \ac{rfid} Readers and Client applications~\cite{ImpinjLTKProgrammers}.
 
@@ -429,11 +423,65 @@ It is an asymmetric protocol where the \ac{llrp} client send commands to the Rea
 The protocol supports both reader and client initiated connections. By default, \ac{llrp} clients connect to \ac{tcp} port $5084$. In reader initiated connections, the Reader will actively try to establish a connection with the host application.
 \ac{llrp} does not specify the behavior delivering data when the connection if broken. The reader used in this dissertation and others I've seen will continue to collect tag data and optionally deliver upon resumption of the connection.
 
-Reader only allows one \ac{llrp} connection at any time. The end-to-end \ac{tcp} connection between reader and client stays open till the client closes it or connection drops.
+Reader only allows one \ac{llrp} connection at any time. The \ac{tcp} connection between reader and client stays open till the client closes it or connection drops.
 
-\subsection{Specification}
+\subsection{Operation}
 
-The primary function of the \ac{llrp} interface is to allow a client to to finely tune the \ac{gen2} Tag Air Standard parameters and commanding the reader to inventory tags and otherwise access tags for read, write, lock, and kill.
+The primary function of the \ac{llrp} interface is to allow a client to finely tune the \ac{gen2} Tag Air Standard parameters and command the reader to inventory tags and otherwise access tags for read, write, lock, and kill.
+
+For this, \ac{llrp} defines \acp{spec} which contain descriptions of 'what, how and when' the Reader perform determined operations.
+\acp{spec} are triggered following boundary trigger information defined in it or by immediate triggers from applications, for a more imperative behavior.
+A \ac{spec} is defined with parameters and fields. \acp{spec} are sent inside of messages, which are the unit of communication between client and Reader.
+\ac{llrp} contains forty basic messages which range from commands, responses, events and a \textit{CUSTOM\_MESSAGE} for vender extensions. A list and description of every message can be found in Appendix~\ref{anx:llrpmessages}.
+
+Inside messages, data is sent as fields or parameters.
+Fields are individual data elements with a known format.
+Parameters are named data elements that contain other parameters and/or fields, much like structures in programming languages.
+When constructing \ac{llrp} messages, parameters can be optional, but field must be presented and within their valid range. Some tooling software provides user friendly features like inferring Reader capabilities and default values for unspecified fields.
+
+\subsection{\acf{spec}}
+
+There are two main \acp{spec} defined in \ac{llrp}, \textit{\acp{rospec}} and \textit{Access \acp{spec}}, which for major of the reader operations, encloses most of other \acp{spec}.
+I will briefly go through some of the relevant ones required to understand this dissertation. Detailed information on important fields will be discussed later in this dissertation.
+
+\subsubsection{\acf{rospec}}
+
+\acp{rospec} control the operation of the Reader. It describes the inventory operations the Reader is instructed to perform.
+A Reader only supports one \ac{rospec} at a time.
+
+An example of an \textit{ADD\_ROSPEC} message in \ac{xml} representation can be seen in LISTING~\ref{code:rospec}. \ac{xml} is used in the context of many \ac{llrp} clients to provide human readability of the binary protocol.
+Inside of the \textit{ADD\_ROSPEC} tag we can se an \ac{rospec}.
+An \ac{rospec} contains the mandatory following elements: 
+
+\begin{description}
+    \item[ROSpecID] is an \ac{id} set by the client to uniquely identify the spec in subsequent commands.
+    \item[Priority] must always be set to $0$.
+    \item[CurrentState] describes the current state of the \ac{rospec}. When adding and \ac{rospec} the state must be set to \emph{Disable}.
+    \item[ROBoundarySpec] is a parameter containing a description of the start and stop conditions for the \ac{spec}.
+    \item[\ac{aispec}] contains the settings for the Reader antennas and \ac{gen2} Air protocol options. An \ac{rospec} can have one or more \acp{aispec} which are executed when the \ac{rospec} runs.
+    \item[ROReportSpec] is optional and describes 'when' reports should be forward to the client and 'what' the report contains. If not defined, the Reader will use the current or default settings.
+\end{description}
+ 
+
+\begin{listing}
+    \inputminted[linenos]{xml}{./code/sota/llrp_messages/ROSPEC.xml}
+    \caption{\textit{ADD\_ROSPEC} message in \ac{xml} representation}
+    \label{code:rospec}
+\end{listing}
+
+
+\subsubsection{Access \ac{spec}}
+
+\subsection{Typical \ac{llrp} Exchange}
+
+We have talked about \acp{spec}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./figs/02-state-of-the-art/llrpflow.pdf}
+    \caption{Example of \ac{llrp} Application Flow~\cite{ImpinjLTKProgrammers}} 
+    \label{fig:llrpflow}
+\end{figure}
 
 
 
