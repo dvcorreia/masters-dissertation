@@ -434,47 +434,41 @@ For this, \ac{llrp} defines \acp{spec} which contain descriptions of 'what, how 
 A \ac{spec} is defined with parameters and fields. \acp{spec} are sent inside of messages, which are the unit of communication between client and Reader.
 \ac{llrp} contains forty basic messages which range from commands, responses, events and a \textit{CUSTOM\_MESSAGE} for vender extensions. A list and description of every message can be found in Appendix~\ref{anx:llrpmessages}.
 
+In figure~\ref{fig:ROACCESSREPORTbin} we can observe an example of binary encoding of the \textit{RO\_ACCESS\_REPORT} message.
 Inside messages, data is sent as fields or parameters.
-Fields are individual data elements with a known format.
+Fields are individual data elements with a known basic format.
 Parameters are named data elements that contain other parameters and/or fields, much like structures in programming languages.
+Observe the memory allocated for a list of \textit{TagReportData} parameters inside the \textit{RO\_ACCESS\_REPORT} message in figure~\ref{fig:ROACCESSREPORTbin}. \textit{TagReportData} is then encoding following figure~\ref{fig:TagReportDatabin}, which inside encodes an \textit{EPCData} or \textit{EPC-96} parameter, where the binary encoded \ac{epc} is allocated.
 When constructing \ac{llrp} messages, parameters can be optional, but field must be presented and within their valid range. Some tooling software provides user friendly features like inferring Reader capabilities and default values for unspecified fields.
+A typical \ac{llrp} application flow can be seen in figure~\ref{fig:llrpflow}.
 
-\subsection{\acf{spec}}
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/RO_ACCESS_REPORT_bin.pdf}
+    \caption{\textit{RO\_ACCESS\_REPORT} message binary encoding~\cite{LowLevelReader}. This message is sent by the Reader and contains inventory and access operations results} 
+    \label{fig:ROACCESSREPORTbin}
+\end{figure}
 
-There are two main \acp{spec} defined in \ac{llrp}, \textit{\acp{rospec}} and \textit{Access \acp{spec}}, which for major of the reader operations, encloses most of other \acp{spec}.
-I will briefly go through some of the relevant ones required to understand this dissertation. Detailed information on important fields will be discussed later in this dissertation.
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/TagReportData_bin.pdf}
+    \caption{\textit{TagReportData} parameter binary encoding~\cite{LowLevelReader}. \textit{TagReportData} is generated per tag and contains a mandatory parameter \textit{EPCData} with encoding} 
+    \label{fig:TagReportDatabin}
+\end{figure}
 
-\subsubsection{\acf{rospec}}
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/EPCDataParameter_bin.pdf}
+    \caption{\textit{EPCData} parameter binary encoding~\cite{LowLevelReader}. \textit{EPCData} shall be used for encoding a non-96 bit \ac{epc}, whereas the \textit{EPC-96} Parameter on figure~\ref{fig:EPC96bin} is be used for encoding a 96-bit \ac{epc}} 
+    \label{fig:EPCDatabin}
+\end{figure}
 
-\acp{rospec} control the operation of the Reader. It describes the inventory operations the Reader is instructed to perform.
-A Reader only supports one \ac{rospec} at a time.
-
-An example of an \textit{ADD\_ROSPEC} message in \ac{xml} representation can be seen in LISTING~\ref{code:rospec}. \ac{xml} is used in the context of many \ac{llrp} clients to provide human readability of the binary protocol.
-Inside of the \textit{ADD\_ROSPEC} tag we can se an \ac{rospec}.
-An \ac{rospec} contains the mandatory following elements: 
-
-\begin{description}
-    \item[ROSpecID] is an \ac{id} set by the client to uniquely identify the spec in subsequent commands.
-    \item[Priority] must always be set to $0$.
-    \item[CurrentState] describes the current state of the \ac{rospec}. When adding and \ac{rospec} the state must be set to \emph{Disable}.
-    \item[ROBoundarySpec] is a parameter containing a description of the start and stop conditions for the \ac{spec}.
-    \item[\ac{aispec}] contains the settings for the Reader antennas and \ac{gen2} Air protocol options. An \ac{rospec} can have one or more \acp{aispec} which are executed when the \ac{rospec} runs.
-    \item[ROReportSpec] is optional and describes 'when' reports should be forward to the client and 'what' the report contains. If not defined, the Reader will use the current or default settings.
-\end{description}
- 
-
-\begin{listing}
-    \inputminted[linenos]{xml}{./code/sota/llrp_messages/ROSPEC.xml}
-    \caption{\textit{ADD\_ROSPEC} message in \ac{xml} representation}
-    \label{code:rospec}
-\end{listing}
-
-
-\subsubsection{Access \ac{spec}}
-
-\subsection{Typical \ac{llrp} Exchange}
-
-We have talked about \acp{spec}
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/EPC96ParameterTVEncoding_bin.pdf}
+    \caption{\textit{EPC-96} parameter binary encoding~\cite{LowLevelReader}} 
+    \label{fig:EPC96bin}
+\end{figure}
 
 \begin{figure}[!ht]
     \centering
@@ -483,9 +477,64 @@ We have talked about \acp{spec}
     \label{fig:llrpflow}
 \end{figure}
 
+\subsection{\acf{spec}}
+
+There are two main \acp{spec} defined in \ac{llrp}, \textit{\acp{rospec}} and \textit{Access \acp{spec}}, which for major of the reader operations, encloses most of other \acp{spec}.
+It will briefly be discussed relevant knowledge required to understand the \acp{spec} context. Detailed information on fields will be presented later in opportune moments throughout this dissertation.
+
+\subsubsection{\acf{rospec}}
+
+\acp{rospec} control the operation of the Reader. It describes the inventory operations the Reader is instructed to perform.
+A Reader only supports one \ac{rospec} at a time.
+
+An example of an \textit{ADD\_ROSPEC} message in \ac{xml} representation can be seen in Code~\ref{code:rospec}. \ac{xml} is used in the context of many \ac{llrp} clients to provide human readability of the binary protocol.
+
+\begin{listing}
+    \inputminted[linenos]{xml}{./code/sota/llrp_messages/ROSPEC.xml}
+    \caption{Example of \textit{ADD\_ROSPEC} message in \ac{xml} representation}
+    \label{code:rospec}
+\end{listing}
+
+Inside of the \textit{ADD\_ROSPEC} \ac{xml} tag we can se an \ac{rospec}.
+An \ac{rospec} contains the following elements:
+
+\paragraph{ROSpecID} is an \ac{id} set by the client to uniquely identify the spec in subsequent commands.
+
+\paragraph{Priority} should be set to $0$~\cite{ImpinjLTKProgrammers}. The default is for all the \acp{rospec} to have the same priority. High priority \acp{rospec} can preempt an active lower priority one and start execution as soon as the start condition occurs.
+
+\paragraph{CurrentState} describes the current state of the \ac{rospec}. When adding and \ac{rospec} the state must be set to \emph{Disable}.
+
+\paragraph{ROBoundarySpec} is a parameter containing a description of the start and stop conditions for the \ac{spec}. These conditions can be
+
+\paragraph{\ac{aispec}} contains the settings for the Reader antennas and \ac{gen2} Air protocol options. An \ac{rospec} can have one or more \acp{aispec} which are executed when the \ac{rospec} runs.
+
+\paragraph{ROReportSpec} is optional and describes 'when' reports should be forward to the client and 'what' the report contains. If not defined, the Reader will use the current or default settings.
+
+\subsubsection{Access \ac{spec}}
+
+\emph{Access \acp{spec}} handle the extended tag operations of \ac{gen2}: read, write, lock and kill.
+It was design to extensible, in order to support multiple air protocols and their respective commands.
+
+These will not be directly used in the practical context of this dissertation, so no further description will be done.
+
+\section{\acf{fc}}
+
+\ac{fc} it a specification for middleware between readers and client applications, to receive, filter, translate and deliver data to applications.
+The \ac{fc} role in the EPCGlobal Architecture has multiple responsibilities and is loosely defined to  allow manufactures to extended its features. 
+
+The core activities can be separated in three blocks.
 
 
-\section{Filtering \& Collection}
+This role filters and collects raw tag reads, over time intervals delimited by events defined by the EPCIS Capturing Application (e.g. tripping a motion detector).
+
+
+is to filter the data it receives from readers in the \ac{llrp} client interface, and deliver it has events, following subscription patters, to applications through the \ac{ale} interface.
+
+
+
+
+
+
 
 \section{Application Level Events (ALE)}
 
