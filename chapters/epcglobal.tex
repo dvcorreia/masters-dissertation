@@ -262,7 +262,7 @@ In other words, the \emph{\ac{epc} Tag \ac{uri}} is a text equivalent of the ent
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.7\textwidth]{./figs/02-state-of-the-art/SGTIN_First2encodings.jpg}
-    \caption{Shit 1~\cite{SGTININFO}} 
+    \caption{SGTIN 1~\cite{SGTININFO}} 
     \label{fig:1111}
 \end{figure}
 
@@ -272,7 +272,7 @@ It will be made a in depth analysis of the encoding in section~\ref{sec:binencod
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/SGTIN_binaryconv2.jpg}
-    \caption{Shit 2~\cite{SGTININFO}} 
+    \caption{SGTIN 2~\cite{SGTININFO}} 
     \label{fig:2222}
 \end{figure}
 
@@ -519,29 +519,83 @@ These will not be directly used in the practical context of this dissertation, s
 
 \section{\acf{fc}}
 
-\ac{fc} it a specification for middleware between readers and client applications, to receive, filter, translate and deliver data to applications.
-The \ac{fc} role in the EPCGlobal Architecture has multiple responsibilities and is loosely defined to  allow manufactures to extended its features. 
+\ac{fc} is a specification for middlewares operating between readers and client applications, to receive, filter, translate and deliver data to client applications.
 
-The core activities can be separated in three blocks.
+\ac{gen2} \ac{rfid} readers can generate use amounts of requests, containing reports with \ac{epc} raw data, unsuitable for application business logic.
+Often, client applications are hosted in different networks and even different physical places. With the current paradigm of cloud computing, the interest in these implementation options only seems to be growing even more.
+The amounts of data and requests can bottleneck most networks and are definitely unsuited for internet data exchanges.
+Client applications, without any middleware, also have to process and contextualize use amounts of data, overburdening services with workloads that are not in the scope of themselves.
 
+\subsection{Responsabilities}
 
-This role filters and collects raw tag reads, over time intervals delimited by events defined by the EPCIS Capturing Application (e.g. tripping a motion detector).
+EPCGlobal Architecture defines responsibilities and interfaces for \ac{fc} middlewares. Companies are free to extended these responsibilities and add features in their own implementations.
 
-is to filter the data it receives from readers in the \ac{llrp} client interface, and deliver it has events, following subscription patters, to applications through the \ac{ale} interface.
+A \ac{fc} middlewares should be able to receive raw tag reads from one or multiple \ac{rfid} Readers through the \ac{llrp} interface.
+These raw tags in binary encoding should be decoded and translated in to \ac{uri} representations used in client applications.
 
+The tag reads should be processed to reduce the \ac{epc} data volume: this includes filtering, by ignoring \acp{epc} according to subscription patterns; 
+aggregate \acp{epc} over time intervals, eliminating duplicate reads within that interval;
+summarize and count \acp{epc} in specific object classes;
+and differential analysis, by reporting which \acp{epc} have been added or removed.
 
+\ac{fc} should be able to carry out \ac{gen2} commands required by applications to write, lock, kick and otherwise operate upon tags.
+It also should map readers by \textit{logical reader names} defined in the configurations.
 
+Lastly, \ac{fc} middleware must expose an \ac{ale} interface to provide means for client applications to request \ac{epc} data and readers information, and control and configure the middleware aspects described previously.
 
+\section{\acf{ale}}
 
+The \ac{ale} interface role is to provide independence  between the infrastructure components and the applications that use the data.
+Business application have access to the lower layers of the infrastructure, like readers and middlewares, without configuring hardware or make low level logical indicators to select data.
 
+Succinctly, the interface allows client applications to register and subscribe to their interested \ac{epc} patters and request strategies in an high-level declarative way.
 
-\section{Application Level Events (ALE)}
+\ac{ale} uses a \ac{wsdl}, an \ac{xml} based interface used for describing the functionality offered by web services, to define, configure and request reports from middlwares and smart readers.
+The interface describes the \ac{xml} schema in a \ac{xsd} file, where it expresses a set of rules to which the \ac{xml} must conform in order to be considered valid. 
+The interface also defines \ac{soap} bindings on top of the \ac{wsdl} for the callback interface for reading and writing \acp{api}.
+
+\subsection{Specifications and Reports}
+
+To configure and subscribe to interested \ac{epc} patters, client applications must register logical readers using and \textbf{LRSpec}. An example can be seen in Code~\ref{code:lrspec}.
+
+\begin{listing}
+    \inputminted[linenos]{xml}{./code/sota/LRSpec.xml}
+    \caption{Example of \textit{LRSpec} used to register a single Reader named \textit{Shelve1} with \ac{ip} $169.254.1.1$}
+    \label{code:lrspec}
+\end{listing}
+
+To subscribe to \ac{epc} data and subscription patterns, client register \textbf{ECSpecs}. An example can be seen in Code~\ref{code:ecspec}. The example subscribes to \ac{epc} data from logical reader \textit{Reader\_Shelve1}. The middleware should send back to the client two types of reports every $5$ seconds: one reporting all \ac{epc} tag-\acp{uri} added to the reading zone of the reader and another reporting all \ac{epc} tag-\acp{uri} removed from the reading zone and a count of total removed tags.
+A complex \textbf{ECSpec} with subscription patterns will be presented in next chapters.
+
+\begin{listing}
+    \inputminted[linenos]{xml}{./code/sota/ECSpec.xml}
+    \caption{Example of \textit{ECSpec}}
+    \label{code:ecspec}
+\end{listing}
+
+Subsequently, client have to indicate where the \textbf{ECSpec} reports should be delivered by indicating a \textit{NotificationURI}.
+These reports are named \textbf{ECReports} and an example can be in Code~\ref{code:ecreport}.
+
+\begin{listing}
+    \inputminted[linenos]{xml}{./code/sota/EC_REPORT_deletions.xml}
+    \caption{Example of \textit{ECReport} where a one tag was removed from the reading zone}
+    \label{code:ecreport}
+\end{listing}
 
 \section{Capture Application}
+
+In the EPCGlobal Framework, the Capture Application role is to contextualize \ac{epc} data from ECReports, into \ac{epcis} data, and send it to an \ac{epcis} repository.
+Capture Applications requirements are not further specified by the EPCGlobal Framework.
+
+From what I have encountered, generic capture applications implement dynamic run-time rule engines to specify business logic.
+Many integrate interfaces for other device-generated data such as bar codes, data matrix, human input and data gathered from other software systems.
+Business logic in capture applications can be complex. Retail capture applications can implement anti-thief mechanism, predict out-of-stock situations, infer clients shopping experience and gather data for machine learning services to derive client product interests~\cite{RFIDRetailKey}.
 
 \section{EPCIS}
 
 % ver sec 5.1.1 da EPCISGuidelinePdf
+
+\subsection{EPCIS Data Model}
 
 \subsection{Capture and Query Interfaces}
 
