@@ -6,10 +6,12 @@
                 <groupList>
                     <member>
                         <tag>urn:epc:tag:sgtin-96:3.0037000.030241.1041970</tag>
+                        <tag>urn:epc:tag:sgtin-96:3.0037000.030241.1041971</tag>
+                        <tag>urn:epc:tag:sgtin-96:3.0037000.030241.1041972</tag>
                     </member>
                 </groupList>
                 <groupCount>
-                    <count>1</count>
+                    <count>3</count>
                 </groupCount>
             </group>
         </report>
