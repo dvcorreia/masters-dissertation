@@ -75,7 +75,7 @@ The framework defines information systems, interface standards and data models. 
 The existence of these standards promote not only the global adoption of \ac{epc}, but also the exchange of information between business partners.
 Even doe the network was design primarily for \ac{rfid} \ac{epc} data sharing, the network does not exclusively runs on \ac{rfid} data carriers. The Network can also be fed \ac{epc} data through data carriers like 1D and 2D barcodes. The interoperability with the barcode was one of the most important considerations used during the planning of the network~\cite{RFIDBarcodeInteroperability}.
 
-\subsection{Activities}
+\subsection{Activities} \label{sec:activities}
 
 The architecture defines three core activities, all of which have a group of standards and guidelines within the \emph{EPCglobal Architecture Framework}: \emph{Physical Object Exchange}, \emph{Infrastructure for Data Capture} and \emph{Data Sharing}.
 These activities are helpful in understanding the organization and scope of the framework but should not be interpreted as extremely rigid~\cite{GS1EPCglobalArchitecture}.
@@ -104,6 +104,8 @@ The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standa
 
 
 \subsection{Standards}
+
+% check EPCIS standard document section 2
 
 % This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
 
@@ -559,7 +561,7 @@ The interface also defines \ac{soap} bindings on top of the \ac{wsdl} for the ca
 To configure and subscribe to interested \ac{epc} patters, client applications must register logical readers using and \textbf{LRSpec}. An example can be seen in Code~\ref{code:lrspec}.
 
 \begin{listing}
-    \inputminted[linenos]{xml}{./code/sota/LRSpec.xml}
+    \inputminted[linenos, breaklines]{xml}{./code/sota/LRSpec.xml}
     \caption{Example of \textit{LRSpec} used to register a single Reader named \textit{Shelve1} with \ac{ip} $169.254.1.1$}
     \label{code:lrspec}
 \end{listing}
@@ -568,7 +570,7 @@ To subscribe to \ac{epc} data and subscription patterns, client register \textbf
 A complex \textbf{ECSpec} with subscription patterns will be presented in next chapters.
 
 \begin{listing}
-    \inputminted[linenos]{xml}{./code/sota/ECSpec.xml}
+    \inputminted[linenos, breaklines]{xml}{./code/sota/ECSpec.xml}
     \caption{Example of \textit{ECSpec}}
     \label{code:ecspec}
 \end{listing}
@@ -577,7 +579,7 @@ Subsequently, client have to indicate where the \textbf{ECSpec} reports should b
 These reports are named \textbf{ECReports} and an example can be in Code~\ref{code:ecreport}.
 
 \begin{listing}
-    \inputminted[linenos]{xml}{./code/sota/EC_REPORT_deletions.xml}
+    \inputminted[linenos, breaklines]{xml}{./code/sota/EC_REPORT_deletions.xml}
     \caption{Example of \textit{ECReport} where a one tag was removed from the reading zone}
     \label{code:ecreport}
 \end{listing}
@@ -591,17 +593,35 @@ From what I have encountered, generic capture applications implement dynamic run
 Many integrate interfaces for other device-generated data such as bar codes, data matrix, human input and data gathered from other software systems.
 Business logic in capture applications can be complex. Retail capture applications can implement anti-thief mechanism, predict out-of-stock situations, infer clients shopping experience and gather data for machine learning services to derive client product interests~\cite{RFIDRetailKey}.
 
-\section{EPCIS}
+\section{\acf{epcis}}
 
 % ver sec 5.1.1 da EPCISGuidelinePdf
 
-\subsection{EPCIS Data Model}
+\ac{epcis} is standard used to create and share \ac{epc} related data with trading partners.
+The standard was conceived as part of a broader effort to enhance collaboration between trading partners, to create visibility of physical and digital objects within relevant business contexts~\cite{EPCISGuidelines}.
+
+\subsection{Data Model}
+
+To ensure consistency in information when sharing and storing data across systems, the \ac{epcis} standard defines a data model.
+
+\ac{epcis} models real-world business information as a sequence of individual steps representing business processes.
+Business processes can vary: from product packaging, packing into a shipping container, shipping, receiving, and so forth.
+The completion of one business process is modeled by \ac{epcis} events.
+
+\ac{epcis} events record four dimensions: What, When, Where and Why.
+
+
+
+
+
+
+
+\subsection{\acf{cbv}}
+
+\subsection{Event types}
 
 \subsection{Capture and Query Interfaces}
 
-\subsection{Core Business Vocabulary}
-
-\section{Practical Context}
 
 % Nespresso supply-chain example and vision in the context of the EPCglobal framework, how it would work and advantages
 
