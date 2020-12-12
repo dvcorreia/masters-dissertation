@@ -1,0 +1,24 @@
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1"
+    xmlns:example="http://epcis.example.com/ns">
+    <EPCISBody>
+        <EventList>
+            <ObjectEvent>
+                <eventTime>2015-07-15T10:00:00.000-05:00</eventTime>
+                <eventTimeZoneOffset>-05:00</eventTimeZoneOffset>
+                <epcList>
+                    <epc>urn:epc:id:sgtin:0614141.012345.101</epc>
+                    <epc>urn:epc:id:sgtin:0614141.012345.102</epc>
+                    <epc>urn:epc:id:sgtin:0614141.012345.103</epc>
+                </epcList>
+                <action>OBSERVE</action>
+                <bizStep>urn:epcglobal:cbv:bizstep:transporting</bizStep>
+                <disposition>urn:epcglobal:cbv:disp:in_transit</disposition>
+                <readPoint>
+                    <id>geo:41.6725,-86.255278</id>
+                </readPoint>
+                <example:TemperatureC>15</example:TemperatureC>
+                <example:RelativeHumidity>80</example:RelativeHumidity>
+            </ObjectEvent>
+        </EventList>
+    </EPCISBody>
+</epcis:EPCISDocument>
