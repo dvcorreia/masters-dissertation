@@ -666,6 +666,37 @@ To allow for more flexibility and variations in the structure of the \textbf{Wha
 
 \subsection{Capture and Query Interfaces}
 
+The \ac{epcis} Data model standardizes the data created and shared across systems. 
+To complement the Data model, \ac{epcis} also standardize data interfaces.
+\ac{epcis} defines two interfaces: a capture interface, provides means for \ac{epcis}~Events, conforming to the data models, to be saved, typically, in a persistent repository of \ac{epcis} data; and a query interface from which \ac{epcis} data may be requested by applications and trading partners.
 
+The data shared between clients and these interfaces is expressed in \ac{xml} bindings for the data definition models.
+The capture interface provides binding that can use either a message queue or \ac{http}. In Code~\ref{code:epcisreport} we can see a \ac{xml} \ac{epcis}~Event example sent to a capture application. 
+
+\begin{listing}
+    \inputminted[linenos, breaklines]{xml}{./code/sota/EPCIS_query_response.xml}
+    \caption{Example of \ac{epcis}Report sent to a \ac{epcis} capture interface. \ac{epcis} Reports can be extended with User/Vendor Extensions. In this example we see a \texttt{TemperatureC} and \texttt{RelativeHumidity} vendor extension}
+    \label{code:epcisreport}
+\end{listing}
+
+\ac{epcis} query interface is defined as a web service which can be access by \ac{soap} transport mechanism using the following operations: 
+
+\begin{itemize}
+    \item \texttt{poll}: queries for \ac{epcis} events matching specific criteria.
+    \item \texttt{subscribe}: allows client to register a subscription for events matching specific criteria, which are delivered asynchronously to the client. 
+    \item \texttt{unsubscribe}: removes a registered subscription.
+    \item \texttt{getQueryNames}: returns a list with the supported types of queries supported by the service.
+    \item \texttt{getSubscriptionIDs}: returns a list of active subscriptions.
+    \item \texttt{getStandardVersion}: return the \ac{epcis} version supported by the service.
+    \item \texttt{getVendorVersion}: returns a vendor string identifying any non-standard extensions supported by the service (e.g.\ \texttt{TemperatureC} and \texttt{RelativeHumidity} vendor extension in Code~\ref{code:epcisreport})
+\end{itemize}
+
+A simple \texttt{poll} operation can be seen in Code~\ref{code:epcisquery}.
+
+\begin{listing}
+    \inputminted[linenos, breaklines]{xml}{./code/sota/EPCIS_query.xml}
+    \caption{Example of \ac{epcis} Query requesting all \texttt{ObjectEvents} from the Business Location \texttt{urn:epc:id:sgln:76300544.00000.1}}
+    \label{code:epcisquery}
+\end{listing}
 
 \cleardoublepage

@@ -9,20 +9,20 @@ By the time of the World War II, both fronts were using radar technologies to de
 Still, it remained the problem of identifying allied aircrafts from enemie ones~\footnote{The attack at Pearl Harbor in $1941$ was possible due to a mistaken assignment of incoming Japanese aircraft to an unrelated \ac{us} bomber flight.}.
 The German aircraft force, \emph{Luftwaffe}, observed that as pilots rolled their planes, it would change the radio signal reflected back. With this ingeniously simple maneuver, they were capable of discriminate allied aircrafts, being roughly the first \ac{rfid} passive application.~\cite{dobkinRFRFIDSecond2012}
 
-It was soon later that Watson-Watt, under a British project, developed the first active \ac{rfid} application to be used in \ac{iff} systems. An active \ac{rf} transmitter was attached to British planes, which on receiving radar signals from base stations, broadcasted a signal identifying the aircraft has allied.~\cite{HistoryRFIDTechnology}
+It was soon later that Watson-Watt, under a British project, developed the first active \ac{rfid} application to be used in \ac{iff} systems. An active \ac{rf} transmitter was attached to British planes, which on receiving radar signals from base stations, broadcasted a signal identifying the aircraft as allied.~\cite{HistoryRFIDTechnology}
 
 % This established the core concept of today's systems that make this dissertation possible - the over the air identification of transponders~\footnote{a device that, upon receiving a signal, emits a different signal in response}.
 
 The technology kept advancing through the 1950s and 1960s, mainly in the academic field, but with private companies starting to commercialize anti-theft systems based on 1-bit transponders~\footnote{a simple inductive RC resonant circuit that detects transponders in field by changes in the reader coil voltage~\cite{andreventuradacruzmarnotozuqueteIdentificacaoPorRFID2018}}.
 
-In the 1970s the first \ac{rfid} patents were registered. Kudos to the active tag with rewritable memory and a passive transponder for door lockers. It was during this time that the \ac{us} National Laboratory of Los Alamos was commissioned, by the Energy Department, to develop a tracking system for nuclear materials. The system revolved around transponders in trucks that would transmit information to readers at the gates of secure facilities. The Agricultural Department also requested Los Alamos for an animal tracking system, which was designed in the \ac{uhf} band with passive transponders, marking the beginning of the \ac{uhfrfid} technology. These systems were also transposed by the same engineers to automated toll payment systems in the private industry~\cite{landtHistoryRFID2005, HistoryRFIDTechnology,casierAnalogCircuitDesign2011}.
+In the 1970s the first \ac{rfid} patents were registered, namely, active tag with rewritable memory and a passive transponder for door lockers. It was during this time that the \ac{us} National Laboratory of Los Alamos was commissioned, by the Energy Department, to develop a tracking system for nuclear materials. The system revolved around transponders in trucks that would transmit information to readers at the gates of secure facilities. The Agricultural Department also requested Los Alamos for an animal tracking system, which was designed in the \ac{uhf} band with passive transponders, marking the beginning of the \ac{uhfrfid} technology. These systems were also transposed by the same engineers to automated toll payment systems in the private industry~\cite{landtHistoryRFID2005, HistoryRFIDTechnology,casierAnalogCircuitDesign2011}.
 
-In the 1980s there was a upsurge in investment, with private industries wagering in \ac{rfid}, fueled by the development of the personal computer and promises of the technology.
+In the 1980s, an upsurge in investment, with private industries wagering in \ac{rfid}, fueled by the development of the personal computer and promises of the technology.
 By the 1990s, deployments of \ac{rfid} systems had grown significantly. The necessity of compatibility and interaction between proprietary systems rose, being established the first industry standards. 
 
 The 2000s followed the same maturation process with slow adoption in the late part of the decade. 
-Despite the interest presented by retail giants like Wal-Mart, and investment by the \ac{dod}, compromises created by the \ac{rfid} industry didn't justified the commitment to the technology. The high cost for investment, technical performance difficulties, conflicting standards, security issues and privacy concerns made the investment stale~\cite{RFIDAdoptionStalls}. 
-Companies had to strangle \ac{rnd} resources due to inexistent tools and complex implementations. Resources required to develop marketing and sales tools, which truly utilize the \ac{rfid} infrastructure to increase revenue, had to be allocated to deploying \ac{rfid} systems.
+Despite the interest presented by retail giants like Wal-Mart, and investment by the \ac{dod}, compromises created by the \ac{rfid} industry did not justify the commitment to the technology. The high cost for investment, technical performance difficulties, conflicting standards, security issues and privacy concerns made the investment unappealing~\cite{RFIDAdoptionStalls}. 
+Companies had to strangle \ac{rnd} resources due to inexistent tools and complex implementations. Resources required to develop marketing and sales tools, which truly utilize the \ac{rfid} infrastructure to increase revenue, had to be allocated to deploy \ac{rfid} systems.
 Devise economic strategies for suppliers to transit to \ac{rfid} also seemed to be a problem, since many ordinary companies don't have \ac{rnd} resources at all to begin with~\cite{gaudinSuppliersGainFailed2008}.
 Another big issue was the standardization of coding schemes in \ac{rf} tags. The fight for dominance in the \ac{uhfrfid} market led to multiple coding standards and protocols that made inter-operation among vendor and suppliers infeasible, if not impossible.
 
@@ -35,7 +35,7 @@ In the last decade, despite the advancements in the industry and adoption by big
 %       maybe talk about read range dependance of things (see slides on UHF) - pass the practical considerations section to here as a subsection
 
 \ac{rfid} is an identification technology that uses radio waves or electro-magnetic fields to automatically identify physical objects and collect data about them.
-Generally, \ac{rfid} solutions start with a radio device called tag. The tag is attached to the object that needs to be identified. When such a object is presented in front of an antenna connected to a suitable \ac{rfid} reader, the tag transmits data to the reader via the reader antenna. The reader then forward the information through a communication channel to a software application running on a computer.
+Generally, \ac{rfid} solutions start with a radio device called tag. The tag is attached to the object that needs to be identified. When such a object is presented in front of an antenna connected to a suitable \ac{rfid} reader, the tag transmits data to the reader via the reader antenna. The reader then forwards the information through a communication channel to a software application running on a computer.
 
 \begin{figure}[!ht]
     \centering
@@ -50,7 +50,7 @@ An \ac{rfid} system is a collection of components that implement an \ac{rfid} so
 Different references present different descriptions of \ac{rfid} systems. Many specify where and which components should be implemented.
 The fact is, depending on the use case and requirements, these components can be implemented in different physical places or not implemented at all. With the current paradigm of \ac{iot}, machine learning and cloud computing, the discrimination of these components is even more difficult to establish. It is naive and intricate to predict what \ac{rfid} system architecture will be like in the next few years.
 
-The component description of \ac{rfid} systems can be simplified to three physical blocks: \emph{Transponder} which is attached to the physical object to be identification, and is responsible for storing and transmitting appropriate data about the object; \emph{Reader} which interacts with transponders to read and write data; and \emph{Software system} that encompass all kinds of hardware and software components that are separated from the reader and support back-end infrastructures and business logic of a system.
+The component description of \ac{rfid} systems can be simplified to three physical blocks: \emph{Transponder} which is attached to the physical object to be identified, and is responsible for storing and transmitting appropriate data about the object; \emph{Reader} which interacts with transponders to read and write data; and \emph{Software system} that encompasses all kinds of hardware and software components that are separated from the reader and support back-end infrastructures and business logic of a system.
 
 From these, all components described in the literature can be specified and clearly added to one of the blocks.
 The prevalent components used in \ac{rfid} systems:
@@ -59,9 +59,9 @@ The prevalent components used in \ac{rfid} systems:
     \item[Tag] \ac{rf} device that can store and transmit data in a contactless manner using radio waves.
     \item[Reader] also called \emph{interrogator}, is a device that can read from and write data to compatible \ac{rfid} tags.
     \item[Reader Antenna] is a device that is attached to a reader and is responsible for the \ac{rf} interface with the tag.
-    \item[Controller] is an interface that allows an external entity to communicate with and control a reader's functions and devices connected to it.
+    \item[Controller] is an interface that allows an external entity to communicate with and control the reader's functions and devices connected to it.
     \item[Sensor, actuator and annunciator] are optional components used for external input and output of the system.
-    \item[Host and software system] is an term for all hardware and software components that are separated from the reader device (e.g.\ middleware, back-end infrastructure, point-of-sale terminals, etc.)
+    \item[Host and software system] is a term for all hardware and software components that are separated from the reader device (e.g.\ middleware, back-end infrastructure, point-of-sale terminals, etc.)
     \item[Communication infrastructure] is the wired and wireless network and serial connection infrastructure needed to connect the previously listed components
 \end{description}
 
@@ -80,12 +80,12 @@ A run through the specificities of most of the components will be done in the fo
 Before presenting the intrinsics around \ac{rfid} system components, a basic expertise in \ac{em} concepts is paramount.
 Designing well performant systems requires a good understanding of electromagnetism fundaments and its peculiarities.
 
-In like manner to other wireless technologies, \ac{rfid} uses \acp{emf} or \acp{emw} as interface to transmit information back and forward between reader and transponder.
+Like other wireless technologies, \ac{rfid} uses \acp{emf} or \acp{emw} as interface to transmit information back and forward between reader and transponder.
 Engineers have to grasp how \acp{emf} and \acp{emw} behave within distance to the reader antenna, how materials in tagged objects can interfere with \ac{rf} signals, how unaccounted poor \ac{rf} environments can compromise deployment of \ac{rfid} systems, to say a few.
 
 An \ac{emf} is the phenomenon produced by moving electric charges. It can be described through Maxwell's equations and mathematical abstracted as a combination of an electric field and a magnetic field that interact with each other and their surroundings.
 
-The behavior of the fields changes as the distance from the source increases and are usually defined as two main regions: \emph{near-field} and \emph{far-field}. These regions separate \ac{rfid} technologies in a very concrete way, but should not misled to think that the boundaries are precisely defined. The regions change their behavior in a progressive manner. The rough discrimination between regions in \ac{rfid} exist to separate mutual coupling and radiation based technologies. 
+The behavior of the fields changes as the distance from the source increases and are usually defined as two main regions: \emph{near-field} and \emph{far-field}. These regions separate \ac{rfid} technologies in two very concrete operational groups. In reality, boundaries are not precisely defined, since the regions change their behavior in a progressive manner. The rough discrimination between regions in \ac{rfid} exist to separate mutual coupling and radiation based technologies. 
 
 \subsection{\emph{Near-field}}
 
@@ -133,7 +133,7 @@ A representation of the borders between regions can be seen in figure~\ref{fig:f
 
 For small antennas, shorter than half of the wavelength of the emitting radiation, the \emph{near-field} for \ac{rfid} applications is usually upper limited by $\lambda / 2\pi = 0.159\lambda$~\cite{nikitinOverviewFieldUHF2007a}.
 Small antennas are used in \ac{lf} and \ac{hf} \ac{rfid} technologies.
-For these technologies, which depend on the \emph{near-field} for mutual coupling, the limit of the reactive region is theoretical limit for the read distance.
+For these technologies, which depend on the \emph{near-field} for mutual coupling, the limit of the reactive region is the theoretical limit for the read distance.
 A delimitation of field regions for small antennas can be seen in figure~\ref{fig:fieldregionsshortantenna}.
 
 \begin{figure}[!ht]
@@ -147,7 +147,7 @@ A delimitation of field regions for small antennas can be seen in figure~\ref{fi
 
 An \ac{rfid} tag is a device that can store and transmit data to a compatible reader in a contactless manner using radio waves or electro-magnetic fields.
 
-Tag cost is the main factor in long term return on investment in \ac{rfid} systems. It is the most important consideration when designing systems. After the initial investment in infrastructure, the expenses are mainly the acquirement of new tags.
+Tag cost is the main factor in long term return on investment in \ac{rfid} systems. It is the most important consideration when designing systems. After the initial investment in infrastructure, the expenses are mainly the acquisition of new tags.
 The reduction of cost per tag is the central focus of manufacturers and what allows the technology to be competitive in the world of \ac{scm}.
 
 At its simplest composition~\footnote{an inductive RC resonant tag used in anti-theft systems is considered an \ac{rfid} device, but is far from the requirements of modern \ac{rfid} paradigms}, a tag contains a microchip and an antenna.
@@ -179,10 +179,10 @@ For a deeper analysis of other \ac{rfid} systems refer to \emph{The RFID Handboo
 \subsubsection{Passive}
 
 Passive tags are characterized for not having an on-board power source. 
-Instead they use the power emitted from the reader antenna to energize itself and transmit the stored data to the reader.
+Instead they use the power emitted from the reader antenna to energize themselves and transmit the stored data to the reader.
 As such, tag-to-reader communication is always started by a reader, since it needs to energize the tag.
 
-This makes tags simple and cheap to manufacture, a microchip and an antenna is all there is to it. A few examples of state of the art passive \ac{uhf} tag inlays can be seen in figure~\ref{fig:alienAlienProductFamily2020}.
+A few examples of state of the art passive \ac{uhf} tag inlays can be seen in figure~\ref{fig:alienAlienProductFamily2020}.
 The simple constitution makes these tags robust, capable of withstanding corrosive chemicals such as acid and high temperatures~\footnote{The new Impinj M730 and M750 \ac{uhf} regular tags for item tagging sustains \ang{206}C for 1 minute and can retain data at \ang{125}C for 1 year~\cite[Tab. 18]{ImpinjM730M750}}.
 These are the type of tags that underwent most technology advancements in the last decade in order to meet performance, compatibility and cost expectations that make mass deployment feasible for companies.
 
@@ -256,7 +256,7 @@ The reader antenna coil generates a strong high frequency \ac{em} field. The var
 Considering the wavelength of the frequency range used (< 135 kHz: 2400m, 13.58MHz: 22.1m) is several times greater than the distance between reader antenna and the transponder, we can treat it just like a simple inductive coupling system, just like a transformer.
 
 This voltage is rectified and supplied to the tag circuitry.
-The circuitry is actually design to resonate at the transmission frequency of the reader. The resonance will generate high current in the reader, which produces the required field strength necessary for operation.
+The circuitry is actually designed to resonate at the transmission frequency of the reader. The resonance will generate high current in the reader, which produces the required field strength necessary for operation.
 
 To transmit data from tag to reader, inductive systems use load modulation. The microchip changes de load on its coil in relation with the digital data to transmit. When a transponder, resonant at the transmission frequency of the reader, is placed in the reactive \emph{near-field} region, through mutual coupling, energy is drawn by the transponder, being detected by the reader as a voltage drop in the internal resistance of the reader through supply of current to the reader antenna.
 
@@ -306,22 +306,30 @@ The reflected signal is picked by the reader antenna. decoupled using a \emph{di
 When categorizing systems, the main aspect that defines \ac{rfid} technologies is the operating frequency.
 In the previous sections we noticed a clear relation between operating frequency, through the wavelength, and system specifications like reading distance and data transfer speeds.
 So, it is no accident that this spontaneous categorization happened. \ac{rfid} technologies tend to mature in a very clear path, being encompassed under use case specific standards with fixed operating frequencies carefully assigned by regulatory \ac{rf} authorities in each country. 
-It is indeed a useful classification method to summarize a set of specifications that usually need to established a priori to system design.
+It is indeed a useful classification method to summarize a set of specifications that usually need to be established a priori to system design.
 
 Being so, it is common in \ac{rfid} slang to name systems by the frequency band they operate in.
-There are five preeminent frequency groups: \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and \ac{uwb} which will not further discussed being in early phases of technological development.
+There are five preeminent frequency groups: \ac{lf}, \ac{hf}, \ac{uhf}, Microwave and \ac{uwb} which will not be further discussed being in early phases of technological development.
 Each of the frequency groups presents characteristics inherent to their physical limitations that should be considered when choosing a technology.
 
-\paragraph*{\ac{lf}} usually operate in the $125$KHz to $134$KHz frequency range, using passive tags through inductive coupling. Inherently, it has slow read speed and the reading range is limited to around $0.5m$. Despite the drawbacks, they have good behavior in metals and liquids and are the most mature technology, probably having the largest installed based system.
+\subsubsection{\acf{lf}}
+
+\ac{lf} usually operates in the $125$KHz to $134$KHz frequency range, using passive tags through inductive coupling. Inherently, it has slow read speed and the reading range is limited to around $0.5m$. Despite the drawbacks, they have good behavior in metals and liquids and are the most mature technology, probably having the largest installed based system.
 It is widely used in animal identification (ISO 11784/5~\cite{isoISO117841996, isoISO117851996}, ISO 14223~\cite{isoISO1422332018}), access control, logistics and data collection~\cite{isoISOIEC180002} and automotive industry in car ignition keys, to say a few.
 
-\paragraph*{\ac{hf}} operates mostly around the $13.54$MHz frequency band. In same manner as \ac{lf}, it uses inductive coupling. The higher operating frequency allows faster data read speeds while maintaining semi-decent behavior in metals and liquids.
-Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of applications and is the basis of \ac{nfc} technology~\cite{isoISOIEC144434, isoISOIEC180003}. \ac{nfc} has been receiving a lot of attention. It is a global communication standard with a mature market (being in ruffly any smartphone nowadays). This convened big companies to invest in it, which promoted wide scale manufacturing, resulting in the reduction of tag price (\$0.35 - \$10.00 per tag) and increase in system deployments.
+\subsubsection{\acf{hf}}
 
-\paragraph*{\ac{uhf}} operates in the band of $315$MHz to $433$MHz using active tags~\cite{isoISOIEC180007}, and in $860$MHz to $956$MHz using passive ones~\cite{isoISOIEC180006}. It is known for the promises it brings to \ac{scm} and logistics, being a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications. It uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
+\ac{hf} operates mostly around the $13.54$MHz frequency band. In same manner as \ac{lf}, it uses inductive coupling. The higher operating frequency allows faster data read speeds while maintaining semi-decent behavior in metals and liquids.
+Widely used in smart cards~\cite{isoISOIEC156932, MIFARE} for all kinds of applications and is the basis of \ac{nfc} technology~\cite{isoISOIEC144434, isoISOIEC180003}. \ac{nfc} has been receiving a lot of attention. It is a global communication standard with a mature market (being in roughly any smartphone nowadays). This promoted big companies to invest in it, which began a wide scale manufacturing, resulting in the reduction of tag price (\$0.35 - \$10.00 per tag) and increase in system deployments.
+
+\subsubsection{\acf{uhf}}
+
+\ac{uhf} operates in the band of $315$MHz to $433$MHz using active tags~\cite{isoISOIEC180007}, and in $860$MHz to $956$MHz using passive ones~\cite{isoISOIEC180006}. It is known for the promises it brings to \ac{scm} and logistics, being a cheap and affordable technology to wirelessly identify and track every item. It is mainly used in item tracking but it can be used for all kinds of applications. It uses backscatter coupling to transmit data between reader and tag. These frequencies present some drawbacks: poor behavior on liquid and metals is a big problem with passive tags; the allocation of the \ac{rf} spectrum differs between countries being a huge problem for global deployments. This thematic will be further discussed throughout this dissertation.
 
 \paragraph*{Microwave} typically operates at $2.45$GHz~\footnote{$5.8$GHz ISO standard was withdrawn}~\cite{isoISOIEC180004} which is also called \emph{Industry, Scientific, and Medical (ISM)} band, accepted globally. Uses backscatter coupling with passive, semi-passive and active tags. It performs very poorly in the presence of metals and liquids.  
 For concise information related to each band on \ac{rf} properties in different materials consult table~\ref{tab:rfproperties}
+
+% Contextualizar tabela. FAzer um parágrafo a explicar melhor e introduzir conceitos como lucent, etc ...
 
 \begin{table}[!htb]
     \centering
@@ -344,14 +352,10 @@ For concise information related to each band on \ac{rf} properties in different 
     \label{tab:rfproperties}
 \end{table}
 
-%\begin{landscape} 
-    % resume table
-%\end{landscape}
-
 \section{Reader} \label{sec:reader}
 
 A reader is a device that can read from and write data to compatible \ac{rfid} tags. It is responsible for sending and receiving \ac{rf} signals to and from tags.
-If we strip down all the features modern readers offer, we can isolate three main components: \ac{rf} front-end, processor, communication interface.
+If we strip down all the features modern readers offer, we can isolate three main components: \ac{rf} front-end, processor, communication interface. % not features - architectural blocks (corrigir)
 
 The \ac{rf} front-end interfaces with the reader antenna. 
 It is responsible for transmitting power and clock cycle via the antenna to tags in the reading zone, and demodulate \ac{rf} signals received from tags to be further handled by the processor. 
@@ -360,9 +364,9 @@ Readers must adhere to \ac{rf} modulation requirements and \ac{eirp} regulations
 The processor is responsible for all logic necessary in the reader. It often comes with other complementary components like memory and dedicated \acp{ic} for specific tasks. Readers differ in architecture design between manufacturers, but the processor must at least implement the reader protocol to communicate with compatible tags. This includes decoding and error checking of the analog signals from the \ac{rf} front-end, a controller interface to allow external entities to communicate with it, to transfer stored data, issue commands, accept commands and control the reader functions.
 
 Communication interface is the component that provides communication instruction to a reader which allows external entities to interact with it.
-It usually comes inside microprocessors and microcontrollers \acp{ic}. It usually seen in commercial readers as serial communication interface or ethernet.
+It usually comes inside microprocessors and microcontrollers \acp{ic}. It is usually seen in commercial readers as serial communication interface or ethernet.
 
-Commercial readers come a variety of types which are suited for different applications.
+Commercial readers come in a variety of types which are suited for different applications.
 The most common are stationary readers. Also called, \emph{fixed} readers, they are what the name implies, used for making fixed reading zones. They also can be mounted on forklifts and inside of trucks.
 Other types are handheld readers, for a portable reading device and \ac{rfid} printers which are used to print smart labels.
 
@@ -372,8 +376,9 @@ A reader communicates with tags through its antenna.
 Antennas are responsible for converting guided \acp{cw} in radiating \ac{emw} and vice-versa.
 It will only be covered radiating antenna theory for it is what is necessary to follow this dissertation.
 
-In handheld readers, the antenna is generally integrated in to the device. In stationary readers is most commonly found as a separate device attached to an antenna port of the reader by means of a cable.
-There are different groups of antenna designs: antennas composed of a wire, which encompass the dipole, monopole and loop antennas; constituted of an opening, like the horn and cavity backed slot antennas; and printed circuit antennas like path antennas, commonly used in \ac{uhfrfid}.
+In handheld readers, the antenna is generally integrated into the device. In stationary readers is most commonly found as a separate device attached to an antenna port of the reader by means of a cable.
+There are different groups of antenna designs: antennas composed of a wire, which encompass the dipole, monopole and loop antennas; constituted of an opening, like the horn and cavity backed slot antennas % rever isto
+; and printed circuit antennas like path antennas, commonly used in \ac{uhfrfid}.
 
 Evaluating antennas for \ac{rfid} systems can be done through the parameters specified by the manufacturer, a few rules of thumb and engineering sensibility.
 At \ac{uhf} we can control the direction of waves and other parameters, and thus improve the readability of tags.
@@ -382,15 +387,15 @@ At \ac{uhf} we can control the direction of waves and other parameters, and thus
 
 An important parameter in antenna selection is the radiation pattern. 
 Radiation pattern is the mathematical description or representation of the radiation properties of the antenna as a function of space coordinates.
-It illustrates the regions where the antenna's energy is most effective.
+The radiation pattern illustrates the regions where the antenna's energy is most effective.
 In \ac{rfid} is usually called the footprint of the antenna and determines the read zone.
 Manufacturers usually provide the radiation patterns for \ac{rfid} antennas in the datasheet.
 
-Different antenna designs radiate different patterns. These radiation patterns are classified in three main classes: isotropic, directional and omnidirectional.
-For \ac{uhfrfid}, directional antennas are really useful since it is possible o maximize directivity, that is, how well the radiation emitted is concentrated in a single direction. This increases reading distances and defines boundaries in reading zones. \ac{uhfrfid} directional antennas are commonly patch antennas, also called \emph{microstrip} or \emph{planar antennas}. They consist of rectangular metal foil or a plate mounted on a substrate such as Teflon or FR-4 (i.e.\ woven fiberglass cloth with an epoxy resin binder).
+Different antenna designs radiate with different patterns. These radiation patterns are classified in three main classes: isotropic, directional and omnidirectional.
+For \ac{uhfrfid}, directional antennas are really useful since it is possible to maximize directivity, that is, how well the radiation emitted is concentrated in a single direction. This increases reading distances and defines boundaries in reading zones. \ac{uhfrfid} directional antennas are commonly patch antennas, also called \emph{microstrip} or \emph{planar antennas}. They consist of rectangular metal foil or a plate mounted on a substrate such as Teflon or FR-4 (i.e.\ woven fiberglass cloth with an epoxy resin binder).
 
 Is also important, when designing \ac{rfid} systems, to have notion of the deformations that occur in the radiation patterns.
-\emph{Multi-path} phenomena - the reflection of \ac{emw} in \ac{rf}-opaque objects which causes waves to be scattered and arrive back at the reader in different paths and times - results in \emph{phase} shifts as constructive and destructive interference.
+\emph{Multi-path} phenomena - the reflection of \ac{emw} in \ac{rf}-opaque objects which causes waves to be scattered and arrive back at the reader in different paths and times - results in \emph{phase} shifts leading to constructive and destructive interference.
 This creates protrusions and dead zones that will inevitably exist in most \ac{uhfrfid} and microwave systems deployments. 
 
 %\subsection{Gain}
@@ -422,12 +427,14 @@ Linear antennas are generally used in applications where tag orientation is fixe
 \subsubsection{Circular polarization}
 
 Circular polarized antennas solve, to certain degree, the orientation dependence problem with detriment of reading distance and a wider radiation beam.
-These antennas have two constituting energy fields that are equal in amplitude and magnitude, with a phase difference of $90^\circ$ between them. This results in the electric field vector to be seen as helix like trace, a circular motion propagating through space. 
+These antennas produce two energy fields that are equal in amplitude and magnitude, with a phase difference of $90^\circ$ between them. This results in the electric field vector to be seen as helix like trace, a circular motion propagating through space. 
 
 Because the nature of circular polarized antennas, they are to a certain extent, unaffected by tag orientation.
 A circularly polarized \ac{emw} interacts with the linear antenna of a tag, tilted at any angle within the plane perpendicular to the axis of propagation, but in every case only half the transmitted power can be received.
 Good antenna design in tags can modestly improve energy harvesting performance, e.g.\ incorporate two dipole antennas on the tag directed orthogonally to one another or physically larger bow-tie antenna designs.
 
 These antennas are widely used in passive \ac{uhfrfid}, specially in \ac{rf} environment with high degree of \ac{rf} reflectance, like due to presence of metals.
+
+% todo: close the chapter and link it to the next
 
 \cleardoublepage
