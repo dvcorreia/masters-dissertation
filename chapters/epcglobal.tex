@@ -279,87 +279,72 @@ A deep analysis of the binary \ac{epc} encoding will be presented in section~\re
 
 \subsection{Relationship between EPCs and GS1 keys}
 
-Before preceding to the encoding of \ac{epc} in \ac{gen2} \ac{rfid} tags, lets understand the underlying concepts of \ac{epc} schemes.
+Before going into the encoding of \ac{epc} in \ac{gen2} \ac{rfid} tags, lets understand the underlying concepts of \ac{epc} and its schemes.
 
-Previously, we mentioned that the \ac{epc} was designed to identify every physical object in the world.
-The EPCGlobal Framework utilize this concept to its very extent.
+Previously, I mentioned that the \ac{epc} was designed to identify every physical object in the world.
+The \emph{EPCGlobal Framework} uses this concept to its very extent.
 A physical object in a \ac{scm} can be a broad term that does not provides much information regarding the object itself.
-For that, the architecture defines \ac{epc} schemes and corresponding GS1 keys.
+To contextualize the objects, the architecture defines GS1 keys and corresponding \ac{epc} schemes.
 Each GS1 key denotes a class or grouping of physical objects. These classes encompass trade items, locations, assets, logistic units, transport groupings to say a few.
-These GS1 keys add valuable information to \ac{scm} operations.
-It allows intervening entities in the supply chain and logistics to retrieve context information about the tagged objects.
-A deeper look in to GS1 keys and implementation guidelines is done in section~\ref{sec:identificationkeys}.
+GS1 keys add valuable information to \ac{scm} operations by allowing intervening entities in the supply chain and logistics, to retrieve class context information regarding the tagged objects.
 
-For each GS1 key there is a corresponding \ac{epc} scheme including both an \ac{epc} \ac{uri} and a binary encoding for use in \ac{rfid} tags.
+For each GS1 key there is a corresponding \ac{epc} scheme, including encoding specifications for both \ac{epc} representation: \ac{uri} and a binary encoding, for use in \ac{rfid} tags.
 Each \ac{epc} scheme and corresponding GS1 key can be seen in Appendix~\ref{tab:epcschemes}.
 
 \subsection{SGTIN}
 
-For the scope of this dissertation, the \ac{sgtin} scheme is the most important encoding scheme to look at.
+In the scope of this dissertation, the \ac{sgtin} scheme might the most important encoding scheme to look at.
 The \ac{sgtin} encodes a \ac{gtin} plus a unique product or serial number.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/SGTIN_UPC_Compare.jpg}
-    \caption{Shit 3~\cite{SGTININFO}} 
-    \label{fig:3333}
+    \caption[Relation and interoperability between \ac{sgtin} and barcode's \ac{gtin}]{Relation and interoperability between \ac{sgtin} and barcode's \ac{gtin}~\cite{SGTININFO}} 
+    \label{fig:barcodesgtin}
 \end{figure}
 
 The \ac{gtin} is used by companies to identify trade items~\cite{GS1GTINExecutive, GS1GTINManagement}. 
 GS1 defines trade items as products or services that are priced, ordered or invoiced at any point in the supply chain.
 \ac{gtin} can be used to identify types of products at any packaging level (e.g., consumer unit, inner pack, case, pallet~\footnote{even if a \ac{gtin} can be used to identify pallets, the use of \ac{sscc} is preferable~\cite{GS1KeysImplementation}}).
 
-There are four \ac{gtin} formats: \ac{gtin}-$8$, \ac{gtin}-$12$, \ac{gtin}-$13$ and \ac{gtin}-$14$. In \ac{rfid} applications and general \ac{it} applications, it is used the uniform 14-digit format, \ac{gtin}-$14$. Is is the \ac{gtin} specified for \ac{gen2} \ac{rfid} \ac{sgtin} encoding.
+There are four \ac{gtin} formats: \ac{gtin}-$8$, \ac{gtin}-$12$, \ac{gtin}-$13$ and \ac{gtin}-$14$. In \ac{rfid} applications and \ac{it} applications, it is used the generalized 14-digit \ac{gtin} format. \ac{gen2} \ac{rfid} \ac{sgtin} encoding scheme is specified for \ac{gtin}-$14$.
 Other \ac{gtin} formats are mainly used in barcodes in point-of-sale applications: in the \ac{us} is commonly used a \ac{gtin}-$12$ with UPC barcodes for single products and \ac{gtin}-$14$ with ITF-14 barcodes for product grouping. In contrast, in the rest of the world is commonly used \ac{gtin}-$8$ with \ac{ean}-8 barcodes for single products and \ac{gtin}-$13$ with \ac{ean}-13 for single products packaging configurations~\cite{BarcodeGS1General,GS1BarcodeChart}.
 
-A \ac{gtin} is composed of three field: \emph{Company Prefix}, \emph{Item Reference} and check digit. All this fields are encoded in the different N-digit \ac{gtin} formats. 
+A \ac{gtin} is composed of three field: \emph{Company Prefix}, \emph{Item Reference} and check digit. All these fields are encoded in the same manner in the different N-digit \ac{gtin} formats. A \ac{gtin}-$13$ can be converted in a \ac{gtin}-$14$ by adding a leading zero, and other \acp{gtin} formats follow the same logic.
 
-GS1 Company Prefix is an identifier licensed by GS1 to identify a company globally. 
-Nowadays, the registration of such is essential to companies whistling to enter digital marketplaces (e.g. Amazon~\cite{ListingRequirementsProduct}, Ebay) and big retail stores.
-A Company Prefix does not uniquely identify a manufacturer and a company can register and own more than one~\cite{GS1EPCglobalArchitecture}. In certain circumstances Company Prefix can change.
-When licensing a Company Prefix, there is an assessment and plan of unique product items a company shall produce. 
+GS1 \emph{Company Prefix} is an identifier licensed by GS1 to identify a company globally. 
+Nowadays, the registration of such is essential to companies wishing to sell products in big retail stores and digital marketplaces like Ebay and Amazon~\cite{ListingRequirementsProduct}).
+A \emph{Company Prefix} does not uniquely identify a manufacturer. Companies can register and own more than one \emph{Company Prefix}~\cite{GS1EPCglobalArchitecture}, and in certain circumstances \emph{Company Prefixes} can change.
+When licensing a \emph{Company Prefix}, there is an assessment and plan of unique product items a company shall produce. 
 Depending on that, GS1 attributes a prefix with a length adjusted to company requirements. 
 Companies requiring high quantities of unique item are given a shorter Company Prefix, accommodating more digits for item identification.
-Also worth mentioning, the attribution of Company Prefix is made by one of the GS1 branches. Each branch has a prefix which uses to assign Company Prefixes (e.g.\ GS1 Portugal has $560$, GS1 Schweiz, Suisse and Svizzera have $760$-$769$)~\cite{anonymousGS1CompanyPrefix2014}.
+Also worth mentioning, the attribution of \emph{Company Prefixes} is made by one of the GS1 branches. Each branch has a prefix which uses to assign \emph{Company Prefixes} (e.g.\ GS1 Portugal has $560$, GS1 Schweiz, Suisse and Svizzera have $760$-$769$)~\cite{anonymousGS1CompanyPrefix2014}.
 
-Item References are assign by the managing entity of the product.
-The item references must be concatenated with the Company Prefix to calculate the Check Digit, forming a \ac{gtin}.
-From a \ac{gtin}, an \ac{sgtin} can be commissioned allowing to uniquely identification of a product within its product grouping.
-Important to clarify, when a \ac{gtin} is stored in \ac{rfid} tags, as in \ac{sgtin} coding schemes, the \emph{Check Digit} presented in barcodes does not exist and must be dropped in barcode \ac{gtin} to \ac{epc} \ac{gtin} conversions.
+\emph{Item References} are assign by the managing entity of the product.
+The item reference must be concatenated with the \emph{Company Prefix} to calculate the Check Digit, forming a \ac{gtin}.
+From a \ac{gtin}, an \ac{sgtin} can be commissioned~\footnote{``Commisioning'' is the technical term used when creating new \acp{epc} for objects}, allowing to uniquely identify a product within its product grouping.
+Important to clarify, when a \ac{gtin} is stored in \ac{rfid} tags, as in \ac{sgtin} coding schemes, the Check Digit has no purpose, so it is dropped. The Check Digit exists for error checking in barcodes. When converting barcode \ac{gtin} to \ac{epc} \ac{sgtin} encoding scheme, the Check digit must be dropped.
 
 \subsection{Binary Encoding} \label{sec:binencoding}
 
-Lets now see how \acp{epc} are stored in \ac{gen2} \ac{rfid} tags.
+Lets now understand how \acp{epc} are stored in \ac{gen2} \ac{rfid} tags.
 We will focus on \ac{sgtin} encoding scheme, but the encoding method is analogous to other encoding schemes.
 
 The binary encoding of an \ac{epc} consists of a fixed length header followed by a series of fields inherent to the encoding scheme like showed on \ac{sgtin}-$96$ Coding table~\ref{tab:sgtin96codingtable}.
 For instance, lets take the \emph{Tag \ac{uri}}
 \mintinline{python}{urn:epc:tag:sgtin-96:1.76300544.07470.2}
 has example.
-This \emph{Tag \ac{uri}} has \ac{sgtin}-$96$ encoding scheme, \emph{Filter value} of $``1"$, \emph{Company Prefix} $``76300544"$, \emph{Item Reference} $``7470"$ and serial $``2"$.
-
-Following table~\ref{tab:encodingexample}, we first need to address the \ac{epc} header.
-A snippet of the \ac{epc} header values can be seen in table~\ref{tab:epcheaders}. We observe that an \ac{sgtin} with $96$~bit coding scheme encodes a $8$-bit header with binary value of $``00110000"$.
-
-Next, we need to encode the additional \textit{information} included in the \ac{epc} Memory Bank: the \emph{Filter} and \emph{Partition}. 
-
-The \emph{Filter} encodes the packing level. An \ac{epc} \ac{sgtin} can be used to identify different levels of item packaging sharing the same \ac{gtin}. Differently from barcodes, which only encode the \ac{gtin}, an \ac{epc} with \emph{Filter} field allows a coherent \ac{gtin} across item packagings.
-The filter value, has \textit{control information}, allows \ac{rfid} readers to select or deselect tags in the \emph{\ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol} corresponding to certain filter levels. This make it easier to read the desired tags in an environment where there may be other tags present (e.g.\ logistics companies only wanting to read and track Unit Loads like pallets).
-Referencing table~\ref{tab:sgtinfiltervalues} with a , with a filter value of $``1"$, it encodes a \ac{pos} Trade Item with binary encoding of $``001"$.
-
-The \emph{Partition} value encodes a pair of variable-length numeric fields referent to the \emph{Company Prefix} and \emph{Item Reference} memory partition. Previously we mentioned that \emph{Company Prefixes} can vary in length depending on company requirements for unique \emph{Item References}. 
-In barcodes the \emph{Company Prefix} and \emph{Item Reference} are encoded together in a \ac{gtin} value. 
-In \ac{gen2} tags, although there is fixed size memory shared between \emph{Company Prefix} and \emph{Item Reference}, there is also the \emph{Partition} value which specifies the distribution of that partition.
-In the case of the example \emph{Tag \ac{uri}}, \emph{Company prefix} has $27$ bits / $8$ digits and \emph{Item reference} has $17$ bits / $5$ digits. Referring to table~\ref{tab:partitiontable} with the pair of variable-lengths, the \emph{Partition Value} is $``4"$ encoded has $``100"$.
-
-The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded converting from decimal to binary and add leading zeros to fill all bits in each Logical Segment.
+This \emph{Tag \ac{uri}} presents a \ac{sgtin}-$96$ encoding scheme, \emph{Filter value} of $``1"$, \emph{Company Prefix} $``76300544"$, \emph{Item Reference} $``7470"$ and serial $``2"$.
 
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_codingtable.pdf}
-    \caption{Coding Table of \ac{sgtin}-$96$~\cite{EPCTagData}} 
+    \caption[Coding Table of \ac{sgtin}-$96$]{Coding Table of \ac{sgtin}-$96$~\cite{EPCTagData}} 
     \label{tab:sgtin96codingtable}
 \end{table}
+
+Following table~\ref{tab:encodingexample}, showing the \emph{Tag \ac{uri}} encoding, we first need to address the \ac{epc} header value.
+A snippet of the \ac{epc} header values can be seen in table~\ref{tab:epcheaders}. We observe that an \ac{sgtin} with $96$-bit coding scheme encodes a $8$-bit header with binary value of $``00110000"$.
 
 \begin{table}[]
     \begin{adjustwidth}{-0.00\textwidth}{0em}
@@ -374,7 +359,7 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
         Serial                                                    & 2                    & \begin{tabular}[c]{@{}l@{}}0000000000000000\\ 0000000000000000000010\end{tabular} & 38                                                                & \begin{tabular}[c]{@{}l@{}}Serial is of fixed length.\\ Can be extended with \\ bigger EPC Memory Bank\end{tabular} \\ \bottomrule
         \end{tabular}
     \end{adjustwidth}
-    \caption{\ac{sgtin}-$96$ binary encoding example of \mintinline{python}{urn:epc:tag:sgtin-96:1.76300544.07470.2} \emph{Tag \ac{uri}} retrieved from the Platform developed in this dissertation} 
+    \caption[\ac{sgtin}-$96$ binary encoding example of \mintinline{python}{urn:epc:tag:sgtin-96:1.76300544.07470.2} \emph{Tag \ac{uri}}]{\ac{sgtin}-$96$ binary encoding example of \mintinline{python}{urn:epc:tag:sgtin-96:1.76300544.07470.2} \emph{Tag \ac{uri}} retrieved from the Platform developed in this dissertation} 
     \label{tab:encodingexample}
 
 \end{table}
@@ -382,9 +367,20 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_epcheaders.pdf}
-    \caption{\ac{epc} headers snippet adapted from \ac{tds}~\cite{EPCTagData}} 
+    \caption[\ac{epc} headers snippet]{\ac{epc} headers snippet adapted from \ac{tds}~\cite{EPCTagData}} 
     \label{tab:epcheaders}
 \end{table}
+
+Next, we need to encode the additional \textit{information} included in the \ac{epc} Memory Bank: \emph{Filter} and \emph{Partition}. 
+
+The \emph{Filter} encodes the packing level. An \ac{epc} \ac{sgtin} can be used to identify different levels of item packaging sharing the same \ac{gtin}. Differently from barcodes, which only encode the \ac{gtin}, an \ac{epc} with \emph{Filter} field allows a coherent \ac{gtin} across all item packages.
+The \emph{Filter} value allows \ac{rfid} readers to select or deselect tags in the \emph{\ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol} corresponding to certain filter levels. This makes it easier to read desired tags in an environment where there may be other tags present (e.g.\ logistics companies only wanting to read and track Unit Loads like pallets).
+Referencing table~\ref{tab:sgtinfiltervalues}, with a filter value of $``1"$, it encodes a \ac{pos} Trade Item with binary encoding of $``001"$.
+
+The \emph{Partition} value encodes a pair of variable-length numeric fields referent to the \emph{Company Prefix} and \emph{Item Reference} memory partition. Previously we mentioned that \emph{Company Prefixes} can vary in length depending on company requirements for unique \emph{Item References}. 
+In barcodes the \emph{Company Prefix} and \emph{Item Reference} are encoded together in a \ac{gtin} value. 
+In \ac{gen2} tags, although there is fixed size memory shared between \emph{Company Prefix} and \emph{Item Reference}, there is also the \emph{Partition} value, which specifies the distribution of that partition between booth fields.
+In the case of the \emph{Tag \ac{uri}} example, \emph{Company prefix} has $27$ bits ($8$ digits) and \emph{Item reference} has $17$ bits ($5$ digits). Referring to table~\ref{tab:partitiontable} with the pair of variable-lengths, the \emph{Partition Value} is $``4"$ encoded has $``100"$.
 
 \begin{table}[]
     \centering
@@ -400,20 +396,22 @@ The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded c
     \label{tab:partitiontable}
 \end{table}
 
+The \emph{Company Prefix}, \emph{Item Reference} and \emph{serial} are encoded converting from decimal to binary and add leading zeros to fill all bits in each Logical Segment.
+
 \section{Low Level Reader Protocol (LLRP)}
 
-The \acf{llrp} is specification for the network interface between \ac{rfid} Readers and Client applications~\cite{ImpinjLTKProgrammers}.
+The \acf{llrp} is specification for the network interface between \ac{rfid} Readers and Client applications~\cite{ImpinjLTKProgrammers}. \ac{llrp} is not exclusive to the \ac{gen2} Air Protocol. It was designed to support multiple \ac{rfid} air protocols, including future versions of \ac{gen2} Air Protocol.
 
-\subsection{Design Principles}
+\subsection{Design Requirements}
 
-In some \ac{rfid} systems, there is a requirement for explicitly tune \ac{rfid} air protocols and the ability to control Readers that implement \ac{rfid} air protocol communications~\cite{LowLevelReader}.
+In some \ac{rfid} systems, there is a requirement for explicitly tune \ac{rfid} air protocols and the ability to control Readers that implement \ac{rfid} air protocol communications~\cite{LowLevelReader}. \ac{llrp} provides tuning features and commands for that purpose.
 
-Devices intended to operate \ac{rfid} Readers can vary from software applications, to middleware on local hardware, \acp{plc} and even on the cloud.
+Devices intended to operate and communicate with \ac{rfid} Readers can vary from software applications, to middleware on local hardware, \acp{plc} and even cloud services. \ac{llrp} is ``simple'' enough to be implemented in all kinds of computer architectures.
 
-\ac{llrp} was design without requiring real-time interaction between the application software and Reader but with time-critical tasks at heart. 
+\ac{llrp} was design without requiring real-time interaction between the application software and Reader, and but with time-critical tasks at heart. 
 The Reader application software passes operational rules to the Reader in non-real time.
 The Reader then triggers and runs those operation rules to achieve time-critical requirements. 
-The triggers can come from the application directly, from timers, \ac{gpi} hardware, or any other trigger defined by the Reader. 
+The triggers can come from the applications directly, from timers, \ac{gpi} hardware, or any other trigger defined by the Reader. 
 This declarative operation method allows Readers to achieve peak performance without constraints caused by network or host latency.
 
 \subsection{Connection Details}
@@ -421,74 +419,96 @@ This declarative operation method allows Readers to achieve peak performance wit
 \ac{llrp} is a binary protocol which runs over the \acs{tcp}/\acs{ip} internet transport protocols.
 It is an asymmetric protocol where the \ac{llrp} client send commands to the Reader.
 
-The protocol supports both reader and client initiated connections. By default, \ac{llrp} clients connect to \ac{tcp} port $5084$. In reader initiated connections, the Reader will actively try to establish a connection with the host application.
-\ac{llrp} does not specify the behavior delivering data when the connection if broken. The reader used in this dissertation and others I've seen will continue to collect tag data and optionally deliver upon resumption of the connection.
+The protocol supports both reader and client initiated connections. By default, \ac{llrp} clients connect to \acs{tcp} port $5084$. In reader initiated connections, the Reader will actively try to establish a connection with the host application.
+\ac{llrp} does not specify the behavior delivering data when a connection if broken. The reader used in this dissertation and others I've seen will continue to collect tag data and optionally deliver upon resumption of the connection.
 
-Reader only allows one \ac{llrp} connection at any time. The \ac{tcp} connection between reader and client stays open till the client closes it or connection drops.
+Readers only allow one \ac{llrp} connection at any time. The \ac{tcp} connection between reader and client stays open until the client closes it or connection drops.
 
 \subsection{Operation}
 
-The primary function of the \ac{llrp} interface is to allow a client to finely tune the \ac{gen2} Tag Air Standard parameters and command the reader to inventory tags and otherwise access tags for read, write, lock, and kill.
+The primary function of the \ac{llrp} interface is to allow a client to finely tune the \ac{gen2} Tag Air Standard parameters, and command the reader to perform an inventory and otherwise access tags for read, write, lock, and kill.
 
-For this, \ac{llrp} defines \acp{spec} which contain descriptions of 'what, how and when' the Reader perform determined operations.
-\acp{spec} are triggered following boundary trigger information defined in it or by immediate triggers from applications, for a more imperative behavior.
-A \ac{spec} is defined with parameters and fields. \acp{spec} are sent inside of messages, which are the unit of communication between client and Reader.
+To meet these requirements, \ac{llrp} defines \acp{spec}, containing descriptions of ``what, how and when'' the Reader should perform certain operations.
+\acp{spec} are run when triggered. The trigger range from boundary trigger information defined in the \ac{spec} itself, \acp{gpio}, or by immediate triggers from applications for a more imperative behavior.
+\acp{spec} are sent inside of messages, which are the unit of communication between client and Reader.
 \ac{llrp} contains forty basic messages which range from commands, responses, events and a \textit{CUSTOM\_MESSAGE} for vender extensions. A list and description of every message can be found in Appendix~\ref{anx:llrpmessages}.
 
-In figure~\ref{fig:ROACCESSREPORTbin} we can observe an example of binary encoding of the \textit{RO\_ACCESS\_REPORT} message.
-Inside messages, data is sent as fields or parameters.
-Fields are individual data elements with a known basic format.
-Parameters are named data elements that contain other parameters and/or fields, much like structures in programming languages.
-Observe the memory allocated for a list of \textit{TagReportData} parameters inside the \textit{RO\_ACCESS\_REPORT} message in figure~\ref{fig:ROACCESSREPORTbin}. \textit{TagReportData} is then encoding following figure~\ref{fig:TagReportDatabin}, which inside encodes an \textit{EPCData} or \textit{EPC-96} parameter, where the binary encoded \ac{epc} is allocated.
+In figure~\ref{fig:ROACCESSREPORTbin} we observe an example of binary encoding of the \textit{RO\_ACCESS\_REPORT} message.
+Inside the message there is a \ac{spec}, and inside a \ac{spec}, data is sent as \emph{parameters} and \emph{fields}.
+\emph{Fields} are individual data elements with a known basic format.
+\emph{Parameters} are named data elements that contain other parameters and/or fields, much like structures in programming languages.
+Inside the \textit{RO\_ACCESS\_REPORT} message, in figure~\ref{fig:ROACCESSREPORTbin}, it can be observed the memory allocated for a list of a parameter called \textit{TagReportData}. \textit{TagReportData} is then encoded following figure~\ref{fig:TagReportDatabin}, which inside encodes an \textit{EPCData} or \textit{EPC-96} parameter, where the binary encoded \ac{epc} is allocated.
 When constructing \ac{llrp} messages, parameters can be optional, but field must be presented and within their valid range. Some tooling software provides user friendly features like inferring Reader capabilities and default values for unspecified fields.
-A typical \ac{llrp} application flow can be seen in figure~\ref{fig:llrpflow}.
 
 \begin{figure}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/RO_ACCESS_REPORT_bin.pdf}
-    \caption{\textit{RO\_ACCESS\_REPORT} message binary encoding~\cite{LowLevelReader}. This message is sent by the Reader and contains inventory and access operations results} 
+    \caption[\textit{RO\_ACCESS\_REPORT} message binary encoding]{\textit{RO\_ACCESS\_REPORT} message binary encoding~\cite{LowLevelReader}. This message is sent by the Reader and contains inventory and access operations results} 
     \label{fig:ROACCESSREPORTbin}
 \end{figure}
 
 \begin{figure}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/TagReportData_bin.pdf}
-    \caption{\textit{TagReportData} parameter binary encoding~\cite{LowLevelReader}. \textit{TagReportData} is generated per tag and contains a mandatory parameter \textit{EPCData} with encoding} 
+    \caption[\textit{TagReportData} parameter binary encoding]{\textit{TagReportData} parameter binary encoding~\cite{LowLevelReader}. \textit{TagReportData} is generated per tag and contains a mandatory parameter \textit{EPCData} with encoding} 
     \label{fig:TagReportDatabin}
 \end{figure}
 
 \begin{figure}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/EPCDataParameter_bin.pdf}
-    \caption{\textit{EPCData} parameter binary encoding~\cite{LowLevelReader}. \textit{EPCData} shall be used for encoding a non-96 bit \ac{epc}, whereas the \textit{EPC-96} Parameter on figure~\ref{fig:EPC96bin} is be used for encoding a 96-bit \ac{epc}} 
+    \caption[\textit{EPCData} parameter binary encoding]{\textit{EPCData} parameter binary encoding~\cite{LowLevelReader}. \textit{EPCData} shall be used for encoding a non-96 bit \ac{epc}, whereas the \textit{EPC-96} Parameter on figure~\ref{fig:EPC96bin} is be used for encoding a 96-bit \ac{epc}} 
     \label{fig:EPCDatabin}
 \end{figure}
 
 \begin{figure}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/EPC96ParameterTVEncoding_bin.pdf}
-    \caption{\textit{EPC-96} parameter binary encoding~\cite{LowLevelReader}} 
+    \caption[\textit{EPC-96} parameter binary encoding]{\textit{EPC-96} parameter binary encoding~\cite{LowLevelReader}}
     \label{fig:EPC96bin}
-\end{figure}
-
-\begin{figure}[]
-    \centering
-    \includegraphics[width=0.7\textwidth]{./figs/02-state-of-the-art/llrpflow.pdf}
-    \caption{Example of \ac{llrp} Application Flow~\cite{ImpinjLTKProgrammers}} 
-    \label{fig:llrpflow}
 \end{figure}
 
 \subsection{\acf{spec}}
 
-There are two main \acp{spec} defined in \ac{llrp}, \textit{\acp{rospec}} and \textit{Access \acp{spec}}, which for major of the reader operations, encloses most of other \acp{spec}.
-It will briefly be discussed relevant knowledge required to understand the \acp{spec} context. Detailed information on fields will be presented later in opportune moments throughout this dissertation.
+There are two main \acp{spec} defined in the \ac{llrp} Standard:  \textit{\acp{rospec}} and \textit{Access \acp{spec}}. Most of other \acp{spec} and parameters are enclosed under one of the two.
+I will briefly discuss relevant knowledge required to understand the \acp{spec} context. Detailed information on necessary fields will be presented later in opportune moments throughout this dissertation.
 
 \subsubsection{\acf{rospec}}
 
-\acp{rospec} control the operation of the Reader. It describes the inventory operations the Reader is instructed to perform.
+\acp{rospec} control the operation of the Reader. They describe the inventory operations the Reader has to perform.
 A Reader only supports one \ac{rospec} at a time.
+An example of a \ac{rospec} is presented inside the \textit{ADD\_ROSPEC} message seen in Code~\ref{code:rospec}. \ac{xml} is used in the context of many \ac{llrp} clients to provide human readability of the binary protocol, and also used in this dissertation for the same reason.
+In the \textit{ADD\_ROSPEC} \ac{xml} message we observe one \ac{rospec} and constituting parameters and fields.
+\acp{rospec} contain the following elements:
 
-An example of an \textit{ADD\_ROSPEC} message in \ac{xml} representation can be seen in Code~\ref{code:rospec}. \ac{xml} is used in the context of many \ac{llrp} clients to provide human readability of the binary protocol.
+\begin{description}
+
+\item[\texttt{ROSpecID}] is an \ac{id} set by the client to uniquely identify the \ac{spec} in subsequent commands.
+
+\item[\texttt{Priority}] should be set to $``0"$~\cite{ImpinjLTKProgrammers}. By default, all \acp{rospec} should have the same priority. High priority \acp{rospec} can preempt an active lower priority one and start execution as soon as the start condition occurs.
+
+\item[\texttt{CurrentState}] describes the current state of the \ac{rospec} - \emph{disabled}, \emph{inactive}, \emph{active}. When adding and \ac{rospec} the state must be set to \emph{disable}.
+
+\item[\texttt{ROBoundarySpec}] is a parameter containing a description of the start and stop conditions for the \ac{spec}. 
+These conditions can be, for the start trigger:
+\begin{itemize}
+    \item \texttt{None/Null} - \ac{rospec} will not start unless indicated by the client application through an \textit{START\_ROSPEC} message;
+    \item \texttt{Immediate} - the \ac{rospec} will start immediately after enabled, and will continuously restart itself until disabled;
+    \item \texttt{Periodic} - when enabled, the \ac{rospec} will be triggered periodically;
+    \item \texttt{\ac{gpi}} - the enabled \ac{rospec} will start when the \ac{gpi} event enters a certain state.
+\end{itemize}
+
+For the stop triggers:
+\begin{itemize}
+    \item \texttt{None/Null} - the \ac{rospec} only stops when stopped by the client through the \textit{STOP\_ROSPEC};
+    \item \texttt{Duration} - \ac{rospec} stops when it has been active for a specified duration;
+    \item \texttt{\ac{gpi}} - \ac{rospec} will stop when the \ac{gpi} event enters a certain state.
+\end{itemize}
+
+\item[\texttt{\ac{aispec}}] contains the settings for the Reader's antennas and \ac{gen2} Air protocol options. An \ac{rospec} can have one or more \acp{aispec} which are executed when the \ac{rospec} runs.
+
+\item[\texttt{ROReportSpec}] is optional and describes ``when'' reports should be forward to the client and ``what'' the report contains. If not defined, the Reader will use the current or default settings.
+\end{description}
 
 \begin{listing}
     \inputminted[linenos]{xml}{./code/sota/llrp_messages/ROSPEC.xml}
@@ -496,53 +516,50 @@ An example of an \textit{ADD\_ROSPEC} message in \ac{xml} representation can be 
     \label{code:rospec}
 \end{listing}
 
-Inside of the \textit{ADD\_ROSPEC} \ac{xml} tag we can se an \ac{rospec}.
-An \ac{rospec} contains the following elements:
+\subsection{Application Flow}
 
-\paragraph{ROSpecID} is an \ac{id} set by the client to uniquely identify the spec in subsequent commands.
+A typical \ac{llrp} application flow can be seen in figure~\ref{fig:llrpflow}. Upon establishing a \ac{tcp} connection, a Client add and enables an \ac{rospec}, containing information about the inventory procedures. The Client can also register a \ac{aispec} for \ac{gen2} commands, like writing \acp{epc}.
+The Reader, upon trigger, executes the \acp{spec}, performing \ac{epc} inventory and tag operations, which are reported back to the Client.
 
-\paragraph{Priority} should be set to $0$~\cite{ImpinjLTKProgrammers}. The default is for all the \acp{rospec} to have the same priority. High priority \acp{rospec} can preempt an active lower priority one and start execution as soon as the start condition occurs.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./figs/02-state-of-the-art/llrpflow.pdf}
+    \caption[Example of \ac{llrp} Application Flow]{Example of \ac{llrp} Application Flow~\cite{ImpinjLTKProgrammers}} 
+    \label{fig:llrpflow}
+\end{figure}
 
-\paragraph{CurrentState} describes the current state of the \ac{rospec}. When adding and \ac{rospec} the state must be set to \emph{Disable}.
 
-\paragraph{ROBoundarySpec} is a parameter containing a description of the start and stop conditions for the \ac{spec}. These conditions can be
+\subsubsection{Access \acl{spec}}
 
-\paragraph{\ac{aispec}} contains the settings for the Reader antennas and \ac{gen2} Air protocol options. An \ac{rospec} can have one or more \acp{aispec} which are executed when the \ac{rospec} runs.
-
-\paragraph{ROReportSpec} is optional and describes 'when' reports should be forward to the client and 'what' the report contains. If not defined, the Reader will use the current or default settings.
-
-\subsubsection{Access \ac{spec}}
-
-\emph{Access \acp{spec}} handle the extended tag operations of \ac{gen2}: read, write, lock and kill.
-It was design to extensible, in order to support multiple air protocols and their respective commands.
-
-These will not be directly used in the practical context of this dissertation, so no further description will be done.
+An \emph{Access \ac{spec}} handles the extended tag operations of \ac{gen2}: read, write, lock and kill.
+It was design to be extensible, in order to support multiple air protocols and their respective commands.
+These will not be directly used in the practical context of this dissertation, so no further description will be added.
 
 \section{\acf{fc}}
 
 \ac{fc} is a specification for middlewares operating between readers and client applications, to receive, filter, translate and deliver data to client applications.
 
-\ac{gen2} \ac{rfid} readers can generate use amounts of requests, containing reports with \ac{epc} raw data, unsuitable for application business logic.
-Often, client applications are hosted in different networks and even different physical places. With the current paradigm of cloud computing, the interest in these implementation options only seems to be growing even more.
-The amounts of data and requests can bottleneck most networks and are definitely unsuited for internet data exchanges.
-Client applications, without any middleware, also have to process and contextualize use amounts of data, overburdening services with workloads that are not in the scope of themselves.
+\ac{gen2} \ac{rfid} readers can generate large amounts of network traffic. The amount of requests generated, containing reports with \ac{epc} raw data, can bottleneck most networks, being unsuited for internet data exchanges. 
+Often, client applications are hosted in different networks and even different physical places. With the current paradigm of cloud computing, the interest in processing data on data centers only seems to be growing.
+Furthermost, raw \ac{epc} data is not ``high-level'' compared to the paradigm of most business logic in client applications.
+Client applications, without any middleware, have to process and contextualize huge amounts of data, overburdening services with workloads that are not in their scope of work.
 
-\subsection{Responsabilities}
+\subsection{Responsibilities}
 
-EPCGlobal Architecture defines responsibilities and interfaces for \ac{fc} middlewares. Companies are free to extended these responsibilities and add features in their own implementations.
+In the standard specification, EPCGlobal defines responsibilities and interfaces for \ac{fc} middlewares. Companies are free to extended these responsibilities and add features in their own implementations.
 
-A \ac{fc} middlewares should be able to receive raw tag reads from one or multiple \ac{rfid} Readers through the \ac{llrp} interface.
-These raw tags in binary encoding should be decoded and translated in to \ac{uri} representations used in client applications.
+A \ac{fc} middlewares must be able to receive raw tag reads from one or multiple \ac{rfid} readers through an \ac{llrp} client interface.
+These raw tags, in binary encoding, must be decoded and translated in to \ac{uri} representations, used in client applications.
 
-The tag reads should be processed to reduce the \ac{epc} data volume: this includes filtering, by ignoring \acp{epc} according to subscription patterns; 
+Tag reads must all be processed to reduce the \ac{epc} data volume: this includes filtering, by ignoring \acp{epc} according to subscription patterns; 
 aggregate \acp{epc} over time intervals, eliminating duplicate reads within that interval;
 summarize and count \acp{epc} in specific object classes;
 and differential analysis, by reporting which \acp{epc} have been added or removed.
 
-\ac{fc} should be able to carry out \ac{gen2} commands required by applications to write, lock, kick and otherwise operate upon tags.
-It also should map readers by \textit{logical reader names} defined in the configurations.
+\ac{fc} must be able to invoke \ac{gen2} commands on the reader, required by applications to write, lock, kill, and otherwise operate upon tags.
+\ac{fc} should also map readers by \textit{logical reader names} defined in the configurations commands and/or file.
 
-Lastly, \ac{fc} middleware must expose an \ac{ale} interface to provide means for client applications to request \ac{epc} data and readers information, and control and configure the middleware aspects described previously.
+Lastly, \ac{fc} middleware must expose an \ac{ale} interface to provide means for client applications to request \ac{epc} data, reader information, control information and configure all \ac{fc} aspects described previously.
 
 \section{\acf{ale}}
 
