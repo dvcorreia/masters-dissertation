@@ -1,5 +1,4 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1"
-    xmlns:example="http://epcis.example.com/ns">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1">
     <EPCISBody>
         <EventList>
             <ObjectEvent>
