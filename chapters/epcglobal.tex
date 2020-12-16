@@ -103,13 +103,29 @@ The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standa
 % image: \emph{EPCglobal Architecture Framework} activities~\cite{Architecture6framework20140414Pdf}
 
 
-\subsection{Standards}
+\subsection{Technical Brief}
 
 % check EPCIS standard document section 2
 
 % This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
 
+The \emph{EPCGlobal Architecture Framework} can become very extensive, separated in multiple documents and show inconsistencies between documents, making the introduction to the framework fairly hard.
+Throughout this section I will introduce the baseline implementation of the \emph{EPCGlobal Framework}, introducing each intervening member and their role within the architecture framework. This should provide a foundation to contextualize the next sections where they will be thoroughly explained.
+
+The \emph{Architecture Framework} provides detailed specifications for three technologies developed by the EPCGlobal team: the \acf{epc}, components of the EPCGlobal Network™
+
+The simplest implementation of the \emph{EPCGlobal Architecture Framework} can be structured like shown in figura~\ref{fig:archstructure}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/architecturer_structure.pdf}
+    \caption{EPCglobal Architecture Framework and EPC Structures Used at Each Level~\cite{EPCTagData}} 
+    \label{fig:archstructure}
+\end{figure}
+
 Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{EPCTagData} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
+
+
 
 \begin{table}[]
     \begin{adjustwidth}{-0.09\textwidth}{0em}
@@ -141,13 +157,6 @@ Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{EPCTagD
     \caption{Standards within the EPCglobal Architecture Framework} 
     \label{tab:standards}
 \end{table}
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/architecturer_structure.pdf}
-    \caption{EPCglobal Architecture Framework and EPC Structures Used at Each Level~\cite{EPCTagData}} 
-    \label{fig:archstructure}
-\end{figure}
 
 \section{Generation 2 \ac{uhf} Tag}
 
@@ -262,8 +271,8 @@ Examples of booth \ac{uri} representations can be seen in figure~\ref{fig:epcuri
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/SGTIN_First2encodings.pdf}
-    \caption[\emph{Pure Identity} and \emph{Tag \acp{uri}} \ac{epc} representation]{\emph{Pure Identity} and \emph{Tag \acp{uri}} \ac{epc} representation~\cite{SGTININFO}} 
+    \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/SGTIN_First2encodings.pdf}
+    \caption[\emph{Pure Identity} and \emph{Tag \acp{uri}} \ac{epc} representation]{\emph{Pure Identity} and \emph{Tag \acp{uri}} \ac{epc} representation adapted from~\cite{SGTININFO}} 
     \label{fig:epcurirepresentation}
 \end{figure}
 
@@ -273,7 +282,7 @@ A deep analysis of the binary \ac{epc} encoding will be presented in section~\re
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/SGTIN_binaryconv2.pdf}
-    \caption[\ac{epc} in binary encoding representation]{\ac{epc} in binary encoding representation~\cite{SGTININFO}} 
+    \caption[\ac{epc} in binary encoding representation]{\ac{epc} in binary encoding representation adapted from~\cite{SGTININFO}} 
     \label{fig:epcbinencoding}
 \end{figure}
 
@@ -289,7 +298,7 @@ Each GS1 key denotes a class or grouping of physical objects. These classes enco
 GS1 keys add valuable information to \ac{scm} operations by allowing intervening entities in the supply chain and logistics, to retrieve class context information regarding the tagged objects.
 
 For each GS1 key there is a corresponding \ac{epc} scheme, including encoding specifications for both \ac{epc} representation: \ac{uri} and a binary encoding, for use in \ac{rfid} tags.
-Each \ac{epc} scheme and corresponding GS1 key can be seen in Appendix~\ref{tab:epcschemes}.
+Each \ac{epc} scheme and corresponding GS1 key can be seen in Appendix~\ref{anx:epccodingschemes}.
 
 \subsection{SGTIN}
 
@@ -298,8 +307,8 @@ The \ac{sgtin} encodes a \ac{gtin} plus a unique product or serial number.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/SGTIN_UPC_Compare.pdf}
-    \caption[Relation and interoperability between \ac{sgtin} and barcode's \ac{gtin}]{Relation and interoperability between \ac{sgtin} and barcode's \ac{gtin}~\cite{SGTININFO}} 
+    \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/SGTIN_UPC_Compare.pdf}
+    \caption[Relation and interoperability between \ac{sgtin} and barcode's \ac{gtin}]{Relation and interoperability between \ac{sgtin} and barcode's \ac{gtin}} 
     \label{fig:barcodesgtin}
 \end{figure}
 
@@ -347,7 +356,7 @@ Following table~\ref{tab:encodingexample}, showing the \emph{Tag \ac{uri}} encod
 A snippet of the \ac{epc} header values can be seen in table~\ref{tab:epcheaders}. We observe that an \ac{sgtin} with $96$-bit coding scheme encodes a $8$-bit header with binary value of $``00110000"$.
 
 \begin{table}[]
-    \begin{adjustwidth}{-0.00\textwidth}{0em}
+    \begin{adjustwidth}{-0.09\textwidth}{0em}
     \begin{tabular}{@{}lllrl@{}}
         \toprule
         \textbf{Field}                                            & \textbf{Value (dec)} & \textbf{Value (bin)}                                                              & \textbf{\begin{tabular}[c]{@{}r@{}}Length \\ (bits)\end{tabular}} & \textbf{Notes}                                                                                                      \\ \midrule
@@ -584,7 +593,7 @@ To configure and subscribe to interested \ac{epc} patterns, client applications 
 To subscribe to \ac{epc} data, clients register \emph{\acp{ecspec}}. 
 \acp{ecspec} take inspiration from the same ideas as in \ac{llrp}, by describing event boundaries, filtering and subscription patterns, aggregation rules and differential analysis report options in a truly high-level form.
 One example can be seen in Code~\ref{code:ecspec}. The example subscribes to \ac{epc} data from the logical reader \textit{Reader\_Shelve1}. The middleware should send back to the client two types of reports every $5$ seconds: one reporting all \ac{epc} tag-\acp{uri} added to the reading zone of the reader; and other reporting all \ac{epc} tag-\acp{uri} removed from the reading zone and a count of total removed tags.
-A complex \textbf{ECSpec} with subscription patterns will be presented in next chapters, in the practical implementation sections of this dissertation.
+A complex \emph{\ac{ecspec}} with subscription patterns will be presented in next chapters, in the practical implementation sections of this dissertation.
 
 \begin{listing}
     \inputminted[linenos, breaklines]{xml}{./code/sota/ECSpec.xml}
@@ -637,7 +646,7 @@ Locations are preferably identified by a \ac{gln}. A \ac{gln} is a GS1 Identific
 
 \begin{figure}[]
     \centering
-    \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/sglnexample.pdf}
+    \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/sglnexample.pdf}
     \caption{Example and decomposition of \ac{gln} with extension (SGLN) in \ac{uri} format. In the practical context of this dissertation identifies the improvised shelve reading point in a Nespresso boutique store} 
     \label{fig:gln}
 \end{figure}
@@ -675,20 +684,18 @@ To allow for more flexibility and variations in the structure of the \emph{What}
 
 \subsection{Capture and Query Interfaces}
 
-The \ac{epcis} Data model standardizes the data created and shared across systems. 
-To complement the Data model, \ac{epcis} also standardize data interfaces.
-\ac{epcis} defines two interfaces: a capture interface, provides means for \ac{epcis}~Events, conforming to the data models, to be saved, typically, in a persistent repository of \ac{epcis} data; and a query interface from which \ac{epcis} data may be requested by applications and trading partners.
+To complement the data model, \ac{epcis} also standardizes two interfaces: a \emph{Capture interface} that allows client to send \ac{epcis} Events, to be saved, typically in a persistent repository of \ac{epcis} data, called \ac{epcis} repository; and a \emph{Query interface} from which \ac{epcis} data may be requested by applications and trading partners.
 
-The data shared between clients and these interfaces is expressed in \ac{xml} bindings for the data definition models.
-The capture interface provides binding that can use either a message queue or \ac{http}. In Code~\ref{code:epcisreport} we can see a \ac{xml} \ac{epcis}~Event example sent to a capture application. 
+The data shared between clients and these interfaces is expressed in \ac{xml}. \ac{epcis} provides \ac{xml} bindings for the data models described previously.
+The \emph{Capture interface} can be used with either message queue or \ac{http}. In Code~\ref{code:epcisreport} can be seen an \ac{xml} \ac{epcis} Event example sent to a capture application. 
 
 \begin{listing}
     \inputminted[linenos, breaklines]{xml}{./code/sota/EPCIS_query_response.xml}
-    \caption{Example of \ac{epcis}Report sent to a \ac{epcis} capture interface. \ac{epcis} Reports can be extended with User/Vendor Extensions. In this example we see a \texttt{TemperatureC} and \texttt{RelativeHumidity} vendor extension}
+    \caption[Example of an \ac{epcis} Report sent to a \ac{epcis} capture interface]{Example of an \ac{epcis} Report sent to a \ac{epcis} capture interface. \ac{epcis} Reports can be extended with User/Vendor Extensions. In this example we see a \texttt{TemperatureC} and \texttt{RelativeHumidity} vendor extensions}
     \label{code:epcisreport}
 \end{listing}
 
-\ac{epcis} query interface is defined as a web service which can be access by \ac{soap} transport mechanism using the following operations: 
+\ac{epcis} \emph{Query interface} is defined as a web service and can be interacted with by the \ac{soap} transport mechanism using the following available operations: 
 
 \begin{itemize}
     \item \texttt{poll}: queries for \ac{epcis} events matching specific criteria.
@@ -700,12 +707,14 @@ The capture interface provides binding that can use either a message queue or \a
     \item \texttt{getVendorVersion}: returns a vendor string identifying any non-standard extensions supported by the service (e.g.\ \texttt{TemperatureC} and \texttt{RelativeHumidity} vendor extension in Code~\ref{code:epcisreport})
 \end{itemize}
 
-A simple \texttt{poll} operation can be seen in Code~\ref{code:epcisquery}.
+A simple \texttt{poll} operation can be seen in Code~\ref{code:epcisquery}. Inside the \ac{soap} envelope we can observe a \texttt{poll} operation requesting every \texttt{ObjectEvent} collected by the reading point \texttt{urn:epc:id:sgln:76300544.00000.1}. 
 
 \begin{listing}
     \inputminted[linenos, breaklines]{xml}{./code/sota/EPCIS_query.xml}
     \caption{Example of \ac{epcis} Query requesting all \texttt{ObjectEvents} from the Business Location \texttt{urn:epc:id:sgln:76300544.00000.1}}
     \label{code:epcisquery}
 \end{listing}
+
+In the next chapter I will present the state of the art of \ac{rfid} smart shelves, purpose hardware and research.
 
 \cleardoublepage
