@@ -77,55 +77,65 @@ Even doe the network was design primarily for \ac{rfid} \ac{epc} data sharing, t
 
 \subsection{Activities} \label{sec:activities}
 
-The architecture defines three core activities, all of which have a group of standards and guidelines within the \emph{EPCglobal Architecture Framework}: \emph{Physical Object Exchange}, \emph{Infrastructure for Data Capture} and \emph{Data Sharing}.
+The architecture defines three core activities, all of which have a group of standards and guidelines within the \emph{EPCglobal Architecture Framework}: \emph{Physical Object Exchange}, \emph{Infrastructure for Data Capture} and \emph{Data Sharing}, which I will be briefly brainstorm bellow.
 These activities are helpful in understanding the organization and scope of the framework but should not be interpreted as extremely rigid~\cite{GS1EPCglobalArchitecture}.
 
 \subsubsection{Physical Object Exchange} 
 
 \emph{Identify} individual physical objects - products, cases, loads, assets, return items, among others - so they can be tracked individually.
 Entities in the supply chain exchange physical objects identified with \acp{epc}.
-Exchange consists in operations such as shipping, receiving goods, and so on.
+Exchange operations can be such as shipping, receiving goods, and so on.
 For many End Users, the physical objects are trade goods, but this could not be the case.
-There are many other uses, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve unique identification and tagging of objects. 
-The architecture must be designed to ensure that when one \textit{End User} delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{GS1EPCglobalArchitecture}.
+There are many other use cases, like library or asset management applications~\cite{dong-yingliDesignInternetThings2016} that differ from the supply chain trade goods model, but still involve unique identification and tagging of objects. 
+The architecture must be designed to ensure that when one \emph{End User} delivers a physical object to another end user, the latter will be able to determine the \ac{epc} of the physical object and interpret it properly~\cite{GS1EPCglobalArchitecture}.
 
 \subsubsection{Infrastructure for Data Capture} 
 
-\emph{Capture data} about the movement of physical assets and creating visibility.
-In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. That can be the creation of \ac{epc}s for new objects, follow the movements of objects by sensing their \ac{epc}s, and gather that information into systems of record within the organization~\cite{GS1EPCglobalArchitecture}. The \emph{EPCglobal Architecture Framework} defines interface standards for the major infrastructure components required to gather and record \ac{epc} data.
+\emph{Capture data} about the movement of physical assets to create supply chain visibility.
+In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. Those can be: the creation of \acp{epc} for new objects, follow the movements of objects by sensing their \acp{epc}; and gather that information into systems of record within the organization~\cite{GS1EPCglobalArchitecture}.
 
 \subsubsection{Data Sharing} 
 
 \emph{Exchange data} with \ac{it} applications and trading partners, to turn visibility into information and action.
-\emph{End Users} benefit from the \emph{EPCglobal Architecture Framework} by sharing data with each other, increasing the visibility they have with respect to the movement of physical objects through the supply chain. 
-The \emph{EPCglobal Architecture Framework} defines \ac{epc} data sharing standards, which provide a means for end users to share data about \acp{epc} within defined user groups or with the general public, and which also provide access to \emph{EPC Network Services} and other shared services that facilitate this sharing.
+\emph{End Users} benefit from the \emph{EPCglobal Architecture Framework} by sharing data with each other, increasing the visibility they have regarding movement of physical objects through the supply chain. 
+The \emph{EPCglobal Architecture Framework} standards provide a means for \emph{End Users} to share data about \acp{epc} within defined user groups or the general public. 
 
 % image: \emph{EPCglobal Architecture Framework} activities~\cite{Architecture6framework20140414Pdf}
 
 
-\subsection{Technical Brief}
+\subsection{Brief}
 
 % check EPCIS standard document section 2
 
 % This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
 
-The \emph{EPCGlobal Architecture Framework} can become very extensive, separated in multiple documents and show inconsistencies between documents, making the introduction to the framework fairly hard.
-Throughout this section I will introduce the baseline implementation of the \emph{EPCGlobal Framework}, introducing each intervening member and their role within the architecture framework. This should provide a foundation to contextualize the next sections where they will be thoroughly explained.
+The \emph{EPCGlobal Architecture Framework} can be taxing to get to know. It is separated in multiple specifications and shows inconsistencies between documents, making the introduction to the framework fairly hard.
+Throughout this section I will introduce the baseline implementation of the \emph{EPCGlobal Architecture}, introducing each intervening member and their role within the framework. This brief searches to provide a technical contextualization of the architecture for the next sections, where it will be thoroughly explained.
 
-The \emph{Architecture Framework} provides detailed specifications for three technologies developed by the EPCGlobal team: the \acf{epc}, components of the EPCGlobal Network™
+The \emph{Architecture Framework} provides detailed specifications for three technologies developed by EPCGlobal: the \acf{epc}, components of the \emph{EPCGlobal Network™} and standards for \ac{rfid} readers and tags.
 
-The simplest implementation of the \emph{EPCGlobal Architecture Framework} can be structured like shown in figura~\ref{fig:archstructure}.
+The \ac{epc} is a unique \acs{id} used to identify an object. This \ac{epc} can be stored in different physical formats, including in \ac{rfid} tags. 
+These \ac{epc} enabled \ac{rfid} tags can be attached to objects, and inspected throughout the supply chain by a network connected by services and readers.
+The simplest implementation of the \emph{EPCGlobal Framework} can be structured like shown in figure~\ref{fig:archstructure}.
+I will starting on the bottom and go up in the architecture structure.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/architecturer_structure.pdf}
-    \caption{EPCglobal Architecture Framework and EPC Structures Used at Each Level~\cite{EPCTagData}} 
+    \caption[\emph{EPCGlobal Architecture Framework} baseline example with \ac{epc} representations used at each level]{\emph{EPCGlobal Architecture Framework} baseline example with \ac{epc} representations used at each level~\cite{EPCTagData}} 
     \label{fig:archstructure}
 \end{figure}
 
-Specifications on \ac{epc} encoding are defined under the \ac{tds}~\cite{EPCTagData} in conjunction with the encoding of \acp{epc} and data in \ac{gen2} \ac{rfid} tags.
+The \ac{gen2} \ac{rfid} Tag is latest generation of \ac{uhf} tag standard design by EPCGlobal. \ac{gen2} tags communicate with readers through the \ac{gen2} Air Interface. The physical memory map of \ac{gen2} tags is standardized in the \ac{tds}~\cite{EPCTagData}, in conjunction with the binary encoding of \acp{epc}. The \ac{rf} communication link, signaling and commands between \ac{gen2} tags and readers is defined in the \ac{gen2} \ac{uhf} \ac{rfid} Standard~\cite{UHFGen2Tag}.
 
+Readers communicate with clients through the \ac{llrp} standard~\cite{LowLevelReader}. \ac{gen2} readers can generate large amounts of network traffic and data, which needs to be processed. For that, \emph{EPCGlobal Architecture Framework} defines \acf{fc} middleware, to translate binary \acs{epc} into human readable format, and filter/aggregate data. \ac{fc} can be implemented in the same physical device as the reader, being called a ``smart reader''. 
 
+Middlewares then send the processed data to Capture Applications, where \ac{epc} data is contextualized with business logic. Middlewares send this data through an \ac{ale} interface. The \ac{ale} interface allows Capture applications to register and subscribe to their interested \ac{epc} patters and request strategies in an high-level declarative way. The interface is defined in its two documents~\cite{ApplicationLevelEvents} and \cite{ApplicationLevelEventsa}.
+
+Capture Applications send the contextualized data to Business Applications or data repositories.
+This data is sent following strict rules to ensure data is created and shared in a conformable and standardized way. The \emph{EPCGlobal Architecture Framework} defines the \ac{epcis}~\cite{EPCInformationServices} and \ac{cbv}~\cite{CoreBusinessVocabulary} Standards, containing data models, vocabulary and communication interfaces required to create and share \ac{epc} related data with trading partners.
+
+More standards and information paradigms exist in the \emph{EPCGlobal Architecture Framework}, namely in the \emph{EPCGlobal Network™} group of standards. The standards under the authority of \emph{EPCGlobal Architecture Framework} can be seen in table~\ref{tab:standards}. Relevant standards and congruous paradigms not in the practical scope of this dissertation: \acf{rm} standard to manage readers (not strongly adopted by the community); \acf{dci}; \acf{tdt} for validation and translation of \ac{epc} identifiers; \ac{ons} a protocol to discover information about a product and related services from the \ac{epc}; and \acf{gdsn}, the network of interoperable data pools to share master data with their trading partners in a standard method. 
 
 \begin{table}[]
     \begin{adjustwidth}{-0.09\textwidth}{0em}
@@ -178,7 +188,7 @@ Figure~\ref{fig:logicalmemorymap} depicts the logical memory layout in \ac{epc} 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/logicmemorymap.pdf}
-    \caption{Logical memory map of EPCGlobal \ac{gen2} \ac{uhf} tags~\cite{UHFGen2Tag}} 
+    \caption[Logical memory map of EPCGlobal \ac{gen2} \ac{uhf} tags]{Logical memory map of EPCGlobal \ac{gen2} \ac{uhf} tags~\cite{UHFGen2Tag}} 
     \label{fig:logicalmemorymap}
 \end{figure}
 
@@ -281,6 +291,7 @@ A deep analysis of the binary \ac{epc} encoding will be presented in section~\re
 
 \begin{figure}[!ht]
     \centering
+    \vspace*{0.5cm}
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/SGTIN_binaryconv2.pdf}
     \caption[\ac{epc} in binary encoding representation]{\ac{epc} in binary encoding representation adapted from~\cite{SGTININFO}} 
     \label{fig:epcbinencoding}
@@ -394,14 +405,14 @@ In the case of the \emph{Tag \ac{uri}} example, \emph{Company prefix} has $27$ b
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_sgtin_filtervalues.pdf}
-    \caption{\ac{sgtin} Filter Value Table~\cite{EPCTagData}} 
+    \caption[\ac{sgtin} Filter Value Table]{\ac{sgtin} Filter Value Table~\cite{EPCTagData}} 
     \label{tab:sgtinfiltervalues}
 \end{table}
 
 \begin{table}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/table_partitionvalues.pdf}
-    \caption{\ac{sgtin} Partition Table~\cite{EPCTagData}} 
+    \caption[\ac{sgtin} Partition Table]{\ac{sgtin} Partition Table~\cite{EPCTagData}} 
     \label{tab:partitiontable}
 \end{table}
 
@@ -647,7 +658,7 @@ Locations are preferably identified by a \ac{gln}. A \ac{gln} is a GS1 Identific
 \begin{figure}[]
     \centering
     \includegraphics[width=0.8\textwidth]{./figs/02-state-of-the-art/sglnexample.pdf}
-    \caption{Example and decomposition of \ac{gln} with extension (SGLN) in \ac{uri} format. In the practical context of this dissertation identifies the improvised shelve reading point in a Nespresso boutique store} 
+    \caption[Example of \ac{gln} with extension (SGLN) in \ac{uri} format]{Example of \ac{gln} with extension (SGLN) in \ac{uri} format. In the practical context of this dissertation, identifies the improvised shelve reading point in a Nespresso boutique store} 
     \label{fig:gln}
 \end{figure}
 
