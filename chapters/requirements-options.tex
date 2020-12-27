@@ -1,9 +1,60 @@
 \chapter{Requirements and Development Options}
 
-\section{Description}
+\section{Context}
 
-\section{System requirements}
+In the previous chapter I presented the state of the art of smart shelves. 
+To understand the context of the implementation presented throughout the remaining of this dissertation, I will contextualize its use case and background.
 
-\section{Manufacturers and development solutions}
+The smart shelve developed in this dissertation was primarily designed to integrate warehouse storage in Nespresso boutique stores.
+Nespresso is a company owned by Nestlé Nespresso S. A., one operational unit of the Nestlé Group, dedicated to the retail and production of coffee capsules, coffee machines and related accessories.
+Coffee arrives from different parts of the globe (Colombia, Brazil, Ethiopia, India, Indonesia, to say a few) through seaborne container, and reaches the factories by train.
+The company has 3 manufacturing facilities producing coffee capsules in Switzerland, from where it dispatches products to supply chain centers.
+Coffee machines are manufactured in East Europe.
+Supply chain centers distribute the products to retail shops and boutique~\cite{PortugalRecebeCentro}.
 
-\section{Out choice}
+With  the  growing  of  the  brand,  the  complexity  in  the logistics networks starts to compromise the management of the products down in the chain.
+Namely, in boutique stores, the categorization and verification of new inventory, inspection of the arrived goods from the transportation company,  returns,  control  and  management  of  stocks, are all attended by manual labour. The manual labour is prone to errors and takes a lot of working time.
+
+\subsection{Requirements}
+
+The solution should be capable of being integrate with the logistics management software and services used by the company and trading partners.
+The solution must be reliable and cheap to maintain.
+The initial investment should also be the smallest possible.
+The solution should be able to compose an inventory of the items in the shelve and provide means to store and query that data, preferably in a standardized manner following supply chain guidelines and practices.
+
+\section{Solution}
+
+The proposed solution is a system of smart shelving, where goods like coffee capsules, machines and accessories are stored. These goods would be \ac{rfid} tagged and integrated in an \ac{rfid}-enabled supply chain.
+The structure storing the products contains \ac{rfid} antennas and readers that detect and read the tags attach to them. Readers will send real-time state of the products in stock to the software platform, which will contextualize the data, store it, and provide appropriate query interfaces to managing software systems.
+In the future, the system could solve multiple issues and integrate multiple features like:
+
+\begin{itemize}
+    \item \textbf{Prevent stock-outs:} get timely replenishment and optimise in-store sales and management. Logistics companies deliver goods on time and according to delivery requirements generated automatically by a management system;
+    \item \textbf{Reduce time and errors from manual labour:} counts, identification, misplacement and lost or stolen items;
+    \item \textbf{Help customers:} find and engage with the products they want;
+    \item \textbf{Control:} who removes or checks out valuable items;
+    \item \textbf{Automatic information and management of stock:} the logistics lines automatically  transmits and receives stock information;
+    \item \textbf{Smart physical storage:} automatic identification of goods in the warehouse/shelves, automatic matching of distribution requirements, improves the efficiency of goods storage;
+    \item \textbf{Acquisition technology:} After the goods enter the collection area, the collection equipment automatically identifies multiple items by collecting \ac{rfid} tags, thereby efficiently completing the goods in and out of the warehouse, ensuring whether the physical and  distribution  requirements are consistent, and improving the efficiency of goods distribution;
+    \item \textbf{Real-time:} master the distribution of all goods in real time, accurately grasp the inventory situation, optimize the inventory, and grasp the status and changes of the warehouse environment in real time;
+    \item Handle registration and verification of arriving stock and manage in real time warehouse products;
+    \item Real-time  management  of fall the  products, machine learning predictions and control of the product flow
+\end{itemize}
+
+In the design and planning of this solution, there were two very different contexts considered: the development of a real product, ready for the envisioned environment, where costs, implementation and architecture are well thought in order to achieve a stable and commercially appealing product; and a generic prototype implementation showing a working vision of what the real product would be like.
+
+In the remaining of this chapter I will address the real product context, discussing and presenting multiple development options. In the last section~\ref{sec:ourchoice}, I will focus on the prototype solution proposal, which will focus on implementing the functional blocks required to the real product implementation, which will presented in dept in chapter~\ref{sec:systemdevelopment}.
+
+\section{Architecture options}
+
+Early in this dissertation it was consent that the \ac{rfid} technology 
+
+\section{Positioning}
+
+\section{Readers}
+
+\section{Antennas}
+
+\section{Software}
+
+\section{Out choice} \label{sec:ourchoice}
