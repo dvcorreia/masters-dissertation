@@ -22,6 +22,8 @@ The solution must be reliable and cheap to maintain.
 The initial investment should also be the smallest possible.
 The solution should be able to compose an inventory of the items in the shelve and provide means to store and query that data, preferably in a standardized manner following supply chain guidelines and practices.
 
+(TODO: describe nespresso products, boxes, sleves)
+
 \section{Solution}
 
 The proposed solution is a system of smart shelving, where goods like coffee capsules, machines and accessories are stored. These goods would be \ac{rfid} tagged and integrated in an \ac{rfid}-enabled supply chain.
@@ -45,15 +47,135 @@ In the design and planning of this solution, there were two very different conte
 
 In the remaining of this chapter I will address the real product context, discussing and presenting multiple development options. In the last section~\ref{sec:ourchoice}, I will focus on the prototype solution proposal, which will focus on implementing the functional blocks required to the real product implementation, which will presented in dept in chapter~\ref{sec:systemdevelopment}.
 
-\section{Architecture options}
+\section{\acs{rfid} Technology}
 
-Early in this dissertation it was consent that the \ac{rfid} technology 
-
-\section{Positioning}
+It was clear, early in this work, that the \ac{rfid} technology which would be used was \ac{uhf}. 
+\ac{uhf} is the most reasonable choice in this context: it has the reading distance requirements necessary for the solution envisioned; it provides the cheapest and most performant tags, with promises of even cheaper, more robust and efficient in the future; and most important, it is the \ac{rf} technology used in \ac{gen2} tags and \ac{scm} systems deployed around the globe. 
+The integration in logistics and supply chain systems, would not make sense otherwise to diverge from the well established implementations.
+With this, there is no further critical incentive to opt for other \ac{rfid} technology other than \ac{uhf} \ac{rfid}.
 
 \section{Readers}
 
+\subsection{Market Offer}
+
+Choosing a reader is a complex subject. The market of RAIN \ac{rfid} \ac{gen2} compatible readers is extensive, but not very divergent in implementation, in that most readers are based on the same \ac{epc} Class 1 \ac{gen2} \ac{ic} chips.
+
+From what I could find, currently, the available \ac{epc} Class 1 \ac{gen2} reader chips available on the market are listed on table~\ref{tab:readerchips}.
+The biggest market leader is Impinj, which commercializes their own readers and development kits with their Indy reader chips~\cite{RAINRFIDReader} for most of commercial readers available on the market (e.g.\ CAEN RFID and Jadak ThingMagic modules~\cite{RAINRFIDPartner}).
+There are other players in the \ac{epc} Class 1 \ac{gen2} reader chip manufacturer. 
+STMicroelectronics acquired Austriamicrosystems' \ac{nfc} and \ac{rfid} reader assets in 2016~\cite{PressRelease}. Austriamicrosystems provided, the now discontinued, \texttt{AS3990} (i.g.\ \texttt{ST25RU3991}), \texttt{AS3990} (i.g.\ \texttt{ST25RU3992}) and \texttt{AS3980} (i.g.\ \texttt{ST25RU9080}) used by academics to create \acs{diy} cheap \ac{epc} Class 1 \ac{gen2} readers~\cite{tangDesignUHFRFID2010a, leiDesignHandheldUHF2011, liDesignRadioFrequency2011}. Currently STMicroelectronics
+commercializes their \texttt{ST25RU3993} chip~\cite{ST25RU3993}. This chip is used in their evaluation boards and in few commercial readers~\cite{UHFMidRange}.
+There are also companies selling SMD \ac{epc} Class 1 \ac{gen2} reader/writer modules, namely Nordic, with the ID NUR~\cite{NURModulesNordic}, and ThingMagic with the M6e, Micro and Nano~\cite{ThingMagicRFID}.
+
+\begin{table}
+    \centering
+    \caption{Available \ac{epc} Class 1 \ac{gen2} reader chips on the market}
+    \label{tab:readerchips}
+\end{table}
+
+Many of these manufacturers offer evaluation boards and development kits. An outline of a few interesting ones can be seen in table~\ref{tab:readerembeddedsolutions}.
+
+\begin{table}
+    \centering
+    \caption{\ac{epc} Class 1 \ac{gen2} evaluation boards and development kits readers offered by manufacturers}
+    \label{tab:readerembeddedsolutions}
+\end{table}
+
+Regarding commercially available readers, there is an extensive variety of solutions, to many to discuss in this dissertation. A overview of established, widely deployed readers can be seen in table~\ref{tab:readercommercialsolutions}.
+Alien Technology, has been commercializing their on \ac{rfid} readers~\cite{AlienTechnologyReaders} for years, having an well established client base. Impinj and Zebra have also been on the market, being well established \ac{epc} Class 1 \ac{gen2} reader manufacturers.
+
+\begin{table}
+    \centering
+    \caption{\ac{epc} Class 1 \ac{gen2} compatible readers well established on the market}
+    \label{tab:readercommercialsolutions}
+\end{table}
+
+\subsection{Considerations}
+
+Buy a commercial reader or make one?
+The response is deeply dependent on company long term plans, namely, in the balance between \ac{rnd} cost and long term benefits. Compromises in engineering work have to be clearly balanced with the company needs and requirements. If the \ac{rfid} implementation plans extend deeply into the organization - points of sale, distribution centers, warehouses and manufacturing - making a custom reader solution might not be a total nonsense when evaluating cost margins and requirements. For companies like Walmart and big retailers, the investment in custom hardware definitely makes sense.
+
+Commercial readers tend to be very expensive. They are usually designed for generic applications, providing incredible reading distances, astonishing number of tag reads per second, and multiple other features to please every client and fit every application.
+This makes them rather expensive and excessive for applications like smart shelves.
+
+Smart shelves, in most design approaches, do not require high transmission power nor high tags reads per second. Designs usually take advantage of \ac{rf} splitters and multiplexers to connect multiple antennas. They could also take advantage of Wifi, LTE and PoE capabilities, over the traditional communication interfaces like the serial port.
+
+Said so, there are two paths which can be followed: development of a custom reader~\footnote{When I address the development of custom readers, I do not specify how, as it can be done through consulting companies or in house. In this dissertation I only approach development considerations and not how those are translated to engineering work} or the use of a commercial one. 
+Custom designs for smart shelves can be much cheaper: less features translate to lower requirements in hardware; lower power transmission allows the use of cheaper \ac{rf} amplifiers (commercial readers can read up to $10m$, depending on implementations, might only be required reads up to $1m$); low requirements of reads speeds allow for cheaper \ac{epc} Class 1 \ac{gen2} SMD or chip solutions like handheld \ac{gen2} \acs{ic}.
+On top of being cheaper, custom readers allow developers to implement features otherwise nonexistent. Many readers provide interfaces mainly through Java and C\# SDKs, open standards like \ac{llrp} are usually provided only in few high-end commercial readers. The stagnant condition of commercial readers do not keep up with new \ac{iot} and \ac{it} technologies, which have showed to be incredible powerful, mainly in the distributed computing area, and dismissed in favor of legacy technologies.
+Custom readers can also integrate middleware capabilities (i.g.\ ``smart readers'' conceptualized by the \emph{EPCGlobal Architecture Framework}), and event capture application features, allowing a deprecation of discrete middleware and capture applications.
+On the other hand, the development of such readers is \ac{rnd} intensive. For small and medium companies, such option is not remotely reasonable. Even for big companies, this kind of project would certainly be approached by consulting companies, since they are not at all within the expertise of most \ac{scm} and retailers.
+
 \section{Antennas}
+
+The discussion between custom and commercial readers made previously, can also be transposed to the selection of antennas. In certain conditions, the development of custom solutions can present good incentives.
+
+Smart shelves, depending on implementations, require mainly antenna designs suitable for the \emph{near-field} region.
+The market offers generic high performance antennas for most applications. These antennas also tend to be expensive, due to the strong requirements in reading distances. 
+
+In the section~\ref{sec:academicsolutions}, I cited numerous implementations of of \emph{near-field} \ac{uhf} \ac{rfid} antennas, intended to be used in smart shelves and similar purposes, by the academic personnel. Many of these are simple and much cheaper than commercial alternatives, with performance suitable to be integrated in smart shelve systems. 
+
+The approach taken in antenna selection, similarly to reader selection, depends on company approach to such endeavor. 
+In table~\ref{tab:antennasolutions} presents a few compact commercial antennas considered for the implementation of this dissertation.
+
+\begin{table}
+    \centering
+    \caption{A few \ac{uhf} \ac{rfid} compact antennas available on the market}
+    \label{tab:antennasolutions}
+\end{table}
+
+\section{Positioning}
+
+Smart shelves can be implemented and designed taking different approaches (e.g.\ regarding number of antennas, their position and power transmitted).
+D’Alessandro, in his PhD thesis~\cite{dalessandroRFIDBasedSmartShelving2012}, makes a good overview and evaluation of few possible combinations, which I used to elaborate the discussion in this section.
+Following I will present a few architectural designs for \ac{uhf} \ac{rfid}-enabled smart shelves, how they differ, and discussed implementation considerations.
+
+The first design, in figure~\ref{fig:position1}, is the simplest of all, a reader and one antenna. The figure shows a top view of a shelve with an external antenna, radiating it at an angle. Variations of this design can be found in retail stores with ceiling antennas pointing to shelves.
+The simplicity and functionality of this design is what makes it appealing and adopted.
+Problems in this arrangement are mainly  tag-to-tag interference and \ac{rf} blind reading zones, which can appear due interference from certain materials (see table~\ref{tab:rfproperties}).
+With two antennas at different angles, it is possible to locate objects with decent accuracy, using metrics provided by some readers - e.g\ \ac{rssi}, \ac{toa}, \ac{aoa}, \ac{pdoa} - and algorithms like the KNN and KGNN, with reference tags.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{}
+    \caption{} 
+    \label{fig:position1}
+\end{figure}
+
+Figures~\ref{fig:position2} and ~\ref{fig:position3} shows the most common approach to designing smart shelves, by placing one or multiple compact antennas in each shelve~\cite{markakisSafeEfficientDesign2014}.
+These antennas can be incorporated into a shelf, making it invisible and ideal for point of sale and retail shelves.
+Reading zones can be very precisely distributed, creating less \ac{rf} ``polution'', undesirable in contexts like shared warehouses in malls, where other \ac{rfid} system might be deployed.
+The location techniques used in the first arrangement can be adapted and implemented in the same manner in this design.
+This implementation has the downside of requiring multiple antennas, usually connected to reader will multiple antenna ports or to \ac{rf} splitters and multiplexers.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{}
+        \caption{} 
+        \label{fig:position2}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{}
+        \caption{} 
+        \label{fig:position3}
+    \end{subfigure}
+    \caption{} 
+    \label{fig:}
+\end{figure}
+
+The latest arrangement example, shown in figure~\ref{fig:position4}, places two antennas per shelf in the sides~\cite{markakisRFIDenabledLibraryManagement2013}. This approach can be implemented without the use of necessarily compact antennas and favors long shelf designs.
+Opposite radiating angles can make location features a little tricky, regarding in shelf placement, whereby further study is needed.
+Can be said that as downside of this arrangement is the necessity of multiple reader ports or \ac{rf} multiplexers, and in long shelves to have antenna designs tuned for both \emph{far} and \emph{near-fields}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{}
+    \caption{} 
+    \label{fig:position4}
+\end{figure}
 
 \section{Software}
 
