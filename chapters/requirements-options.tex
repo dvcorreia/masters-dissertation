@@ -177,6 +177,21 @@ Can be said that as downside of this arrangement is the necessity of multiple re
     \label{fig:position4}
 \end{figure}
 
-\section{Software}
+\section{Software and Services}
+
+This dissertation addresses two development ``timelines''. The first in which I evaluate the reader and shelve system: configure and test its capabilities, examine performance of the shelve system, interact with its interfaces. I also evaluate \ac{epc} encoding, decoding and translation software.
+In the second period, the local deployment of the smart shelve system and \emph{EPCGlobal Architecture Framework} services.
+
+For the first part, commercial readers manufacturers make Java and C# SDKs usually available. Readers providing an \ac{llrp} interface can also use \ac{llrp} client programs like the FossTrack LLRPCommander~\cite{FosstrakLLRPCommander}. There is also libraries available to decode and encode \ac{llrp} messages, which can be used to make \ac{llrp} clients. A few worth mention: Python \texttt{sllurp} and \texttt{pyllrp}, \ac{llrp} Toolkit Java, Perl and C++ LTKs\cite{LlrpOrga}, Golang \texttt{go-llrp}).
+To encode, decode and translate \acp{epc}, there are many available libraries, namely the \texttt{epc-standards} decoding Java library from Nike~\cite{NikeIncEpcstandards2019}, and Fosstrak Java \ac{tdt} Engine~\cite{FosstrakTagData}.
+
+For the second part, the availability of resources is very limited.
+The established software come from Fosstrak Open Source \ac{rfid} Software Platform, which provides a \ac{ale} \ac{fc} Middleware, Capturing Application and \ac{epcis} Repository. Fosstrack last commits to some projects are 5+ years old and the technology is outdated with bugs to the point that it can said it is broken, and the project forum is ``dead''.
+Olliot is a fork of the Fosstrak components which extends GS1 standard architecture to support various \ac{iot} connectivity and protocols such as bar code, \ac{rfid} ZigBee and 6LoWPAN~\cite{OpenLanguageInternet}. Inherent to being based on Fosstrak code, it suffers, to certain degree, of the same problems as Fosstrak components.
+Iori Mizutani, in this dissertation~\cite{mizutaniRobustHighPerformance} and research~\cite{mizutaniMulticodePortableRFID2016b}, has contributed with a modern implementaion in Golang of a \ac{fc} middleware and reader emulator~\cite{mizutaniIomzGolemu2020, mizutaniIomzGosstrak2020}. His work seems promising in the nonexistent contributions for the EPCGlobal standards in the last years. But his \ac{fc} implementation is not actively maintained anymore. It implements a simplified version of the \ac{ecspec} and provides a crude pseudo \ac{ale} interface, whereby not being production ready.
+
+(commercial solutions)
+
+Also worth mention, IoTA also supplies EPCGlobal tools in their ecosystem of distributed technology~\cite{GlobalTradeSupply}. It leverages on Fosstrak components to adds a prototype Discovery Service and secured \ac{epcis} components~\cite{FosstrakSimilarProjects}. Their platform of distributed network, block-chain, micropayments, immutable data and many other technologies reaches far out the scope of this dissertation.
 
 \section{Out choice} \label{sec:ourchoice}
