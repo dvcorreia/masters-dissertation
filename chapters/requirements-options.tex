@@ -69,16 +69,9 @@ There are also companies selling SMD \ac{epc} Class 1 \ac{gen2} reader/writer mo
 
 \begin{table}
     \centering
-    \caption{Available \ac{epc} Class 1 \ac{gen2} reader chips on the market}
+    \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/table_chipreaders.pdf}
+    \caption[Available \ac{epc} Class 1 \ac{gen2} reader chips and SMD modules on the market]{Available \ac{epc} Class 1 \ac{gen2} reader chips and SMD modules on the market. Information and prices gathered from respective datasheets, AtlasRFIDstore~\cite{AtlasRFIDstoreBuyRFID} and Mouser~\cite{DistribuidorComponentesEletronicos}.}
     \label{tab:readerchips}
-\end{table}
-
-Many of these manufacturers offer evaluation boards and development kits. An outline of a few interesting ones can be seen in table~\ref{tab:readerembeddedsolutions}.
-
-\begin{table}
-    \centering
-    \caption{\ac{epc} Class 1 \ac{gen2} evaluation boards and development kits readers offered by manufacturers}
-    \label{tab:readerembeddedsolutions}
 \end{table}
 
 Regarding commercially available readers, there is an extensive variety of solutions, to many to discuss in this dissertation. A overview of established, widely deployed readers can be seen in table~\ref{tab:readercommercialsolutions}.
@@ -86,7 +79,8 @@ Alien Technology, has been commercializing their on \ac{rfid} readers~\cite{Alie
 
 \begin{table}
     \centering
-    \caption{\ac{epc} Class 1 \ac{gen2} compatible readers well established on the market}
+    \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/table_commercialreaders.pdf}
+    \caption[\ac{epc} Class 1 \ac{gen2} compatible readers well established on the market]{\ac{epc} Class 1 \ac{gen2} compatible readers well established on the market. Information and prices gathered from respective datasheets and AtlasRFIDstore~\cite{AtlasRFIDstoreBuyRFID}.}
     \label{tab:readercommercialsolutions}
 \end{table}
 
@@ -120,7 +114,8 @@ In table~\ref{tab:antennasolutions} presents a few compact commercial antennas c
 
 \begin{table}
     \centering
-    \caption{A few \ac{uhf} \ac{rfid} compact antennas available on the market}
+    \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/table_antennas.pdf}
+    \caption[A few \ac{uhf} \ac{rfid} compact antennas available on the market]{A few \ac{uhf} \ac{rfid} compact antennas available on the market. Information and prices gathered from respective datasheets and AtlasRFIDstore~\cite{AtlasRFIDstoreBuyRFID}.}
     \label{tab:antennasolutions}
 \end{table}
 
@@ -135,46 +130,46 @@ The simplicity and functionality of this design is what makes it appealing and a
 Problems in this arrangement are mainly  tag-to-tag interference and \ac{rf} blind reading zones, which can appear due interference from certain materials (see table~\ref{tab:rfproperties}).
 With two antennas at different angles, it is possible to locate objects with decent accuracy, using metrics provided by some readers - e.g\ \ac{rssi}, \ac{toa}, \ac{aoa}, \ac{pdoa} - and algorithms like the KNN and KGNN, with reference tags.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=0.5\linewidth]{./figs/02-state-of-the-art/position1.pdf}
     \caption{} 
     \label{fig:position1}
 \end{figure}
 
-Figures~\ref{fig:position2} and ~\ref{fig:position3} shows the most common approach to designing smart shelves, by placing one or multiple compact antennas in each shelve~\cite{markakisSafeEfficientDesign2014}.
+Figures~\ref{fig:position21} and ~\ref{fig:position22} shows the most common approach to designing smart shelves, by placing one or multiple compact antennas in each shelve~\cite{markakisSafeEfficientDesign2014}.
 These antennas can be incorporated into a shelf, making it invisible and ideal for point of sale and retail shelves.
 Reading zones can be very precisely distributed, creating less \ac{rf} ``polution'', undesirable in contexts like shared warehouses in malls, where other \ac{rfid} system might be deployed.
 The location techniques used in the first arrangement can be adapted and implemented in the same manner in this design.
 This implementation has the downside of requiring multiple antennas, usually connected to reader will multiple antenna ports or to \ac{rf} splitters and multiplexers.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
     \begin{subfigure}{.45\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{}
+        \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/position2_1.pdf}
         \caption{} 
-        \label{fig:position2}
+        \label{fig:position21}
     \end{subfigure}
     \begin{subfigure}{.45\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{}
+        \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/position2_2.pdf}
         \caption{} 
-        \label{fig:position3}
+        \label{fig:position22}
     \end{subfigure}
     \caption{} 
-    \label{fig:}
+    \label{fig:position2}
 \end{figure}
 
-The latest arrangement example, shown in figure~\ref{fig:position4}, places two antennas per shelf in the sides~\cite{markakisRFIDenabledLibraryManagement2013}. This approach can be implemented without the use of necessarily compact antennas and favors long shelf designs.
+The latest arrangement example, shown in figure~\ref{fig:position3}, places two antennas per shelf in the sides~\cite{markakisRFIDenabledLibraryManagement2013}. This approach can be implemented without the use of necessarily compact antennas and favors long shelf designs.
 Opposite radiating angles can make location features a little tricky, regarding in shelf placement, whereby further study is needed.
 Can be said that as downside of this arrangement is the necessity of multiple reader ports or \ac{rf} multiplexers, and in long shelves to have antenna designs tuned for both \emph{far} and \emph{near-fields}.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{}
+    \includegraphics[width=0.5\linewidth]{./figs/02-state-of-the-art/position3.pdf}
     \caption{} 
-    \label{fig:position4}
+    \label{fig:position3}
 \end{figure}
 
 \section{Software and Services}
@@ -182,7 +177,7 @@ Can be said that as downside of this arrangement is the necessity of multiple re
 This dissertation addresses two development ``timelines''. The first in which I evaluate the reader and shelve system: configure and test its capabilities, examine performance of the shelve system, interact with its interfaces. I also evaluate \ac{epc} encoding, decoding and translation software.
 In the second period, the local deployment of the smart shelve system and \emph{EPCGlobal Architecture Framework} services.
 
-For the first part, commercial readers manufacturers make Java and C# SDKs usually available. Readers providing an \ac{llrp} interface can also use \ac{llrp} client programs like the FossTrack LLRPCommander~\cite{FosstrakLLRPCommander}. There is also libraries available to decode and encode \ac{llrp} messages, which can be used to make \ac{llrp} clients. A few worth mention: Python \texttt{sllurp} and \texttt{pyllrp}, \ac{llrp} Toolkit Java, Perl and C++ LTKs\cite{LlrpOrga}, Golang \texttt{go-llrp}).
+For the first part, commercial readers manufacturers make Java and C# SDKs usually available. Readers providing an \ac{llrp} interface can also use \ac{llrp} client programs like the FossTrack LLRPCommander~\cite{FosstrakLLRPCommander}. There is also libraries available to decode and encode \ac{llrp} messages, which can be used to make \ac{llrp} clients. A few worth mention: Python \texttt{sllurp} and \texttt{pyllrp}, \ac{llrp} Toolkit Java, Perl and C\+\+ LTKs\cite{LlrpOrga}, Golang \texttt{go-llrp}).
 To encode, decode and translate \acp{epc}, there are many available libraries, namely the \texttt{epc-standards} decoding Java library from Nike~\cite{NikeIncEpcstandards2019}, and Fosstrak Java \ac{tdt} Engine~\cite{FosstrakTagData}.
 
 For the second part, the availability of resources is very limited.

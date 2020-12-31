@@ -9,10 +9,10 @@
 %He proceeds to implement a smart book shelves, with two reader  antennas  attached  to  the  bookshelf  columns,  one  in  front  of  the  other. This was used has alternative to large-area thin planar antennas integrated into the shelf top.
 
 \section{Hello World}
-\todo[inline]{UHF Evaluation: Programs developed to evaluate the system, serialize and deserialize EPCs, Writing valid EPCs}
+%UHF Evaluation: Programs developed to evaluate the system, serialize and deserialize EPCs, Writing valid EPCs
 
 \section{Cloud and Modern Service Development}
-\todo[inline]{Explain Linux containers, Docker and modern service development and deployment}
+%Explain Linux containers, Docker and modern service development and deployment
 
 \section{RFID Serialization Plan}
 
@@ -22,11 +22,11 @@
 
 Update ao firmware do leitor. origen 5.12.2.240 (Build cbc9ad1d0d1)
 
-\todo[inline]{ver https://support.impinj.com/hc/en-us/articles/360000046899-Reader-Modes-Made-Easy}
-\todo[inline]{ver Reader and Gateway compatibility: https://support.impinj.com/hc/en-us/articles/360000046899-Reader-Modes-Made-Easy}
-\todo[inline]{quote https://support.impinj.com/hc/en-us/articles/360007414920-Reader-Mode-1002-Autoset-Dense-Reader-Deep-Scan-Overview}
+%ver https://support.impinj.com/hc/en-us/articles/360000046899-Reader-Modes-Made-Easy
+%ver Reader and Gateway compatibility: %https://support.impinj.com/hc/en-us/articles/360000046899-Reader-Modes-Made-Easy
+%quote https://support.impinj.com/hc/en-us/articles/360007414920-Reader-Mode-1002-Autoset-Dense-Reader-Deep-Scan-Overview
 
-Octane 6.2.0 is based on LLRP version 1.0.1, which does not support C1G2 version 1.2.0.~\cite[sec. 3.1.21]{ImpinjOctaneLLRP}. Octane includes vendor extensions to expose the underlying air protocol features. For more information, refer to the documentation for the individual extensions.
+Octane 6.2.0 is based on \ac{llrp} version 1.0.1, which does not support C1G2 version 1.2.0.~\cite[sec. 3.1.21]{ImpinjOctaneLLRP}. Octane includes vendor extensions to expose the underlying air protocol features. For more information, refer to the documentation for the individual extensions.
 
 \paragraph{ROBoundarySpec}
 
@@ -38,9 +38,9 @@ Periodic trigger values: period - Time period specified in milliseconds; offset 
 
 Used ROSpecStartTriggerType Periodic.
 
-\paragraph{Antenna inventory operations configuration (AISpec)}
+\paragraph{Antenna inventory operations configuration (\ac{aispec})}
 
-AISpecStopTrigger parameter defines the stop (i.e., terminating boundary) of an antenna inventory operation~\cite[sec. 11.2.2.1]{Llrp1standard20101013Pdf}. Here it was set to Null to Stop when ROSpec is done.
+AISpecStopTrigger parameter defines the stop (i.e., terminating boundary) of an antenna inventory operation~\cite[sec. 11.2.2.1]{LowLevelReader}. Here it was set to Null to Stop when \ac{rospec} is done.
 
 InventoryParameterSpec Configuration (C1G2InventoryCommand) \dots
 
@@ -52,18 +52,20 @@ The C1G2RFControl parameter~\cite[sec. 3.1.4]{ImpinjOctaneLLRP} specifies Speedw
 
 Mode Index for the use case in this dissertation can be one of the three bellow, depending on the RF environment in which is deployed: 
 
-- (the choice) 1002 (Autoset Static) configures the Reader to choose the best Gen2 link parameters for the environments where the tags population is relatively static and we wish to attempt to search for the weakest tag.
-
-- 1003 (Autoset Static Fast) is an adaptation of Autoset Static for good RF environments
-
-- 1004 (Autoset Static DRM) is an adaptation of Autoset Static for difficult RF environments
+\begin{itemize}
+    \item (the choice) 1002 (Autoset Static) configures the Reader to choose the best Gen2 link parameters for the environments where the tags population is relatively static and we wish to attempt to search for the weakest tag.
+    \item 1003 (Autoset Static Fast) is an adaptation of Autoset Static for good RF environments
+    \item 1004 (Autoset Static DRM) is an adaptation of Autoset Static for difficult RF environments
+\end{itemize}
 
 This C1G2SingulationControl Parameter provides controls particular to the singulation process in the C1G2 air protocol.
 
-- Tag transit time**: This is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
-- **Tag population**: This is the expected tag population in the field of view of the antenna.
-- **Session ID**: This is the C1G2 session number that the tags use to update the inventory state upon successful singulation.
-- TagInventoryStateAwareSingulationAction: This is not used since the TagInventoryStateAware flag is set to false in the InventoryParameterSpec.
+\begin{itemize}
+    \item Tag transit time: This is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
+    \item Tag population: This is the expected tag population in the field of view of the antenna.
+    \item Session ID: This is the C1G2 session number that the tags use to update the inventory state upon successful singulation.
+    \item  TagInventoryStateAwareSingulationAction: This is not used since the TagInventoryStateAware flag is set to false in the InventoryParameterSpec.
+\end{itemize}
 
 This parameters were not set to let the Impinj mode index use the optimal parameters.
 
@@ -74,7 +76,7 @@ Describes the messages and parameters used in reports, event notifications and k
 A reporting trigger (ROReportTrigger or AccessReportTrigger) generates a report while a connection is open.
 
 In the use case in this dissertation we are not concerned with near real-time updates on the state of the inventory. So we can reduce the report generation by letting the end of the ROSpec generate a report periodically.
-So ROReportTrigger can be set to Upon_N_Tags_Or_End_Of_ROSpec with N=0 (unlimited tag in antenna's field of view)~\cite[sec. 14.2.1]{Llrp1standard20101013Pdf}
+So ROReportTrigger can be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} with N=0 (unlimited tag in antenna's field of view)~\cite[sec. 14.2.1]{LowLevelReader}
 
 In terms of the content useful to retrieve from the reader inventory singulation, the ROSpecID, FirstSeenTimestamp, LastSeenTimestamp are in the interests of the application.
 
@@ -82,18 +84,17 @@ We can enable it the TagReportContentSelector block by setting the Enable in eac
 
 \paragraph{Impinj Custom Parameters}
 
-Impinj readers support Impinj extensions to the LLRP protocol. This extensions can be disabled by setting their values to zero. This will use the information defined in the LLRP parameters defined above.
+Impinj readers support Impinj extensions to the \ac{llrp} protocol. This extensions can be disabled by setting their values to zero. This will use the information defined in the \ac{llrp} parameters defined above.
 
 One that is worth looking at is the ImpinjInventorySearchMode.
-Impinj Readers implement state unaware singulation and therefore the Client does not control how the Reader attempts to singulate tags. This parameter provides a high-level control over the search algorithm and consequently does not interfere with any of the standard LLRP settings.~\cite[sec. 4.3.3]{ImpinjOctaneLLRP}
-\todo[color=red]{rewrite}
+Impinj Readers implement state unaware singulation and therefore the Client does not control how the Reader attempts to singulate tags. This parameter provides a high-level control over the search algorithm and consequently does not interfere with any of the standard \ac{llrp} settings.~\cite[sec. 4.3.3]{ImpinjOctaneLLRP}
 
 Value 3, Single Target Inventory with Suppression (aka TagFocus), used for High tag count, high-throughput use cases where a reduction in repeated tag observations is acceptable. Suppresses repeated observations for extended periods of time while tags are energized. Supported only with Monza tags using Session 1. Since the we are using Monza R6-P tags, we can enable this mode.
 
 \paragraph{Tools}
 
-Used Fosstrak LLRP Commander with the old old Eclipse 3.3 and JRE/JDK1.8 to configure de reader using an xml schema.
-Also developed a java tool to configure the reader using LLRP. Used the java llrp.ltk and code by impinj to configure it based on the "same" schema used in the LLRP commander.
+Used Fosstrak \ac{llrp} Commander with the old old Eclipse 3.3 and JRE/JDK 1.8 to configure de reader using an xml schema.
+Also developed a java tool to configure the reader using \ac{llrp}. Used the java llrp. LTK and code by impinj to configure it based on the "same" schema used in the LLRP commander.
 In the java tool, the xml parser sometimes requires fields that shouldn't be needed because Impinj reader ignores then in certain configuration options. But for the configuration to be validated, they have to be present in order to validate de xsd schema (TagInventoryStateAware, Tari)
 
 \section{Middleware}
@@ -106,8 +107,8 @@ We have 2 ec reports: one for informing the tag uri added and deleted from the s
 
 ECSpec2: want only to know the number of which coffee type are available in storage, so SGTIN filter value of 1 (Point of Sale (POS) Trade Item), with nespresso's company prefix, different item references groups and any serial tag number in those groups.
 
-\todo[inline]{Table 10-1 in sec 10.2 TDS : Filter Values for SGTIN EPC Tags}
-\todo[inline]{Ref ECReportOutputSpec in 8.2.10 ALE standard core}
+%Table 10-1 in sec 10.2 TDS : Filter Values for SGTIN EPC Tags
+%Ref ECReportOutputSpec in 8.2.10 ALE standard core
 
 \section{Capture application}
 
