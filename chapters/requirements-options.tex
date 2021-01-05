@@ -74,6 +74,24 @@ There are also companies selling SMD \ac{epc} Class 1 \ac{gen2} reader/writer mo
     \label{tab:readerchips}
 \end{table}
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.35\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/impinjrs1000.pdf}
+        \caption{Impinj RS1000 development kit (End-of-Life announced on September 4, 2020)} 
+        \label{fig:impinjrs1000}
+    \end{subfigure}
+    \begin{subfigure}{.55\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./figs/02-state-of-the-art/st25ru3993-eval.jpg}
+        \caption{STMicroelectronics ST25RU3993 evaluation board (\$306.25 at Digikey)} 
+        \label{fig:st25ru3993}
+    \end{subfigure}
+    \caption{} 
+    \label{fig:devboards}
+\end{figure}
+
 Regarding commercially available readers, there is an extensive variety of solutions, to many to discuss in this dissertation. A overview of established, widely deployed readers can be seen in table~\ref{tab:readercommercialsolutions}.
 Alien Technology, has been commercializing their on \ac{rfid} readers~\cite{AlienTechnologyReaders} for years, having an well established client base. Impinj and Zebra have also been on the market, being well established \ac{epc} Class 1 \ac{gen2} reader manufacturers.
 
@@ -185,8 +203,80 @@ The established software come from Fosstrak Open Source \ac{rfid} Software Platf
 Olliot is a fork of the Fosstrak components which extends GS1 standard architecture to support various \ac{iot} connectivity and protocols such as bar code, \ac{rfid} ZigBee and 6LoWPAN~\cite{OpenLanguageInternet}. Inherent to being based on Fosstrak code, it suffers, to certain degree, of the same problems as Fosstrak components.
 Iori Mizutani, in this dissertation~\cite{mizutaniRobustHighPerformance} and research~\cite{mizutaniMulticodePortableRFID2016b}, has contributed with a modern implementaion in Golang of a \ac{fc} middleware and reader emulator~\cite{mizutaniIomzGolemu2020, mizutaniIomzGosstrak2020}. His work seems promising in the nonexistent contributions for the EPCGlobal standards in the last years. But his \ac{fc} implementation is not actively maintained anymore. It implements a simplified version of the \ac{ecspec} and provides a crude pseudo \ac{ale} interface, whereby not being production ready.
 
-(commercial solutions)
+Commercial middleware solutions are usually not provided as a product or service. Consulting companies generally provide middlewares in a bundle of a solution.
+Ricoh commercializes a software middleware solution called RECO-Bridge IDR-1 V2. RECO-Bridge IDR-1 V2 sells for $850000$ yen ($\approx 6736€$) and is operated in Microsoft® Windows Server™. Offers filter capabilities, provides \ac{ale}-complied interfaces, can connect and control up to $32$ \ac{uhf} and/or \ac{hf} reader/writers~\footnote{up to $64$ if purely using \ac{hf} reader/writers} and $128$ antenna units, using \ac{llrp} v$1.1$ protocol interface and provides monitoring functions for \ac{rfid} systems~\cite{RECOBridgeIDR1V2}.
+Quake Global Inc. commercializes the EasyTap™ \ac{rfid} middleware~\cite{EasyTAPRealTime}. Their web page advertises multiple data services and application integration standards, \ac traffic visualization in real time and performance optimization capabilities. External sources specify a little further the capabilities of their EasyTAP751 hardware solution: supports \ac{llrp}, provides \ac{ale} and \ac{EPCIS} data capture interfaces,  ~\cite{RFIDNetutowakuinhuraEasyTAP}
+
 
 Also worth mention, IoTA also supplies EPCGlobal tools in their ecosystem of distributed technology~\cite{GlobalTradeSupply}. It leverages on Fosstrak components to adds a prototype Discovery Service and secured \ac{epcis} components~\cite{FosstrakSimilarProjects}. Their platform of distributed network, block-chain, micropayments, immutable data and many other technologies reaches far out the scope of this dissertation.
 
 \section{Out choice} \label{sec:ourchoice}
+
+\subsection{Context}
+
+Before proceeding discussing the opted choice of hardware and software, a brief contextualization is needed.
+The initial proposal for this dissertation was not promptly defined. The downright agreement was to develop a generic smart shelve based on \ac{rfid} technologies. The application could vary, and was to be used and adapted in a multitude of contexts like lockers, cabinets and certainly shelves.
+
+The initial research of the literature focused in set of consecutive topics.
+First and foremost, an exploration and understanding of \ac{rfid} technologies, in order to determine a suitable \ac{rf} system. It was clear, from early in the study, that \ac{uhf} \ac{rfid} technologies would be the most suitable option. The market of \ac{uhf} had evolved significantly over the years, tags were cheap, performance was better than alternatives and every \ac{scm} deployed was using. This established confidence in choosing \ac{uhf} \ac{rfid} has the technology to integrate in solution.
+
+Exploring \ac{uhf} antenna design followed next. The multiple application contexts required different antenna sizes and designs.
+Readers also had to provide sufficient antenna ports to handle the multiple antennas. Commonly, commercial readers provide up to $4$ antenna ports. For a few application contexts, namely lockers constructed of metal with poor \ac{rf} conditions, the four antenna ports were insufficient to provide proper reading conditions. Alternatively, it could be used \ac{rf} splitters and multiplexers to connect numerous amounts of antennas.
+In parallel, the exploration of \ac{scm} operation revealed the \emph{EPCGlobal Architecture Framework}. The architecture is extensive, with many details and technicalities which took a long time to understand. The research also did not showed any efforts in a ``top-down'' implementation of the architecture.
+
+\subsection{Implementation Design and Hardware}
+
+In the contemplation of the research and prior investigation done in this area, it was decided to develop a simple generic smart shelve based on \ac{uhf} \ac{rfid} technologies, implementing the necessary EPCGlobal services, standards and interfaces, to achieve a solution where added and removed items could be monitored through a web application following \ac{scm} guidelines.
+The implementation of the smart shelve had to be simple. The development of custom hardware had to be avoid, in favor of the \emph{EPCGlobal Architecture Framework} implementation, due to time constrains.
+
+The shelve used is $190\times150\times60$cm MDF and metal construction shelve. It was chosen for the comparability with most warehouse storage shelves. Was also interest of this dissertation to evaluate real world performance in shelves with metal structures, which interfere with the \ac{emw} generated by the reader antenna.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{./figs/estantedemetal.jpg}
+    \caption{Leroy Merlin $190\times150\times60$cm MDF and metal construction shelve~\cite{EstanteMetalSpaceo}} 
+    \label{fig:commercialshelve}
+\end{figure}
+
+The \ac{uhf} \ac{rfid} solution had to be money constrained. The proposed solution consists of a single compact antenna and reader attached to the bottom shelf, radiating upwards.
+The antenna choice is a Keonn Advantenna-p14, shown in figure~\ref{fig:advantennap14}. This antenna integrates the same technology group and design as Keonn solution of compact antennas for smart shelves presented in section~\ref{sec:keonnsolutions}.
+The antenna can radiate the entire shelve. It has a $30^{\circ}$ beam width in the direction of the antenna long edge and $90^{\circ}$ in the direction of the antenna short edge, as shown in figure~\ref{fig:advantennap14-radiation}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./figs/advantennap14.pdf}
+        \caption{Photography of the Keonn Advantenna-p14. The direction of the antenna long edge is the $x$ axis, the antenna short edge is the $y$ axis} 
+        \label{fig:advantennap14}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./figs/advantennap14-radiation.pdf}
+        \caption{Radiation diagram of the antenna} 
+        \label{fig:advantennap14-radiation}
+    \end{subfigure}
+    \caption{Keonn Advantenna-p14~\cite{Advantennap14RFIDCompact}} 
+    \label{fig:antennachoice}
+\end{figure}
+
+The reader choice is the Impinj Speedway R120, shown in figure~\ref{fig:impinjr120}, a less powerful, 1 antenna port version of the R420 showed in table~\ref{tab:readercommercialsolutions}. It was chosen for being widely used, has good documentation, tools, state of the art technology, PoE, and most important, provides an \ac{llrp} interface~\footnote{Impinj is one of the big supporter of the \ac{llrp} protocol as an open source interface for \ac{rfid} readers~\cite{SevenRFIDOrganizations}}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{./figs/Speedway_Revolution_R120.jpg}
+    \caption{Impinj Speedway R120~\cite{ImpinjSolucoesRAIN}} 
+    \label{fig:impinjr120}
+\end{figure}
+
+This combination provides very decent performance, without great investment in commercial and custom hardware. Some problems arise from this implementation, mainly with \ac{rf} obstructions. Performance will be examined in the tests chapter~\ref{sec:tests}.  
+
+To program the reader and evaluate operation, it was used the Octane Java SDK provided by Impinj. 
+The SDK uses the Octane \ac{llrp} LTK, as the base library on which the SDK is built upon. The Octane \ac{llrp} LTK is an extension of the open source LTK implementation, with added Impinj command, extensions and features.
+Inherently to the Octane SDK implementation, the high level API design captures fairly well the \ac{llrp} essence, making it intuitive, which knowledge of the protocol, to understand which \ac{llrp} messages are traded and what they contain.
+
+Regarding the development of the platform, implementing the EPCGlobal services, great effort was given to make it fairly modular and modern, despite the very old software it runs.
+Fosstrak Open Source \ac{rfid} software services were chosen. Alternatives only seemed to complicate and widen the platform with unnecessary features. The problems shown in Fosstrak are also present in the alternatives, which use fosstrak code.
+Docker was used to containerize services. 
+Docker packages up code and all its dependencies in what is called a container, which allows applications to run quickly and reliably from one computing environment to another. Docker containers can be easily deployed and managed in all major cloud computing platforms, and are widely used in the current paradigm of cloud computing.
+Docker compose was used to orchestrate the containers and networks locally.
