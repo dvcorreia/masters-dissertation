@@ -179,11 +179,11 @@ The first design, shown in figure~\ref{fig:position1}, is the simplest of all. I
 The simplicity and functionality of this design is what makes it appealing and fairly adopted.
 Problems in this arrangement emerge mainly due in tag-to-tag interference and \ac{rf} obstruction zones, which can appear due interference from certain materials (see table~\ref{tab:rfproperties}).
 
-With two antennas at different angles, it is possible to locate objects with decent accuracy, using metrics~\footnote{A few commercial readers provide \ac{rf} metrics like \ac{rssi}, \ac{toa}, \ac{aoa}, \ac{pdoa}} provided by readers, and classification algorithms, using reference tags attached to strategic places of the shelves~\cite{dalessandroRFIDBasedSmartShelving2012}.
+With two antennas at different angles, it is possible to locate objects with decent accuracy, using metrics~\footnote{Most commercial readers provide \ac{rf} metrics like \ac{rssi}, \ac{toa}, \ac{aoa}, \ac{pdoa}} provided by readers, and classification algorithms, using reference tags attached to strategic places of the shelves~\cite{dalessandroRFIDBasedSmartShelving2012}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{./figs/02-state-of-the-art/position1.eps}
+    \includegraphics[width=0.6\linewidth]{./figs/02-state-of-the-art/position1.eps}
     \caption{Top view of two external antennas radiating a shelve at different angles}
     \label{fig:position1}
 \end{figure}
@@ -200,7 +200,7 @@ This design has been used in products like the ones refereed in chapter~\ref{sec
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{./figs/02-state-of-the-art/position2_1.eps}
+    \includegraphics[width=0.6\linewidth]{./figs/02-state-of-the-art/position2_1.eps}
     \caption{Arrangement with multiple compact antennas distributed in each shelf radiating upwards} 
     \label{fig:position2}
 \end{figure}
@@ -212,53 +212,76 @@ Similarly to the last design, it presents the downside of requiring multiple rea
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{./figs/02-state-of-the-art/position3.eps}
+    \includegraphics[width=0.6\linewidth]{./figs/02-state-of-the-art/position3.eps}
     \caption{Arrangement with two antennas per shelf, one in each side of opposing laterals radiating inwards} 
     \label{fig:position3}
 \end{figure}
 
-\section{Software Platform}
+\section{Software}
 
-\subsection{Reader Control Software}
+\subsection{Reader Interface Software}
 
-Commercial readers manufacturers make Java and C\# SDKs usually available. Readers providing an \ac{llrp} interface can also use \ac{llrp} client programs like the FossTrack LLRPCommander~\cite{FosstrakLLRPCommander}. There is also libraries available to decode and encode \ac{llrp} messages, which can be used to make \ac{llrp} clients. A few worth mention: Python \texttt{sllurp} and \texttt{pyllrp}, \ac{llrp} Toolkit Java, Perl and C\+\+ LTKs\cite{LlrpOrga}, Golang \texttt{go-llrp}).
-To encode, decode and translate \acp{epc}, there are many available libraries, namely the \texttt{epc-standards} decoding Java library from Nike~\cite{NikeIncEpcstandards2019}, and Fosstrak Java \ac{tdt} Engine~\cite{FosstrakTagData}.
+Interaction with \ac{uhf} readers is uniform across the industry.
+Reader manufacturers generally make Java, C\+\+ and C\# SDKs available for commercial and chips readers. These SDKs allow integrators to configure and interact with these through high level APIs, which usually abstract the \ac{gen2} air protocol. SDKs can also expose low level APIs to precisely control the reader and tune the air protocol.
 
-\subsection{Platform}
+\ac{llrp}-compliant readers can use \ac{llrp} client programs, like the Fosstrak LLRPCommander~\cite{FosstrakLLRPCommander}, based on Eclipse 3.3, to manage and receive tag information. 
+There is also libraries available to decode and encode \ac{llrp} messages, which can be used to make \ac{llrp} clients. A few of those worth mention: \texttt{sllurp} and \texttt{pyllrp} implemented in Python, \ac{llrp} Toolkits (LTKs) in Java, Perl and C\+\+~\cite{LlrpOrga} and \texttt{go-llrp} implemented in Golang.
 
-The availability of resources is very limited.
-The established software come from Fosstrak Open Source \ac{rfid} Software Platform, which provides a \ac{ale} \ac{fc} Middleware, Capturing Application and \ac{epcis} Repository. Fosstrack last commits to some projects are 5+ years old and the technology is outdated with bugs to the point that it can said it is broken, and the project forum is ``dead''.
-Olliot is a fork of the Fosstrak components which extends GS1 standard architecture to support various \ac{iot} connectivity and protocols such as bar code, \ac{rfid} ZigBee and 6LoWPAN~\cite{OpenLanguageInternet}. Inherent to being based on Fosstrak code, it suffers, to certain degree, of the same problems as Fosstrak components.
-Iori Mizutani, in this dissertation~\cite{mizutaniRobustHighPerformance} and research~\cite{mizutaniMulticodePortableRFID2016b}, has contributed with a modern implementaion in Golang of a \ac{fc} middleware and reader emulator~\cite{mizutaniIomzGolemu2020, mizutaniIomzGosstrak2020}. His work seems promising in the nonexistent contributions for the EPCGlobal standards in the last years. But his \ac{fc} implementation is not actively maintained anymore. It implements a simplified version of the \ac{ecspec} and provides a crude pseudo \ac{ale} interface, whereby not being production ready.
+To encode, decode and translate \acp{epc} data, there are many available libraries, namely the \texttt{epc-standards} decoding Java library from Nike~\cite{NikeIncEpcstandards2019}, and Fosstrak Java \ac{tdt} Engine~\cite{FosstrakTagData}.
 
-Also worth mention, IoTA also supplies EPCGlobal tools in their ecosystem of distributed technology~\cite{GlobalTradeSupply}. It leverages on Fosstrak components to adds a prototype Discovery Service and secured \ac{epcis} components~\cite{FosstrakSimilarProjects}. Their platform of distributed network, block-chain, micropayments, immutable data and many other technologies reaches far out the scope of this dissertation.
+\subsection{Software Platform}
 
-Commercial middleware solutions are usually not provided as a product or service. Consulting companies generally provide middlewares in a bundle of a solution.
-Ricoh commercializes a software middleware solution called RECO-Bridge IDR-1 V2. RECO-Bridge IDR-1 V2 sells for $850000$ yen ($\approx 6736$€) and is operated in Microsoft® Windows Server™. Offers filter capabilities, provides \ac{ale}-complied interfaces, can connect and control up to $32$ \ac{uhf} and/or \ac{hf} reader/writers~\footnote{up to $64$ if purely using \ac{hf} reader/writers} and $128$ antenna units, using \ac{llrp} v$1.1$ protocol interface and provides monitoring functions for \ac{rfid} systems~\cite{RECOBridgeIDR1V2}.
-Quake Global Inc. commercializes the EasyTap™ \ac{rfid} middleware~\cite{EasyTAPRealTime}. Their web page advertises multiple data services and application integration standards, traffic visualization in real time and performance optimization capabilities. External sources specify a little further the capabilities of their EasyTAP751 hardware solution: supports \ac{llrp}, provides \ac{ale} and \ac{epcis} data capture interfaces~\cite{RFIDEasyTAPTag}.
-Transcends commercializes the RIFIDI® Edge Server middleware~\cite{RIFIDIEdgeServer2015}. It supportes \ac{llrp} and integrates with most \ac{iot} protocols and cloud vendors (e.g.\ REST, MQTT, JMS, ALE, AWS, Cloud). Does not specify EPCGlobal integration or interfaces. It costs \$$3000$ 1st year and \$$2000$ each consecutive year per JVM instance up to 10 readers, with 5\% price increase for each additional JVM.
+The availability of software resources for the \emph{EPCGlobal Architecture} is very limited.
+For years, the only software came from Fosstrak Open Source \ac{rfid} Software Platform, which provided an \ac{ale} \ac{fc} Middleware, Capturing Application and \ac{epcis} Repository implementations. Fosstrack last commits to most of the projects dates back 5 years. The technology is outdated, with bugs, documentation errors and the project forum is ``dead''.
+
+Oliot is a fork of the Fosstrak components, which extends GS1 standard architecture to support various \ac{iot} connectivity and protocols such as bar code, \ac{rfid} ZigBee and 6LoWPAN~\cite{OpenLanguageInternet}. Inherent to being based on Fosstrak code, it suffers, to certain degree, of the same problems and bugs as Fosstrak services.
+
+Iori Mizutani, in this dissertation~\cite{mizutaniRobustHighPerformance} and research~\cite{mizutaniMulticodePortableRFID2016b}, has contributed with a modern implementation in Golang of a \ac{fc} middleware and reader emulator~\cite{mizutaniIomzGolemu2020, mizutaniIomzGosstrak2020}. 
+His work seems promising in the nonexistent contribution to the EPCGlobal standards in the last years. Although, his \ac{fc} implementation is not production ready. The project is not actively maintained anymore, only implements a simplified version of the \ac{ecspec} and the \ac{ale} interface provided is incomplete.
+
+IoTA supplies EPCGlobal tools in their ecosystem of distributed technology~\cite{GlobalTradeSupply}. It leverages on Fosstrak components to adds a prototype of the Discovery Service and secured \ac{epcis} components~\cite{FosstrakSimilarProjects}. Their platform integrates distributed network, block-chain, micropayments, immutable data and many other technologies which reach far out the scope of this dissertation.
+
+Commercial EPCGlobal solutions are usually not provided as a single product or service. Consulting companies generally provide their services in a solution bundle.
+
+Ricoh commercializes a software middleware solution called RECO-Bridge IDR-1 V2. It sells for $850000$ yen ($\approx 6736$€) and is operated in Microsoft® Windows Server™. Offers filter capabilities, monitoring functions for \ac{rfid} systems, provides \ac{ale}-complied interfaces, can connect and control up to $32$ \ac{uhf} and/or \ac{hf} reader/writers~\footnote{up to $64$ if purely using \ac{hf} reader/writers} and $128$ antenna units using \ac{llrp} v$1.1$ protocol interface~\cite{RECOBridgeIDR1V2}.
+
+Quake Global Inc. commercializes the EasyTap™ \ac{rfid} middleware~\cite{EasyTAPRealTime}. Their web page advertises multiple data services and application integration standards, traffic visualization in real time and performance optimization capabilities. External sources specify a little further the capabilities of their EasyTAP751 hardware solution seen in figure~\ref{fig:easytap751}. It supports \ac{llrp}, provides \ac{ale} and \ac{epcis} data capture interfaces~\cite{RFIDEasyTAPTag}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{./figs/02-state-of-the-art/easytap751.jpg}
+    \caption{uake Global Inc. EasyTAP751 middlware hardware solution~\cite{RFIDEasyTAPTag}} 
+    \label{fig:easytap751}
+\end{figure}
+
+Transcends commercializes the RIFIDI® Edge Server middleware software solution~\cite{RIFIDIEdgeServer2015}. It supports \ac{llrp} and integrates with most \ac{iot} protocols and cloud vendors (e.g.\ REST, MQTT, JMS, ALE, AWS, Cloud). Does not specify EPCGlobal integration or interfaces. It costs \$$3000$ in 1st year, \$$2000$ each consecutive year, per JVM instance up to 10 readers, with 5\% price increase for each additional JVM.
 
 \section{Out choice} \label{sec:ourchoice}
 
-This dissertation addresses two development ``timelines''. The first in which I evaluate the reader and shelve system: configure and test its capabilities, examine performance of the shelve system, interact with its interfaces. I also evaluate \ac{epc} encoding, decoding and translation software.
-In the second period, the local deployment of the smart shelve system and \emph{EPCGlobal Architecture Framework} services.
-
 \subsection{Context}
 
-Before proceeding discussing the opted choice of hardware and software, a brief contextualization is needed.
-The initial proposal for this dissertation was not promptly defined. The downright agreement was to develop a generic smart shelve based on \ac{rfid} technologies. The application could vary, and was to be used and adapted in a multitude of contexts like lockers, cabinets and certainly shelves.
+Before proceeding with the discussion on the opted choice of hardware and software, a brief contextualization is needed.
 
-The initial research of the literature focused in set of consecutive topics.
-First and foremost, an exploration and understanding of \ac{rfid} technologies, in order to determine a suitable \ac{rf} system. It was clear, from early in the study, that \ac{uhf} \ac{rfid} technologies would be the most suitable option. The market of \ac{uhf} had evolved significantly over the years, tags were cheap, performance was better than alternatives and every \ac{scm} deployed was using. This established confidence in choosing \ac{uhf} \ac{rfid} has the technology to integrate in solution.
+The introductory proposal for this dissertation was not clearly defined in terms of objectives and work. The downright agreement was to develop a generic smart shelve solution based on \ac{rfid} technologies. The application could vary, and was to be used and adapted in a multitude of contexts like lockers and cabinets.
 
-Exploring \ac{uhf} antenna design followed next. The multiple application contexts required different antenna sizes and designs.
-Readers also had to provide sufficient antenna ports to handle the multiple antennas. Commonly, commercial readers provide up to $4$ antenna ports. For a few application contexts, namely lockers constructed of metal with poor \ac{rf} conditions, the four antenna ports were insufficient to provide proper reading conditions. Alternatively, it could be used \ac{rf} splitters and multiplexers to connect numerous amounts of antennas.
-In parallel, the exploration of \ac{scm} operation revealed the \emph{EPCGlobal Architecture Framework}. The architecture is extensive, with many details and technicalities which took a long time to understand. The research also did not showed any efforts in a ``top-down'' implementation of the architecture.
+The initial investigation of the literature focused in set of topics which would not be directly used in this dissertation.
+First, it was conducted an exploration of \ac{rfid} technologies, in order to determine a suitable \ac{rf} system. It was clear, from early in the study, that \ac{uhf} \ac{rfid} would be the most suitable option. The market of \ac{uhf} had evolved significantly over the years, tags were cheap, performance was better than alternatives and every \ac{scm} deployed was using it. This established confidence in choosing \ac{uhf} \ac{rfid} has the technology to integrate in solution.
+
+Studying how the implementation of such system followed next, with research in \ac{uhf} antenna design. The multiple application contexts and particular requirements of smart shelves, requiring different antenna sizes and designs, motivated an analysis of cost and manufacturing approaches and designs.
+
+In parallel, an analysis of available readers and requirements was conducted.
+Readers did not provide sufficient antenna ports to handle the multiple antennas required in most smart shelve designs.
+For a few application contexts, namely lockers constructed of metal, the poor \ac{rf} conditions caused by the material, imposed a high number of small antennas. The four antenna ports, provided by most commercial readers, were insufficient to provide proper results. 
+Alternatively, to solve this problem it could be used \ac{rf} splitters and multiplexers to connect numerous amounts of antennas. This alternative was highly expensive.
+
+Later, the exploration of \ac{scm} operations and standards, revealed the \emph{EPCGlobal Architecture Framework}. The architecture was extensive, with many details and technicalities, which took a long time to understand and filter to the application in question.
+
+The inexistent research in developing EPCGlobal compliant products motivated the proposal of this dissertation.
 
 \subsection{Implementation Design and Hardware}
 
-In the contemplation of the research and prior investigation done in this area, it was decided to develop a simple generic smart shelve based on \ac{uhf} \ac{rfid} technologies, implementing the necessary EPCGlobal services, standards and interfaces, to achieve a solution where added and removed items could be monitored through a web application following \ac{scm} guidelines.
-The implementation of the smart shelve had to be simple. The development of custom hardware had to be avoid, in favor of the \emph{EPCGlobal Architecture Framework} implementation, due to time constrains.
+In the final agreement of this dissertation, it was decided to develop a simple generic smart shelve based on \ac{uhf} \ac{rfid} technologies, implementing the necessary EPCGlobal services, standards and interfaces, to achieve a solution where added and removed items could be monitored through a web application.
+The implementation of the smart shelve had to be simple and cost constrained. Due to time constrains, the development of custom hardware had to be avoid in favor of the \emph{EPCGlobal Architecture Framework} implementation.
 
 The shelve used is $190\times150\times60$cm MDF and metal construction shelve. It was chosen for the comparability with most warehouse storage shelves. Was also interest of this dissertation to evaluate real world performance in shelves with metal structures, which interfere with the \ac{emw} generated by the reader antenna.
 
