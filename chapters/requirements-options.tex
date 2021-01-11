@@ -75,7 +75,7 @@ In the remaining of this chapter I will discuss and show multiple development op
 \section{\acs{rfid} Technology}
 
 It was clear, early in the researching for this dissertation, that the \ac{rfid} technology which would be used was \ac{uhf}. 
-It is the most reasonable option in this context: it has the reading distance requirements necessary for the solution envisioned; it provides the cheapest and most performant tags, with promises of even cheaper, more robust and efficient in the future; and most important, it is the \ac{rf} technology used in \ac{gen2} tags and \ac{scm} systems deployed around the globe. 
+It is the most reasonable option in this context: it has the reading distance requirements necessary for the solution envisioned; it provides the cheapest and best performance tags, with promises of even cheaper, more robust and efficient in the future; and most important, it is the \ac{rf} technology used in \ac{gen2} tags and \ac{scm} systems deployed around the globe. 
 Would not make sense to diverge from the well established implementations and difficult the integration in logistics and supply chain systems.
 In fact, it would create a technological frontier and incompatibility in respect to tag technology.
 With this, there is no further critical incentive to opt for other \ac{rfid} technology other than \ac{uhf} \ac{rfid}.
@@ -106,7 +106,7 @@ The market of RAIN \ac{rfid} \ac{gen2} compatible readers is extensive, but not 
 Currently, the available \ac{epc} Class 1 \ac{gen2} reader chips available on the market are listed on table~\ref{tab:readerchips}.
 The biggest market leader is Impinj, which commercializes their own readers and development kits with their in-house reader chips~\cite{RAINRFIDReader}. Most of the commercial readers available on the market (e.g.\ CAEN RFID and Jadak ThingMagic modules~\cite{RAINRFIDPartner}) use their chips.
 There are other players in the \ac{epc} Class 1 \ac{gen2} reader chip manufacturer. 
-STMicroelectronics acquired Austriamicrosystems' \ac{nfc} and \ac{rfid} reader assets in 2016~\cite{PressRelease}. Austriamicrosystems provided, the now discontinued, \texttt{AS3990} (i.g.\ \texttt{ST25RU3991}), \texttt{AS3990} (i.g.\ \texttt{ST25RU3992}) and \texttt{AS3980} (i.g.\ \texttt{ST25RU9080}) used by academics to create \acs{diy} cheap \ac{epc} Class 1 \ac{gen2} readers~\cite{tangDesignUHFRFID2010a, leiDesignHandheldUHF2011, liDesignRadioFrequency2011}. Currently STMicroelectronics
+STMicroelectronics acquired Austriamicrosystems' \ac{nfc} and \ac{rfid} reader assets in 2016~\cite{PressRelease}. Austriamicrosystems provided, the now discontinued, \texttt{AS3990} (i.g.\ \texttt{ST25RU3991}), \texttt{AS3990} (i.g.\ \texttt{ST25RU3992}) and \texttt{AS3980} (i.g.\ \texttt{ST25RU9080}) used by academics to create cheap \ac{epc} Class 1 \ac{gen2} readers~\cite{tangDesignUHFRFID2010a, leiDesignHandheldUHF2011, liDesignRadioFrequency2011}. Currently STMicroelectronics
 commercializes their \texttt{ST25RU3993} chip~\cite{ST25RU3993}, used in their evaluation boards and in few commercial readers, like Feig's~\cite{UHFMidRange}.
 There are also companies selling SMD \ac{epc} Class 1 \ac{gen2} reader/writer modules, namely Nordic, with the ID NUR~\cite{NURModulesNordic}, and ThingMagic with the M6e, Micro and Nano~\cite{ThingMagicRFID}.
 
@@ -250,7 +250,7 @@ Quake Global Inc. commercializes the EasyTap™ \ac{rfid} middleware~\cite{EasyT
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{./figs/02-state-of-the-art/easytap751.jpg}
-    \caption{uake Global Inc. EasyTAP751 middlware hardware solution~\cite{RFIDEasyTAPTag}} 
+    \caption{Quake Global Inc. EasyTAP751 middlware hardware solution~\cite{RFIDEasyTAPTag}} 
     \label{fig:easytap751}
 \end{figure}
 
@@ -327,7 +327,15 @@ The reader chosen was the Impinj Speedway R120, shown in figure~\ref{fig:impinjr
 
 This combination provides very decent performance, without great investment in commercial and custom hardware. Some problems arise from this implementation, mainly with \ac{rf} obstructions. Performance will be examined in the tests chapter~\ref{sec:tests}.  
 
-Regarding tag choices, it is out of the scope of this dissertation. Implementation considerations will be presented, but tags used are generic and not single purpose of any kind.
+Regarding tag choices, it is out of the scope of this dissertation. It was used generic HID 6H2E43 tags~\cite{HidetiquetasrfidPdf}, shown on figure~\ref{fig:6H2E43}. No single purpose tags of any kind.
+These tags use Impinj Monza R6-P chips with 96 bit \ac{epc} and 32 bit \ac{umi}. They are made of PET material, with a size of $92\times28$mm and reading distance up to $14$m.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{./figs/6H2E43.png}
+    \caption{HID 6H2E43 $92\times28$mm PET tag with $96$ bit \acs{epc}~\cite{EtusivuIDcontrol}} 
+    \label{fig:6H2E43}
+\end{figure}
 
 To program the reader and evaluate operation, it was used the Octane Java SDK provided by Impinj. 
 The SDK uses the Octane \ac{llrp} LTK, as the base library. The Octane \ac{llrp} LTK is an extension of the open source LTK implementation, with added Impinj command, extensions and features.

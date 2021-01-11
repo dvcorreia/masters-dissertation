@@ -1,25 +1,54 @@
 \chapter{System Architecture and Development} \label{sec:systemdevelopment}
 
-In this dissertation we address two different contexts of software. Each group is referent to different development ``timelines'' through this work. The first in which I evaluate the reader and shelve system: configure and test its capabilities, examine performance of the shelve system, interact with its interfaces. I also evaluate \ac{epc} encoding, decoding and translation software.
-In the second period, the local deployment of the smart shelve system and \emph{EPCGlobal Architecture Framework} services.
+In the previous chapter I presented the requirements the solution had to achieve and evaluated different development options, discussing their advantages and disadvantages.
+I closed the chapter with a solution proposition, where I justified hardware and software choices.
+In this chapter I will present the implementation of such solution, going through the architecture design, configuration and development. 
 
-\section{Overall architecture}
+\section{Architecture}
 
-% tese do italiano
- 
-%The first experiment was arranged using two commercial reader antennas, located outside the shelf, in a diagonal read zone arrangement in relation to the shelf. He obtained a $100\%$ reading rate and a $23cm$ estimation error, using existing localization algorithms, in a $91 \times 144cm^2$ shelf, with $16$ reference tags to read six target tags.
-%In the second arrangement setup, he employed ``off the shelf'' antennas on the parallel $x$-direction related to a sliding cabinet. He used tag averaged \ac{rssi} while the drawer was sliding to estimate object positions.
-%He proceeds to implement a smart book shelves, with two reader  antennas  attached  to  the  bookshelf  columns,  one  in  front  of  the  other. This was used has alternative to large-area thin planar antennas integrated into the shelf top.
+The architecture identically follows the EPCGlobal example, presented in figure~\ref{fig:archstructure} on chapter~\ref{sec:epcglobal}.
+A detailed overview of the architecture is illustrated in figure~\ref{fig:practicalarchitecture}.
 
-\section{Hello World}
-%UHF Evaluation: Programs developed to evaluate the system, serialize and deserialize EPCs, Writing valid EPCs
+\begin{figure}
+    \centering
+    \caption{Overview of the solution architecture developed in this dissertation} 
+    \label{fig:practicalarchitecture}
+\end{figure}
 
-\section{Cloud and Modern Service Development}
-%Explain Linux containers, Docker and modern service development and deployment
+The Impinj Speedway R120 reader and Keonn Advantenna-p14 are attached behind the bottom shelf, as shown in figure~\ref{fig:shelvephoto}, radiating the entire shelve.
+The reader interrogates the tags, using the \ac{gen2} Tag Air Standard, following the active \acp{rospec} configured prior to the inventory.
+The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages, to the \ac{llrp} interface of the middleware.
 
-\section{RFID Serialization Plan}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figs/completeshelve_photo.jpeg}
+    \caption{Photograph of the Keonn Advantenna-p14 and Impinj Speedway R120 attached behind the bottom shelf}
+    \label{fig:shelvephoto}
+\end{figure}
 
-\section{Identification Keys}
+The Fosstrak \ac{fc} middlware receives the inventory information from the reader, processes it, following the configured \acp{ecspec}, and periodically generates \acp{ecreport}, which are sent to the capture application \ac{ale} capture interface.
+
+The Fosstrak capture application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} documents, following the \ac{cbv} vocabulary guidelines, and sent to the \ac{epcis} repository.
+
+The \ac{epcis} repository permanently saves the \ac{epcis} data in to the \ac{epcis} database. The \ac{epcis} repository exposes the \ac{soap} query interface, which can be used to retrieve information.
+
+The managing application to visualize the smart shelve inventory, was made using web technologies. The application is served to browsers, which query the data from the \ac{epcis} repository.
+Modern browsers do not support \ac{soap} natively. 
+To mitigate this problem, the requests pass through a crude \ac{epcis} web adapter, serving as a proxy between web applications and the \ac{epcis} repository. 
+The proxy adapts the \ac{soap} \ac{xml} requests into \ac{http} and \ac{json} endpoints, which modern browsers understand.
+
+All requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between the services, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
+
+\section{\acs{epc} Serialization Plan}
+
+When companies adhere to the EPCGlobal framework, there are a few things they have to deliberate.
+One of those is delineating the \acs{epc} serialization plan, where an evaluation of unique products and serial numbers is made.
+The plan has to ensure that a company has enough unique product numbers to identify current and future products.
+
+In the case of this dissertation, the serialization plan was already performed by Nespresso.
+Each of their products has already an assigned \ac{gtin}, including the cardboard case for transport.
+
+From the product cases and sleeves, used for testing, Nespresso has two company prefixes registered, 
 
 \section{Reader}
 
