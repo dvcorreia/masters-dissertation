@@ -1,0 +1,65 @@
+version: '3'
+services:
+    middleware:
+        build: ./middleware
+        container_name: middleware
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./middleware/logs/:/usr/local/tomcat/logs/
+        restart: on-failure
+    capture:
+        build: ./capture
+        container_name: capture
+        ports: 
+            - "9999"
+        restart: on-failure
+        volumes: 
+            - ./capture/drools/:/usr/local/tomcat/webapps/capturingapp-0.1.1/WEB-INF/classes/drools/
+        depends_on: 
+            - epcis
+    epcis:
+        build: ./epcis
+        container_name: epcis
+        ports: 
+            - "8080"
+        volumes:
+            - ./epcis/logs/:/usr/local/tomcat/logs/
+        restart: always
+        depends_on:
+            - epcis-db
+    epcis-adapter:
+        build: ./epcis-adapter
+        container_name: epcis-adapter
+        restart: always
+    epcis-db:
+        image: mysql:5.6
+        container_name: epcis-db
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=epcis
+            - MYSQL_DATABASE=epcis
+            - MYSQL_USER=epcis
+            - MYSQL_PASSWORD=epcis
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+        ports: 
+            - "3306"
+        volumes:
+            - ./epcis-db/files/:/docker-entrypoint-initdb.d
+            - ./epcis-db/data/:/var/lib/mysql
+    web:
+        image: nginx:alpine
+        volumes: 
+            - ./web/build/:/usr/share/nginx/html
+        restart: always
+    proxy:
+        image: nginx:latest
+        container_name: proxy
+        ports:
+        - "80:80"
+        volumes:
+        - ./default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - web
+            - epcis-adapter

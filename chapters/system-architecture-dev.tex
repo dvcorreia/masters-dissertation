@@ -11,6 +11,7 @@ A detailed overview of the architecture is illustrated in figure~\ref{fig:practi
 
 \begin{figure}
     \centering
+    \includegraphics[width=\textwidth]{figs/platform_diagram.pdf}
     \caption{Overview of the solution architecture developed in this dissertation} 
     \label{fig:practicalarchitecture}
 \end{figure}
@@ -32,23 +33,36 @@ The Fosstrak capture application receives the \acp{ecreport}, contextualizes the
 
 The \ac{epcis} repository permanently saves the \ac{epcis} data in to the \ac{epcis} database. The \ac{epcis} repository exposes the \ac{soap} query interface, which can be used to retrieve information.
 
-The managing application to visualize the smart shelve inventory, was made using web technologies. The application is served to browsers, which query the data from the \ac{epcis} repository.
+The managing application to visualize the smart shelve inventory, was made using web technologies. The application is served to browsers by an NGINX static file server. The browser running the application queries the data in the \ac{epcis} repository.
 Modern browsers do not support \ac{soap} natively. 
 To mitigate this problem, the requests pass through a crude \ac{epcis} web adapter, serving as a proxy between web applications and the \ac{epcis} repository. 
 The proxy adapts the \ac{soap} \ac{xml} requests into \ac{http} and \ac{json} endpoints, which modern browsers understand.
 
-All requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between the services, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
+All client requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between the services, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
+
+All services in the platform infrastructure are containerized using Docker, and orchestrated using Docker Compose. The yaml compose file, containing the description of  can be consulted in appendix~\ref{apx:composefile}.
 
 \section{\acs{epc} Serialization Plan}
 
-When companies adhere to the EPCGlobal framework, there are a few things they have to deliberate.
+When companies adhere to the EPCGlobal framework, there are a few things that have to be deliberated.
 One of those is delineating the \acs{epc} serialization plan, where an evaluation of unique products and serial numbers is made.
 The plan has to ensure that a company has enough unique product numbers to identify current and future products.
 
 In the case of this dissertation, the serialization plan was already performed by Nespresso.
 Each of their products has already an assigned \ac{gtin}, including the cardboard case for transport.
 
-From the product cases and sleeves, used for testing, Nespresso has two company prefixes registered, 
+From the product cases, GS1-128 barcode, and sleeves, \acs{ean}-13 barcode, used for testing, two Nespresso company prefixes were present: $76300544$ and $76300396$ respectively. Searching in GS1 Company Database (GEPIR), it was found $18$ more company prefixes registered by Nestlé Nespresso SA in Switzerland.
+From the \acs{ean}-13 barcode in sleeves, the \acs{gtin}-13 can be inferred and converted to \acs{gtin}-14, covered in section~\ref{sec:sgtin}, used in \ac{sgtin}-96 encoding for \ac{gen2} \ac{epc} \acs{rfid} tags.
+For the GS1-128 barcode of product cases for transport, an example of the deconstruction of the barcode is illustrated in figure~\ref{fig:gs1-128barcode}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figs/gs1-128barcode.pdf}
+    \caption{Deconstruction of a GS1-128 barcode from a Volluto cardboard case for transport used in this dissertation has a test product}
+    \label{fig:gs1-128barcode}
+\end{figure}
+
+With the \acs{gtin}-14, it is possible to encode it in \ac{gen2} tags, using \ac{sgtin}-96 encoding. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code was adapted. Instead of generating a random \ac{epc}, the Fosstrak \ac{tdt} engine was used to encode a valid \ac{epc} with the correspondent company prefix, item reference and serial in to hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader to program the tag.
 
 \section{Reader}
 
