@@ -451,19 +451,19 @@ The primary function of the \ac{llrp} interface is to allow a client to finely t
 To meet these requirements, \ac{llrp} defines \acp{spec}, containing descriptions of ``what, how and when'' the Reader should perform certain operations.
 \acp{spec} are run when triggered. The trigger range from boundary trigger information defined in the \ac{spec} itself, \acp{gpi}, or by immediate triggers from applications for a more imperative behavior.
 \acp{spec} are sent inside of messages, which are the unit of communication between client and Reader.
-\ac{llrp} contains forty basic messages which range from commands, responses, events and a \texttt{CUSTOM\_MESSAGE} for vender extensions. A list and description of every message can be found in Appendix~\ref{anx:llrpmessages}.
+\ac{llrp} contains forty basic messages which range from commands, responses, events and a \textit{CUSTOM\_MESSAGE} for vender extensions. A list and description of every message can be found in Appendix~\ref{anx:llrpmessages}.
 
-In figure~\ref{fig:ROACCESSREPORTbin} we observe an example of binary encoding of the \texttt{RO\_ACCESS\_REPORT} message.
+In figure~\ref{fig:ROACCESSREPORTbin} we observe an example of binary encoding of the \textit{RO\_ACCESS\_REPORT} message.
 Inside the message there is a \ac{spec}, and inside a \ac{spec}, data is sent as \emph{parameters} and \emph{fields}.
 \emph{Fields} are individual data elements with a known basic format.
 \emph{Parameters} are named data elements that contain other parameters and/or fields, much like structures in programming languages.
-Inside the \texttt{RO\_ACCESS\_REPORT} message, in figure~\ref{fig:ROACCESSREPORTbin}, it can be observed the memory allocated for a list of a parameter called \texttt{TagReportData}. \texttt{TagReportData} is then encoded following figure~\ref{fig:TagReportDatabin}, which inside encodes an \texttt{EPCData} or \texttt{EPC-96} parameter, where the binary encoded \ac{epc} is allocated.
+Inside the \textit{RO\_ACCESS\_REPORT} message, in figure~\ref{fig:ROACCESSREPORTbin}, it can be observed the memory allocated for a list of a parameter called \texttt{TagReportData}. \texttt{TagReportData} is then encoded following figure~\ref{fig:TagReportDatabin}, which inside encodes an \texttt{EPCData} or \texttt{EPC-96} parameter, where the binary encoded \ac{epc} is allocated.
 When constructing \ac{llrp} messages, parameters can be optional, but field must be presented and within their valid range. Some tooling software provides user friendly features like inferring Reader capabilities and default values for unspecified fields.
 
 \begin{figure}[]
     \centering
     \includegraphics[width=\textwidth]{./figs/02-state-of-the-art/RO_ACCESS_REPORT_bin.pdf}
-    \caption[\texttt{RO\_ACCESS\_REPORT} message binary encoding]{\texttt{RO\_ACCESS\_REPORT} message binary encoding~\cite{LowLevelReader}. This message is sent by the Reader and contains inventory and access operations results} 
+    \caption[\textit{RO\_ACCESS\_REPORT} message binary encoding]{\textit{RO\_ACCESS\_REPORT} message binary encoding~\cite{LowLevelReader}. This message is sent by the Reader and contains inventory and access operations results} 
     \label{fig:ROACCESSREPORTbin}
 \end{figure}
 
@@ -488,7 +488,7 @@ When constructing \ac{llrp} messages, parameters can be optional, but field must
     \label{fig:EPC96bin}
 \end{figure}
 
-\subsection{\acf{spec}}
+\subsection{\acf{spec}} \label{sec:llrpspecs}
 
 There are two main \acp{spec} defined in the \ac{llrp} Standard:  \textit{\acp{rospec}} and \textit{Access \acp{spec}}. Most of other \acp{spec} and parameters are enclosed under one of the two.
 I will briefly discuss relevant knowledge required to understand the \acp{spec} context. Detailed information on necessary fields will be presented later in opportune moments throughout this dissertation.

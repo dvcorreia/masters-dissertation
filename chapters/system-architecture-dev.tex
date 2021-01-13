@@ -29,7 +29,7 @@ The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages, t
 
 The Fosstrak \ac{fc} middlware receives the inventory information from the reader, processes it, following the configured \acp{ecspec}, and periodically generates \acp{ecreport}, which are sent to the capture application \ac{ale} capture interface.
 
-The Fosstrak capture application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} documents, following the \ac{cbv} vocabulary guidelines, and sent to the \ac{epcis} repository.
+The Fosstrak capture application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} event documents, following the \ac{cbv} vocabulary guidelines, and sent to the \ac{epcis} repository.
 
 The \ac{epcis} repository permanently saves the \ac{epcis} data in to the \ac{epcis} database. The \ac{epcis} repository exposes the \ac{soap} query interface, which can be used to retrieve information.
 
@@ -72,7 +72,7 @@ Throughout this dissertation, the reader was configured employing three approach
 Each one has their advantages and disadvantages.
 
 In section~\ref{sec:llrp}, I mentioned that \ac{xml} is used to provide a human readable and abstract the \ac{llrp} standard.
-In fact, it can be used to describe messages like the \texttt{ADD\_ROSPEC} and \texttt{SET\_READER\_CONFIG}.
+In fact, it can be used to describe messages like the \textit{ADD\_ROSPEC} and \textit{SET\_READER\_CONFIG}.
 This makes it easy to create and manage configuration files compared to code, which requires knowledge of each reader manufactured SDK and referent programming language, to to maintain.
 
 When configuring the reader with the \acs{llrp}Commander or LTK-\ac{xml}, the configurations can be interchangeable, sharing the same \ac{xml} file. These methods have a few flaws. From what I experienced, \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ 2007 build, which is old and not maintained.
@@ -87,6 +87,32 @@ The \ac{xml} configuration files used with \ac{llrp}Commander and LTK-\acs{xml} 
 The parameters configuration will be discussed in the next section.
 
 \subsection{Configuration}
+
+In section~\ref{sec:llrpspecs} I presented the \ac{rospec} used to control the reader operation through the \ac{llrp} protocol. The \ac{rospec} defined for this solution will be discussed in detail in this section.
+
+\subsubsection{Antenna configuration}
+
+It is good practice in \ac{uhf} \ac{rfid} systems to configure antennas aside from the \ac{rospec} definition. \ac{rf} antenna parameters are dependent on \ac{rfid} hardware and environment in which the system is deployed. \acp{rospec} allow antenna configuration, but should only specify reader control operation, namely inventory logic operations. This ensures configuration interoperability between same logic deployments in disparate \ac{rf} environments.
+
+To do so, \ac{llrp} defines the \textit{SET\_READER\_CONFIG} message with the \texttt{AntennaConfiguration} parameter.
+This parameter contains three important fields:
+
+\begin{itemize}
+    \item \texttt{ReceiverSensitivity} which specifies the effective receive sensitivity level in dBm. The value can be calculated using equation~\ref{eq:sensitivity}~\cite{ImpinjOctaneLLRP}. While testing the solutions, the \ac{rf} environment conditions were optimal, allowing setting the reader to $-80$dBm, maximum sensitivity, referent to index $1$ in \texttt{ReceiveSensitivityTableEntry};
+\end{itemize}
+
+\texttt{TransmitPower} ; and \texttt{ModeIndex}
+
+~\cite{SettingReceiveSensitivity}
+
+\begin{equation}
+    Receive Sensitivity (dBm) = -80 dBm + ReceiveSensitivityValue
+    \label{eq:sensitivity}
+\end{equation}
+
+\texttt{ImpinjInventorySearchMode}
+
+
 
 \paragraph{ROBoundarySpec}
 
