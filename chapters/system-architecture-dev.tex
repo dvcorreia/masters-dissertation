@@ -51,28 +51,42 @@ The plan has to ensure that a company has enough unique product numbers to ident
 In the case of this dissertation, the serialization plan was already performed by Nespresso.
 Each of their products has already an assigned \ac{gtin}, including the cardboard case for transport.
 
-From the product cases, GS1-128 barcode, and sleeves, \acs{ean}-13 barcode, used for testing, two Nespresso company prefixes were present: $76300544$ and $76300396$ respectively. Searching in GS1 Company Database (GEPIR), it was found $18$ more company prefixes registered by Nestlé Nespresso SA in Switzerland.
-From the \acs{ean}-13 barcode in sleeves, the \acs{gtin}-13 can be inferred and converted to \acs{gtin}-14, covered in section~\ref{sec:sgtin}, used in \ac{sgtin}-96 encoding for \ac{gen2} \ac{epc} \acs{rfid} tags.
-For the GS1-128 barcode of product cases for transport, an example of the deconstruction of the barcode is illustrated in figure~\ref{fig:gs1-128barcode}.
+From the product cases for transport are identified by the GS1-$128$ barcode, and sleeves by \acs{ean}-$13$ barcode. From those used for testing, two Nespresso company prefixes were present: $76300544$ and $76300396$ respectively. Nestlé Nespresso SA has many more registered. Searching in GS1 Company Database (GEPIR), I found $18$ more, registered in Switzerland.
+From the \acs{ean}-$13$ barcode in sleeves, the \acs{gtin}-$13$ can be inferred and converted to \acs{gtin}-$14$ for \ac{sgtin}-$96$ encoding on \ac{gen2} \ac{epc} \acs{rfid} tags, which was covered in section~\ref{sec:sgtin}.
+For the GS1-$128$ barcode in product cases for transport, an example of the barcode deconstruction is illustrated in figure~\ref{fig:gs1-128barcode}.
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figs/gs1-128barcode.pdf}
-    \caption{Deconstruction of a GS1-128 barcode from a Volluto cardboard case for transport used in this dissertation has a test product}
+    \caption{Deconstruction of a GS1-$128$ barcode from a Volluto coffee cardboard case for transport used in this dissertation has a test product (GS1 AI IDs on \acs{tds} Section F.1~\cite{EPCTagData})}
     \label{fig:gs1-128barcode}
 \end{figure}
 
-With the \acs{gtin}-14, it is possible to encode it in \ac{gen2} tags, using \ac{sgtin}-96 encoding. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code was adapted. Instead of generating a random \ac{epc}, the Fosstrak \ac{tdt} engine was used to encode a valid \ac{epc} with the correspondent company prefix, item reference and serial in to hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader to program the tag.
+With the \acs{gtin}-$14$, it is possible to encode \ac{sgtin}-$96$ in \ac{gen2} tags. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code, adapted with the \ac{tdt} engine. Instead of generating a random \ac{epc}, the Fosstrak \ac{tdt} engine was used to encode a valid \ac{epc} with the correspondent company prefix, item reference and serial in to hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader and program the tag.
+
+A tag was attached to each sleeve and transport box, with their correspondent \ac{gtin} and unique serial number as a \ac{sgtin}-$96$.
 
 \section{Reader}
 
-Update ao firmware do leitor. origen 5.12.2.240 (Build cbc9ad1d0d1)
+Throughout this dissertation, the reader was configured employing three approaches: using the Impinj Octane Java SDK~\cite{OctaneSDK}, the Impinj LTK using \ac{xml} configuration files~\cite{LTKXMLJava} and with Fosstrak \ac{llrp}Comander client software~\cite{FosstrakLLRPCommander}.
+Each one has their advantages and disadvantages.
 
-%ver https://support.impinj.com/hc/en-us/articles/360000046899-Reader-Modes-Made-Easy
-%ver Reader and Gateway compatibility: %https://support.impinj.com/hc/en-us/articles/360000046899-Reader-Modes-Made-Easy
-%quote https://support.impinj.com/hc/en-us/articles/360007414920-Reader-Mode-1002-Autoset-Dense-Reader-Deep-Scan-Overview
+In section~\ref{sec:llrp}, I mentioned that \ac{xml} is used to provide a human readable and abstract the \ac{llrp} standard.
+In fact, it can be used to describe messages like the \texttt{ADD\_ROSPEC} and \texttt{SET\_READER\_CONFIG}.
+This makes it easy to create and manage configuration files compared to code, which requires knowledge of each reader manufactured SDK and referent programming language, to to maintain.
 
-Octane 6.2.0 is based on \ac{llrp} version 1.0.1, which does not support C1G2 version 1.2.0.~\cite[sec. 3.1.21]{ImpinjOctaneLLRP}. Octane includes vendor extensions to expose the underlying air protocol features. For more information, refer to the documentation for the individual extensions.
+When configuring the reader with the \acs{llrp}Commander or LTK-\ac{xml}, the configurations can be interchangeable, sharing the same \ac{xml} file. These methods have a few flaws. From what I experienced, \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ 2007 build, which is old and not maintained.
+The Impinj LTK-\ac{xml} configuration method also seems to have some problems dealing with Impinj extensions~\footnote{Example: specifying \texttt{ImpinjInventorySearchMode} returns unable to convert LTK-XML to Internal Object. \texttt{C1G2InventoryCommand} has unknown element \texttt{ImpinjInventorySearchMode} which exists and is documented~\cite{ImpinjLTKProgrammers}}.
+
+The suggested approach is using the Octane SKD. It forfeits the advantages of a \ac{xml} configuration file, but it provides all the features expected from the reader, and is reliable and fast to configure.
+Octane 6.2.0, last version at the time of this dissertation, is based on \ac{llrp} version 1.0.1, which does not support some Class 1 \ac{gen2} version 1.2.0 features natively in the \ac{llrp} LTK implementation~\cite{ImpinjOctaneLLRP}. Octane includes vendor extensions in the SDK to expose the underlying air protocol features.
+The reader firmware used was version 5.12.2.240 (Build cbc9ad1d0d1).
+
+The full code used to configure the reader can be consulted in appendix~\ref{apx:octanereaderconfig}.
+The \ac{xml} configuration files used with \ac{llrp}Commander and LTK-\acs{xml} program can be consulted in appendix~\ref{apx:xmlreaderconfig}.
+The parameters configuration will be discussed in the next section.
+
+\subsection{Configuration}
 
 \paragraph{ROBoundarySpec}
 

@@ -1,7 +1,7 @@
 \renewcommand{\thesection}{\Alph{section}}
 
 \begin{appendices}
-\chapter{Information References}
+\chapter{Appendix}
 
 \section{\ac{epc} Schemes and Corresponding GS1 keys} \label{anx:epccodingschemes}
 \begin{table}[!ht]
@@ -34,7 +34,21 @@
     \label{tab:llrpmessages2}
 \end{table}
 
+\clearpage
+
 \section{Production Docker Compose file} \label{apx:composefile}
-\inputminted[linenos, breaklines]{yaml}{./code/docker-compose-production.yml}
+\inputminted[linenos, breaklines, frame=single]{yaml}{./code/docker-compose-production.yml}
+
+\clearpage
+
+\section{Octane SDK Reader Configuration Program} \label{apx:octanereaderconfig}
+\inputminted[linenos, breaklines, frame=single]{java}{./code/App.java}
+
+\clearpage
+
+\section{\acs{xml} Reader Configuration Message Files} \label{apx:xmlreaderconfig}
+\inputminted[linenos, breaklines, frame=single]{xml}{./code/SET_READER_CONFIG.xml}
+\pagebreak
+\inputminted[linenos, breaklines, frame=single]{xml}{./code/ADD_ROSPEC.xml}
 
 \end{appendices}
