@@ -116,9 +116,15 @@ The \texttt{C1G2RFControl} parameter specifies Speedway Gen2 modes selected by I
 
 The option used was \texttt{ModeIndex} $1002$. The $1004$ is not currently available for the R120 in the ETSI european \ac{uhf} band. The $1003$ does not provide confidence in warehouse malls, where other readers systems can operate and create poor \ac{rf} environment conditions.
 
-% here --------------
+Impinj offers a few custom parameters supported in Octane \ac{llrp}, namely the \texttt{ImpinjInventorySearchMode}, a Impinj-specific inventory search mode. 
+To understand search modes, we have to understand sessions. This thematic goes deep in to the \ac{gen2} air protocol and will only briefly contextualized. \ac{gen2} defines up to four tag sessions. Sessions are states tags can transit to, in order to help the reader attempt to singulate, i.g\ read, tags.
+Sessions can be used to determine when a tag will respond to a query from the reader, and/or allow tags to maintain independent states when communicating with multiple readers at the same time. 
 
-This C1G2SingulationControl Parameter provides controls particular to the singulation process in the C1G2 air protocol.
+Impinj readers implement state unaware singulation, in that they provide a high-level control over the search algorithm, through \texttt{ImpinjInventorySearchMode} parameter, not interfering with any of the standard \ac{llrp}/\ac{gen2} settings~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
+Impinj search modes can be consulted in appendix~\ref{apx:searchmodes}.
+In this dissertation we used Tag Focus to make sure every tag was read. This was possible only because we used HID 6H2E43 tags with use Monza chips in this dissertation. For generic tags I recommend using Single Target Inventory search mode.
+
+Using purely \ac{llrp} settings for configuration interchangeability with other reader manufacturers, \ac{gen2} provides the \texttt{C1G2SingulationControl} to control the singulation process in the Class 1 \ac{gen2} air protocol:
 
 \begin{itemize}
     \item Tag transit time: This is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
@@ -127,15 +133,12 @@ This C1G2SingulationControl Parameter provides controls particular to the singul
     \item  TagInventoryStateAwareSingulationAction: This is not used since the TagInventoryStateAware flag is set to false in the InventoryParameterSpec.
 \end{itemize}
 
-This parameters were not set to let the Impinj mode index use the optimal parameters.
+Configurations with tunning of these setting were done for testing, but were not used in the final prototype presented in this dissertation, so no further detail will be done.
 
-\texttt{ImpinjInventorySearchMode}
 
 \subsubsection{Operation configuration}
 
-\paragraph{ROBoundarySpec}
-
-This parameter carries the lifetime of the Reader inventory and survey operation.
+The \texttt{ROBoundarySpec} parameter carries the lifetime of the Reader inventory and survey operation.
 ROSpecStartTrigger, ROSpecStopTrigger: This is the start and stop trigger for this ROSpec.
 
 Used ROSpecStopTriggerType Periodic.
@@ -143,7 +146,7 @@ Periodic trigger values: period - Time period specified in milliseconds; offset 
 
 Used ROSpecStartTriggerType Periodic.
 
-\paragraph{Antenna inventory operations configuration (\ac{aispec})}
+\textbf{Antenna inventory operations configuration (\ac{aispec})}
 
 AISpecStopTrigger parameter defines the stop (i.e., terminating boundary) of an antenna inventory operation~\cite[sec. 11.2.2.1]{LowLevelReader}. Here it was set to Null to Stop when \ac{rospec} is done.
 
@@ -163,15 +166,6 @@ So ROReportTrigger can be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} wit
 In terms of the content useful to retrieve from the reader inventory singulation, the ROSpecID, FirstSeenTimestamp, LastSeenTimestamp are in the interests of the application.
 
 We can enable it the TagReportContentSelector block by setting the Enable in each on.
-
-\paragraph{Impinj Custom Parameters}
-
-Impinj readers support Impinj extensions to the \ac{llrp} protocol. This extensions can be disabled by setting their values to zero. This will use the information defined in the \ac{llrp} parameters defined above.
-
-One that is worth looking at is the ImpinjInventorySearchMode.
-Impinj Readers implement state unaware singulation and therefore the Client does not control how the Reader attempts to singulate tags. This parameter provides a high-level control over the search algorithm and consequently does not interfere with any of the standard \ac{llrp} settings.~\cite[sec. 4.3.3]{ImpinjOctaneLLRP}
-
-Value 3, Single Target Inventory with Suppression (aka TagFocus), used for High tag count, high-throughput use cases where a reduction in repeated tag observations is acceptable. Suppresses repeated observations for extended periods of time while tags are energized. Supported only with Monza tags using Session 1. Since the we are using Monza R6-P tags, we can enable this mode.
 
 \paragraph{Tools}
 
