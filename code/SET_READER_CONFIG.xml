@@ -18,7 +18,7 @@
         <Tari>0</Tari>
       </C1G2RFControl>
       <!-- <Impinj:ImpinjInventorySearchMode>
-        <Impinj:InventorySearchMode>Single_Target</Impinj:InventorySearchMode>
+        <Impinj:InventorySearchMode>Dual_Target</Impinj:InventorySearchMode>
       </Impinj:ImpinjInventorySearchMode> -->
     </C1G2InventoryCommand>
   </AntennaConfiguration>

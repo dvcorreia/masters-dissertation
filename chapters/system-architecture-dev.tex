@@ -77,6 +77,7 @@ This makes it easy to create and manage configuration files compared to code, wh
 
 When configuring the reader with the \acs{llrp}Commander or LTK-\ac{xml}, the configurations can be interchangeable, sharing the same \ac{xml} file. These methods have a few flaws. From what I experienced, \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ 2007 build, which is old and not maintained.
 The Impinj LTK-\ac{xml} configuration method also seems to have some problems dealing with Impinj extensions~\footnote{Example: specifying \texttt{ImpinjInventorySearchMode} returns unable to convert LTK-XML to Internal Object. \texttt{C1G2InventoryCommand} has unknown element \texttt{ImpinjInventorySearchMode} which exists and is documented~\cite{ImpinjLTKProgrammers}}.
+Other problem is the \ac{xml} parser which seems to require fields, ignored Impinj reader in certain conditions, which have to be present in order to validate de \ac{xsd} schema for the configuration to be validated (e.g\ \texttt{TagInventoryStateAware}, \texttt{Tari}).
 
 The suggested approach is using the Octane SKD. It forfeits the advantages of a \ac{xml} configuration file, but it provides all the features expected from the reader, and is reliable and fast to configure.
 Octane 6.2.0, last version at the time of this dissertation, is based on \ac{llrp} version 1.0.1, which does not support some Class 1 \ac{gen2} version 1.2.0 features natively in the \ac{llrp} LTK implementation~\cite{ImpinjOctaneLLRP}. Octane includes vendor extensions in the SDK to expose the underlying air protocol features.
@@ -122,19 +123,18 @@ Sessions can be used to determine when a tag will respond to a query from the re
 
 Impinj readers implement state unaware singulation, in that they provide a high-level control over the search algorithm, through \texttt{ImpinjInventorySearchMode} parameter, not interfering with any of the standard \ac{llrp}/\ac{gen2} settings~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
 Impinj search modes can be consulted in appendix~\ref{apx:searchmodes}.
-In this dissertation we used Tag Focus to make sure every tag was read. This was possible only because we used HID 6H2E43 tags with use Monza chips in this dissertation. For generic tags I recommend using Single Target Inventory search mode.
+In this dissertation we used Tag Focus to make sure every tag was read. This was possible only because we used HID 6H2E43 tags with use Monza chips in this dissertation. For generic tags I recommend using Dual Target Inventory search mode.
 
 Using purely \ac{llrp} settings for configuration interchangeability with other reader manufacturers, \ac{gen2} provides the \texttt{C1G2SingulationControl} to control the singulation process in the Class 1 \ac{gen2} air protocol:
 
 \begin{itemize}
-    \item Tag transit time: This is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
-    \item Tag population: This is the expected tag population in the field of view of the antenna.
+    \item \texttt{TagTransitTime}: This is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
+    \item \texttt{TagPopulation}: This is the expected tag population in the field of view of the antenna.
     \item Session ID: This is the C1G2 session number that the tags use to update the inventory state upon successful singulation.
-    \item  TagInventoryStateAwareSingulationAction: This is not used since the TagInventoryStateAware flag is set to false in the InventoryParameterSpec.
+    \item \texttt{TagInventoryStateAwareSingulationAction}: used if the \texttt{TagInventoryStateAware} flag is set to true in the \texttt{InventoryParameterSpec}. It is used to query, select and deselect target tag population in the a selected session.
 \end{itemize}
 
 Configurations with tunning of these setting were done for testing, but were not used in the final prototype presented in this dissertation, so no further detail will be done.
-
 
 \subsubsection{Operation configuration}
 
@@ -171,7 +171,7 @@ We can enable it the TagReportContentSelector block by setting the Enable in eac
 
 Used Fosstrak \ac{llrp} Commander with the old old Eclipse 3.3 and JRE/JDK 1.8 to configure de reader using an xml schema.
 Also developed a java tool to configure the reader using \ac{llrp}. Used the java llrp. LTK and code by impinj to configure it based on the "same" schema used in the LLRP commander.
-In the java tool, the xml parser sometimes requires fields that shouldn't be needed because Impinj reader ignores then in certain configuration options. But for the configuration to be validated, they have to be present in order to validate de xsd schema (TagInventoryStateAware, Tari)
+
 
 \section{Middleware}
 
