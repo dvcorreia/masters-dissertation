@@ -87,12 +87,10 @@ The full code used to configure the reader can be consulted in appendix~\ref{apx
 The \ac{xml} configuration files used with \ac{llrp}Commander and LTK-\acs{xml} program can be consulted in appendix~\ref{apx:xmlreaderconfig}.
 The parameters configuration will be discussed in the next section.
 
-\subsection{Configuration}
+\subsubsection{Antenna and \acs{gen2} Settings}
 
 In section~\ref{sec:llrpspecs} I presented the \ac{rospec} used to control the reader operation through the \ac{llrp} protocol. The \ac{rospec} defined for this solution will be discussed in detail in this section.
 Use appendix~\ref{apx:xmlreaderconfig} \ac{xml} configuration files as reference.
-
-\subsubsection{Antenna configuration}
 
 It is good practice in \ac{uhf} \ac{rfid} systems to configure antennas aside from the \ac{rospec} definition. \ac{rf} antenna parameters are dependent on \ac{rfid} hardware and environment in which the system is deployed. \acp{rospec} allow antenna configuration, but should only specify reader control operation, namely inventory logic operations. This ensures configuration interoperability between same logic deployments in disparate \ac{rf} environments.
 
@@ -136,44 +134,71 @@ Using purely \ac{llrp} settings for configuration interchangeability with other 
 
 Configurations with tunning of these setting were done for testing, but were not used in the final prototype presented in this dissertation, so no further detail will be done.
 
-\subsubsection{Operation configuration}
+\subsection{Operation Configuration}
 
-The \texttt{ROBoundarySpec} parameter carries the lifetime of the Reader inventory and survey operation.
-ROSpecStartTrigger, ROSpecStopTrigger: This is the start and stop trigger for this ROSpec.
+With the antenna and \ac{gen2} protocol configured, we can focus on the operations the reader has no perform on the tag population.
 
-Used ROSpecStopTriggerType Periodic.
-Periodic trigger values: period - Time period specified in milliseconds; offset - Time offset specified in milliseconds from receiving message to start. useful for one-shot inventory.
+In this dissertation we want to perform an inventory of the products stored in the shelve. Reader inventory operations are described in a \ac{rospec}.
+In section~\ref{sec:llrpspecs}, I described the parameters composing an \ac{rospec} document. Particularly, the \texttt{ROBoundarySpec}, \texttt{\acs{aispec}} and \texttt{ROReportSpec} are interesting to be discussed.
 
-Used ROSpecStartTriggerType Periodic.
+\subsubsection{ROBoundarySpec}
 
-\textbf{Antenna inventory operations configuration (\ac{aispec})}
+The \texttt{ROBoundarySpec} parameter describes the lifetime of the Reader inventory and survey operations.
+The lifetime can be configured in different ways, with no clear superior choice, being to the integrator engineer sensibility to project and evaluate an effective \ac{spec}.
 
-AISpecStopTrigger parameter defines the stop (i.e., terminating boundary) of an antenna inventory operation~\cite[sec. 11.2.2.1]{LowLevelReader}. Here it was set to Null to Stop when \ac{rospec} is done.
+In designing this \ac{spec} solution, the configuration made previously, regarding the search singulation algorithm mode, had to be accounted.
+For the Tag Focus search mode, the reader inventories tags in state A, transitioning the tags to state B upon singulation. Tags transition back to state A in less than $5$ seconds, when de-energized~\cite{ImpinjOctaneLLRP}.
+Dual Target search mode inventories tags in state A, transitioning the tags to state B. Them inventories tags in state B, transitioning the tags back to state A.
+Evaluating both search modes, the solution used consisted in periodically inventor the tags, every $5$ seconds with a $2$ seconds inventory exercitation time~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
+This allowed a full Tag Focus search inventory search cycle while providing enough time for the Dual Target search mode.
 
-InventoryParameterSpec Configuration (C1G2InventoryCommand) \dots
+Translating the lifetime plan to the \ac{spec} parameters, it should look like code~\ref{code:boudaryspec}. The \texttt{ROSpecStartTrigger} should be periodic, with a period of $5000$ milliseconds, and no offset. The \texttt{ROSpecStopTrigger} triggers $2000$ milliseconds after receiving the trigger to start the \ac{rospec}. 
 
+\begin{listing}
+    \begin{minted}[linenos]{xml}
+    <ROBoundarySpec>
+      <ROSpecStartTrigger>
+        <ROSpecStartTriggerType>Periodic<ROSpecStartTriggerType>
+        <PeriodicTriggerValue>
+          <Offset>0</Offset>
+          <Period>5000</Period>
+        </PeriodicTriggerValue>
+      </ROSpecStartTrigger>
+      <ROSpecStopTrigger>
+        <ROSpecStopTriggerType>Duration<ROSpecStopTriggerType>
+        <DurationTriggerValue>2000</DurationTriggerValue>
+      </ROSpecStopTrigger>
+    </ROBoundarySpec>
+    \end{minted}
+    \caption{}
+    \label{code:boudaryspec}
+\end{listing}
 
+\subsubsection{\acl{aispec}}
 
-\paragraph{Report Operation Report Spec (ROReportSpec)}
+For the \ac{aispec} parameters, most of the configuration was already done in through the \textit{SET\_READER\_CONFIG} message, presented in the previous section.
 
-Describes the messages and parameters used in reports, event notifications and keepalives that are generated by the Reader and sent to the Client.
+It is important to specify the air protocol, namely EPCGlobalClass1Gen2, inside the \texttt{InventoryParameterSpec}.
+The \texttt{AISpecStopTrigger} parameter defines the terminating boundary of an antenna inventory operation~\cite{LowLevelReader}, which was set to Null to stop when \ac{rospec} is terminated.
 
-A reporting trigger (ROReportTrigger or AccessReportTrigger) generates a report while a connection is open.
+\subsubsection{Report Operation Report Spec (ROReportSpec)}
 
-In the use case in this dissertation we are not concerned with near real-time updates on the state of the inventory. So we can reduce the report generation by letting the end of the ROSpec generate a report periodically.
-So ROReportTrigger can be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} with N=0 (unlimited tag in antenna's field of view)~\cite[sec. 14.2.1]{LowLevelReader}
+The \texttt{ROReportSpec} parameter describes the messages and parameters used in reports, event notifications and keepalives that are generated by the Reader and sent to the Client.
 
-In terms of the content useful to retrieve from the reader inventory singulation, the ROSpecID, FirstSeenTimestamp, LastSeenTimestamp are in the interests of the application.
+Important to consider, evaluating systems, is when reports are generated and sent to the Client. 
+In the use case in this dissertation we are not concerned with near real-time updates on the state of the inventory. We are interested in the networking infrastructure in which the system is deployed. In mall warehouses, this infrastructure is most likely shared with other companies. The traffic generated by readers should be controlled to not overburden the network.
 
-We can enable it the TagReportContentSelector block by setting the Enable in each on.
+With that in mind, the report generation is triggered by the end of the \ac{rospec}. This will generate a report periodically every $5$ seconds.
+For this behavior \texttt{ROReportTrigger} should be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} with N$=0$, meaning unlimited tag in the field of view of the antenna~\cite{LowLevelReader}.
 
-\paragraph{Tools}
-
-Used Fosstrak \ac{llrp} Commander with the old old Eclipse 3.3 and JRE/JDK 1.8 to configure de reader using an xml schema.
-Also developed a java tool to configure the reader using \ac{llrp}. Used the java llrp. LTK and code by impinj to configure it based on the "same" schema used in the LLRP commander.
-
+The \texttt{ROReportSpec} also selects which content the report sent to the client should include.
+The \ac{epc} is always delivered by default.
+In terms of the content useful to retrieve from the reader inventory singulation, the \texttt{ROSpecID}, \texttt{FirstSeenTimestamp} and \texttt{LastSeenTimestamp} are in the interests of the application. 
+This content allows the middleware to generated accurate tag time information without real-time report delivery, which will be discussed next.
 
 \section{Middleware}
+
+
 
 \paragraph{LRSpec}
 
