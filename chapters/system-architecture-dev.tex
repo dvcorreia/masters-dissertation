@@ -87,18 +87,22 @@ The full code used to configure the reader can be consulted in appendix~\ref{apx
 The \ac{xml} configuration files used with \ac{llrp}Commander and LTK-\acs{xml} program can be consulted in appendix~\ref{apx:xmlreaderconfig}.
 The parameters configuration will be discussed in the next section.
 
-\subsubsection{Antenna and \acs{gen2} Settings}
+\subsection{Antenna and \acs{gen2} Settings}
 
 In section~\ref{sec:llrpspecs} I presented the \ac{rospec} used to control the reader operation through the \ac{llrp} protocol. The \ac{rospec} defined for this solution will be discussed in detail in this section.
 Use appendix~\ref{apx:xmlreaderconfig} \ac{xml} configuration files as reference.
 
 It is good practice in \ac{uhf} \ac{rfid} systems to configure antennas aside from the \ac{rospec} definition. \ac{rf} antenna parameters are dependent on \ac{rfid} hardware and environment in which the system is deployed. \acp{rospec} allow antenna configuration, but should only specify reader control operation, namely inventory logic operations. This ensures configuration interoperability between same logic deployments in disparate \ac{rf} environments.
 
+\subsubsection{Power}
+
 To do so, \ac{llrp} defines the \textit{SET\_READER\_CONFIG} message with the \texttt{AntennaConfiguration} parameter.
 This parameter contains a few important parameters and fields:
 
 \texttt{ReceiverSensitivity} specifies the effective receive sensitivity level in dBm. While testing the solution, the \ac{rf} environment conditions were optimal, which allowed setting the reader to the maximum sensitivity of $-80$dBm. This sensitivity is index $1$ on the \texttt{ReceiveSensitivityTableEntry}. For the R120 reader capabilities consult appendix~\ref{apx:readercapabilities}.
 \texttt{TransmitPower} specifies the transmission power provided to the antennas as an offset into the \texttt{TransmitPowerLevelTableEntry}. For the Speedway R120 reader power with PoE, the maximum transmission power is $30$ dBm, which is index of $81$, used in this dissertation tests~\cite{ImpinjOctaneLLRP, SettingReceiveSensitivity}.
+
+\subsubsection{Class 1 \ac{gen2} Settings}
 
 The \texttt{C1G2InventoryCommand} parameter is were the Class 1 \ac{gen2} air protocol is tunned.
 \texttt{TagInventoryStateAware} flag is used to determine how to process all the \texttt{C1G2Filter} and \texttt{C1G2Singulation} parameters in this command~\footnote{At a functional level, if the Client is managing the tag states during an inventory operation (i.e\ the Client is specifying Class1 \ac{gen2} tag Select command Target and Action values), then it will set that flag to true and pass the appropriate fields in the C1G2 Filter and C1G2 Singulation parameters. If a reader set \texttt{CanDoTagInventoryStateAwareSingulation} to False in LLRPCapabilities, then the Reader shall ignore the \texttt{TagInventoryStateAware} flag~\cite{LowLevelReader}}.
@@ -114,6 +118,8 @@ The \texttt{C1G2RFControl} parameter specifies Speedway Gen2 modes selected by I
 \end{itemize}
 
 The option used was \texttt{ModeIndex} $1002$. The $1004$ is not currently available for the R120 in the ETSI european \ac{uhf} band. The $1003$ does not provide confidence in warehouse malls, where other readers systems can operate and create poor \ac{rf} environment conditions.
+
+\subsubsection{Singulation Configuration}
 
 Impinj offers a few custom parameters supported in Octane \ac{llrp}, namely the \texttt{ImpinjInventorySearchMode}, a Impinj-specific inventory search mode. 
 To understand search modes, we have to understand sessions. This thematic goes deep in to the \ac{gen2} air protocol and will only briefly contextualized. \ac{gen2} defines up to four tag sessions. Sessions are states tags can transit to, in order to help the reader attempt to singulate, i.g\ read, tags.
@@ -133,6 +139,32 @@ Using purely \ac{llrp} settings for configuration interchangeability with other 
 \end{itemize}
 
 Configurations with tunning of these setting were done for testing, but were not used in the final prototype presented in this dissertation, so no further detail will be done.
+
+\subsubsection{\ac{gen2} \ac{epc} Filtering}
+
+In the \ac{llrp} and LTK-\ac{xml} configurations I could not make it work, but in the Java Octane reader configuration, used to configure the reader in the shelve solution, it was possible to implement \ac{epc} filtering directly through the Class 1 \ac{gen2} protocol.
+
+The filtering works by defining a mask, which is sent in the air protocol in the query process, for tags to evaluate if they correspond to the desired population to be inventoried. Only tags corresponding to such filter answer back.
+The \ac{c1g2} filter can be used to match any \ac{gen2} tag memory data, not \ac{epc} exclusively.
+Air protocol filtering greatly reduces tag-to-tag interference, decreases environment \ac{rf} noise, lowers networking traffic in pin-point singulation inventories, and removes filtering work otherwise made by the middleware.
+
+The \ac{c1g2} protocol provides tree parameters which can be used to specify the filter: 
+
+\begin{itemize}
+  \item \texttt{setBitPointer} (integer): corresponds to the start bit position to apply the tag mask when performing tag filtering;
+  \item \texttt{setBitCount} (integer): defines the number of bits to compare against the mask, starting with the bit pointer;
+  \item \texttt{mask}: is the mask to be compared. It must be of a bit length divisible by $8$, begin usually defined in hexadecimal~\cite{LowLevelReader}.
+\end{itemize}
+
+In figure~\ref{fig:c1g2filter} It can be observed a deduction of the parameters presented previously.
+
+
+\begin{figure}
+  \centering
+  \caption{Illustration of company prefix \ac{c1g2} filtering parameter deduction}
+  \label{fig:c1g2filter}
+\end{figure}
+
 
 \subsection{Operation Configuration}
 
@@ -215,4 +247,13 @@ ECSpec2: want only to know the number of which coffee type are available in stor
 
 \section{EPCIS repository}
 
+\subsection{EPCIS Adapter}
+
 \section{Managements application}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figs/webmanagement.png}
+  \caption{}
+  \label{fig:webinterface}
+\end{figure}
