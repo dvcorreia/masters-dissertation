@@ -5,14 +5,12 @@
     </logicalReaders>
     <boundarySpec>
         <repeatPeriod unit="MS">20000</repeatPeriod>
-        <duration unit="MS">3000</duration>
+        <duration unit="MS">5000</duration>
         <stableSetInterval unit="MS">0</stableSetInterval>
     </boundarySpec>
+    <!--3 ECReports delieved to the capture application-->
     <reportSpecs>
-        <reportSpec reportName="current">
-            <reportSet set="CURRENT" />
-            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" />
-        </reportSpec>
+        <!--Sends a report informing the added trading cases for transport (filter = 2) with filter rules for nespresso company prefixes (76300544 and 76300396)-->
         <reportSpec reportName="additions">
             <reportSet set="ADDITIONS" />
             <filterSpec>
@@ -33,6 +31,7 @@
             </filterSpec>
             <output includeTag="true" />
         </reportSpec>
+        <!--Sends a report informing the removed trading cases for transport (filter = 2) with filter rules for nespresso company prefixes (76300544 and 76300396)-->
         <reportSpec reportName="deletions">
             <reportSet set="DELETIONS" />
             <filterSpec>
@@ -53,6 +52,8 @@
             </filterSpec>
             <output includeTag="true" />
         </reportSpec>
+        <!--Sends a report informing the current state of sleeves inventory (filter = 1 point of sale) with filter rules for nespresso company prefixes (76300544 and 76300396)-->
+        <!--The report aggregates the tags based on unique products and countS them. The report only contains an inventory of how many sleeves of each coffee type are in inventory-->
         <reportSpec reportName="inventory">
             <reportSet set="CURRENT" />
             <filterSpec>

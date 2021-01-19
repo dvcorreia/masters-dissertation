@@ -5,7 +5,7 @@
     </logicalReaders>
     <boundarySpec>
         <repeatPeriod unit="MS">5000</repeatPeriod>
-        <duration unit="MS">3000</duration>
+        <duration unit="MS">5000</duration>
         <stableSetInterval unit="MS">0</stableSetInterval>
     </boundarySpec>
     <reportSpecs>

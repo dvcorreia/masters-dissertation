@@ -41,6 +41,7 @@ The proxy adapts the \ac{soap} \ac{xml} requests into \ac{http} and \ac{json} en
 All client requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between the services, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
 
 All services in the platform infrastructure are containerized using Docker, and orchestrated using Docker Compose. The yaml compose file, containing the description of  can be consulted in appendix~\ref{apx:composefile}.
+All the code, configurations, dockerfiles and such can be consulted in the Github dissertation repository at \url{https://github.com/dvcorreia/epc-smart-shelve}~\cite{DvcorreiaEpcsmartshelve}.
 
 \section{\acs{epc} Serialization Plan}
 
@@ -157,6 +158,8 @@ The \ac{c1g2} protocol provides tree parameters which can be used to specify the
 \end{itemize}
 
 In figure~\ref{fig:c1g2filter} It can be observed a deduction of the parameters presented previously.
+To match to both company prefixes found in the test products, the bit pointer should point to the first bit of the company prefix, which will be the pointer to the \ac{epc} memory plus $14$ bits.
+The bit count should be the size of the company prefix, $27$ bits. The mask has to be at least $32$ bits, which for company prefix of ``$76300544$'' the mask could be \texttt{91882001} and for ``$76300396$'' \texttt{91880D82}.
 
 \begin{figure}
   \centering
@@ -164,7 +167,6 @@ In figure~\ref{fig:c1g2filter} It can be observed a deduction of the parameters 
   \caption{Illustration of company prefix \ac{c1g2} filtering parameter deduction}
   \label{fig:c1g2filter}
 \end{figure}
-
 
 \subsection{Operation Configuration}
 
@@ -228,26 +230,51 @@ The \ac{epc} is always delivered by default.
 In terms of the content useful to retrieve from the reader inventory singulation, the \texttt{ROSpecID}, \texttt{FirstSeenTimestamp} and \texttt{LastSeenTimestamp} are in the interests of the application. 
 This content allows the middleware to generated accurate tag time information without real-time report delivery, which will be discussed next.
 
-\section{Middleware}
+\section{\acs{fc} Middleware}
 
+To configure de Fosstrak \ac{fc} middleware we need to define \acp{lrspec} and \acp{ecspec}.
+\acp{lrspec} must identify the reader, its \ac{ip} address, port and type, for abstraction layers required in some proprietary reader communication interfaces.
+For the Impinj Speedway R120, using the \ac{llrp} interface, the configuration can be seen in code~\ref{code:lrspec}.
 
-
-\paragraph{LRSpec}
-
-\paragraph{ECSpec}
-
-We have 2 ec reports: one for informing the tag uri added and deleted from the shelve that will be used for the capture application to provide supply chain visualization to the epcis repository; a second for informing the real-time inventory service on the point of sale the current state of inventory (will sent counts for products).
-
-ECSpec2: want only to know the number of which coffee type are available in storage, so SGTIN filter value of 1 (Point of Sale (POS) Trade Item), with nespresso's company prefix, different item references groups and any serial tag number in those groups.
-
-%Table 10-1 in sec 10.2 TDS : Filter Values for SGTIN EPC Tags
-%Ref ECReportOutputSpec in 8.2.10 ALE standard core
+Following the requirements of the solution, the configuration of the \ac{ecspec} has to provide $2$ \acp{ecreport} to the capture application: one for informing the tag \acp{uri} added to the shelve and another informing tag \ac{uri} removed from the shelve.
+The configuration can be seen in code~\ref{code:ecspec}.
+Every $5$ seconds, the middleware will report to the capture application added and removed tag \acp{uri}.
+This configuration can be has complex has the integrator seems required. Since \ac{epc} filtering was achieved through the \ac{c1g2} protocol, no filtering was required in the middleware. For an example of what a more complex shelve middleware would look like for this type of application, consult appendix~\ref{apx:complexecspec}.
 
 \section{Capture application}
 
-\section{EPCIS repository}
+The Fosstrak Capture application allows the definition of business logic through the Drools engine, a business rules management system.
 
-\subsection{EPCIS Adapter}
+For the requirements for this solutions, it were defined two rules: one for added items and another for removed items. Each generates a single \ac{epcis} ObjectEvent document following \ac{cbv} guidelines. The ObjectEvent contains:
+
+\begin{itemize}
+  \item \textbf{\ac{epc} List}: containing the tag \acp{uri}.
+  \item \textbf{Action type}: \texttt{OBSERVED}.
+  \item \textbf{Event time}: ISO 8601 generated automatically by the capture application software.
+  \item \textbf{Event Time Zone Offset}: ISO 8601 generated automatically by the capture application software.
+  \item \textbf{Read Point}: ``\texttt{urn:epc:id:sgln:76300544.00000.1}'', a fictitious read point created for test purposes. It identifies the shelve within the business location.
+  \item \textbf{Business Location}: ``\texttt{urn:epc:id:sgln:76300544.00000.0}'', a fictitious business location created for test purposes. Identifies the Nespresso boutique store in Aveiro. 
+  \item \textbf{Business Step}: ``\texttt{urn:epcglobal:cbv:bizstep:storing}'' for added items; ``\texttt{urn:epcglobal:cbv:bizstep:unpacking}'' for removed items. 
+  \item \textbf{Disposition}: ``\texttt{urn:epcglobal:cbv:disp:sellable\_not\_accessible}'' for added items; ``\texttt{urn:epcglobal:cbv:disp:partially\_dispensed}'' for removed items.
+\end{itemize}
+
+The capture application, in a real world context, could implement much more complex business logic, to provide information to other inventory data services, process data, and present better context regarding the \ac{cbv}. 
+
+\section{\acs{epcis} repository and Adapter}
+
+The \ac{epcis} repository does not require any configuration, except for containerizing the service and provide a SQL database instance configured with the \ac{epcis} schema.
+
+To facilitate the interaction with the \ac{epcis} repository by modern web browsers, an adapter service was developed in the Golang programming language. The service implements a crude and partial adapter for the \ac{epcis} Query Interface. A functional block illustration can be seen in figure~\ref{fig:epcisadapter}. It implements endpoints for the \texttt{poll} \texttt{SimpleEventQuery} and \texttt{subscribe} operations.
+
+For the \texttt{poll} operation, the service translates \ac{http} queries in to \ac{soap} envelopes, which are sent to the \ac{epcis} repository. Response data is translated form \ac{xml} in to \ac{json} and sent back to the web client. 
+For the \texttt{subscribe} operation, the subscription endpoint converts the query into \ac{soap} and registers the subscription in the \ac{epcis} repository. The event data is sent by the \ac{epcis} repository to the adapter, were is delivered in \ac{json} using websockets.
+The \ac{epcis} data model in Golang used for this service can be seen in appendix~\ref{apx:epcisgolang}. The full service code can be consulted in the dissertation Github repository~\cite{DvcorreiaEpcsmartshelve}.
+
+\begin{figure}
+  \centering
+  \caption{Functional block illustration of the \acs{epcis}-adapter developed in this dissertation}
+  \label{fig:epcisadapter}
+\end{figure}
 
 \section{Managements application}
 
