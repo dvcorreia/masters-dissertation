@@ -5,15 +5,15 @@
 In the previous chapter I presented the state of the art of smart shelves. 
 To understand the context of the implementation presented throughout the remaining of this dissertation, a brief contextualization of the use case and background is needed.
 
-The smart shelve developed in this dissertation was primarily designed to integrate warehouse storage in Nespresso boutique stores.
+The smart shelf developed in this dissertation was primarily designed to integrate warehouse storage in Nespresso boutique stores.
 Nespresso is a company owned by Nestlé Nespresso S. A., one operational unit of the Nestlé Group, dedicated to the retail and production of coffee capsules, coffee machines and related accessories.
 Coffee arrives from different parts of the globe (Colombia, Brazil, Ethiopia, India, Indonesia, to say a few) through seaborne container, reaching the factories by train.
 The company has 3 manufacturing facilities producing coffee capsules in Switzerland, from where it dispatches products to supply chain centers.
-Coffee machines are manufactured in East Europe and shipping from there to supply chain centers.
+Coffee machines are manufactured in East Europe and from there, shipped to supply chain centers.
 Supply chain centers distribute the products to retail and boutique shops where they are sold~\cite{PortugalRecebeCentro}.
 
 The  complexity  in  the logistics network, due to the growing of the brand, starts to compromise the management of the products down in the chain.
-Namely, in boutique stores, the categorization and verification of new inventory, inspection of the arrived goods from the transportation company, returns, control and management of stocks, are all attended by manual labour. The manual labour is prone to errors and consumes a lot of working hours.
+Namely, in boutique stores, the categorization and verification of new inventory, inspection of the arrived goods from the transportation company, returns, control and management of stocks, are all attended by manual labour. The manual labour is prone to errors and requires a lot of working hours.
 
 \section{Requirements}
 
@@ -47,27 +47,26 @@ Regarding Nespresso's inventory specifications, their catalog ranges in products
     \label{fig:sleeves}
 \end{figure}
 
-The software platform implementation should be agnostic, in that it runs equally well across multiple platform. It should be capable of effortlessly integrate with the logistics management software and services used by the company and trading partners.
+The software platform implementation should be agnostic, in that it runs equally well across multiple platforms. It should be capable of effortlessly integrate with the logistics management software and services used by the company and trading partners.
 
 \section{Solution}
 
 The solution proposed in this dissertation is a system of smart shelving, where the goods like coffee capsules, machines and accessories are stored. These goods are tagged with \ac{rfid} tags and integrated in an \ac{rfid}-enabled supply chain.
-The shelve structure contains \ac{rfid} antennas and readers that detect and read the tags attach to the stored products. Readers will send real-time state and changes of inventory to the software platform, which filters and contextualizes the data, stores it, and provide appropriate query interfaces to managing software systems.
-This system can solve multiple issues and integrate multiple features like:
+The shelve structure contains \ac{rfid} antennas and readers that detect and read the tags attached to the stored products. Readers will send real-time state and changes of inventory to the software platform, which filters and contextualizes the data, stores it, and provides appropriate query interfaces to managing software systems.
+This system can solve multiple issues and in the future integrate multiple features like:
 
 \begin{itemize}
     \item Prevent stock-outs and get timely replenishment of products. Logistics companies deliver goods on time and according to delivery requirements generated automatically by a management system;
     \item Reduce time and errors from manual labour: counts, identification, misplacement and lost or stolen items;
-    \item Help customers find and engage with the products they want. Optimise in-store sales and management with point-of-sale shelves;
-    \item Control who removes or checks out valuable items;
-    \item Automatic information about stock predictions. Manufacturer production lines automatically transmit and receive re-stock interest information.
-    \item Handle registration and verification of arriving stock.Automatically identify goods in the warehouse/shelves and match them with distribution invoices;
-    \item Verify products trades as goods enter the collection area.  The collection equipment automatically identifies items, by collecting \ac{rfid} tags, thereby ensuring the physical and  distribution requirements are consistent;
+    \item Control who removes or checks out valuable products;
+    \item Automate information about stock predictions. Manufacturer production lines automatically transmit and receive re-stock interest information.
+    \item Handle registration and verification of arriving stock. Automatically identify goods in the warehouse/shelves and match them with distribution invoices;
+    \item Verify products trades as goods enter the collection area. The collection equipment automatically identifies items, by collecting \ac{rfid} tags, thereby ensuring the physical and  distribution requirements are consistent;
     \item Monitor in real-time the distribution of all goods, accurately know inventory state and grasp the status and changes of the warehouse environment in real time.
 \end{itemize}
 
-In the design and planning of this solution, there are two different contexts considered. The first is a consideration of how a real product would be design to be ready for the envisioned environment. Costs, deployment problems and architecture designs should be well thought in order to achieve a stable and commercially appealing product.
-The second context is the  and a generic prototype implementation showing a working p of what the real product would be like.
+In the design and planning of this solution, there are two different contexts considered. The first is how a real product would be designed to be ready for the envisioned environment. Costs, deployment problems and architecture designs should be well thought in order to achieve a stable and commercially appealing product.
+The second context is a generic prototype implementation showing a working proof of what the real product would be like.
 In a real-world implementation, sleeves would not be tagged, as it would increase significantly operation costs without significant benefits. For academic purposes of studying tag density read performance, each sleeve was tagged.
 
 In the remaining of this chapter I will discuss and show multiple development options: hardware, product design and platform software. In the last section of this chapter, I will present and clarify the options taken to prototype the smart shelve solution accomplished in this dissertation.
@@ -84,20 +83,20 @@ With this, there is no further critical incentive to opt for other \ac{rfid} tec
 
 \subsection{Considerations}
 
-Buy commercial readers or make a custom implementation?
-The answer is deeply dependent on company long term plans, namely, in the balance between \ac{rnd} cost, return on investment, and long term benefits. Compromises in engineering work have to be clearly balanced with the company needs and requirements. If the \ac{rfid} implementation plans extend deeply into the organization - points of sale, distribution centers, warehouses and manufacturing - making a custom reader solution might make sense, when evaluating cost margins and requirements. For companies like Walmart, Decathlon and big retailers, the investment in custom hardware should definitely be considered.
+To buy commercial readers or make a custom implementation?
+The answer is deeply dependent on company long term plans, namely in the balance between \ac{rnd} cost, return on investment, and long term benefits. Compromises in engineering work have to be clearly balanced with the company needs and requirements. If the \ac{rfid} implementation plans extend deeply into the organization - points of sale, distribution centers, warehouses and manufacturing - making a custom reader solution might make sense, when evaluating cost margins and requirements. For companies like Walmart, Decathlon and big retailers, the investment in custom hardware should definitely be considered.
 
 Commercial readers tend to be very expensive. They are usually designed for generic applications, providing incredible reading distances, astonishing number of tag reads per second, and multiple other features to please every client and fit every application.
 This makes them rather expensive and excessive for applications like smart shelves.
 
-Smart shelves, in most design approaches, do not require high transmission power nor high tags reads per second. Designs usually take advantage of \ac{rf} splitters and multiplexers to connect multiple antennas. They could also take advantage of WiFi, LTE and PoE capabilities, over the traditional communication interfaces like the serial port.
+Smart shelves, in most design approaches, do not require high power transmission nor high tags reads per second. Designs usually take advantage of \ac{rf} splitters and multiplexers to connect multiple antennas. They could also take advantage of WiFi, LTE and PoE capabilities, over the traditional communication interfaces like the serial port.
 
 Returning to the main premise, there are two paths which can be followed: development of a custom reader~\footnote{When I address the development of custom readers, I do not specify who and how, as it can be done by consulting companies or in house. In this dissertation I only discuss development considerations and not how those are translated to engineering work} or adopt a commercial one. 
-Custom designs for smart shelves can be much cheaper: less features translate to few hardware requirements; lower power transmission allows cheaper \ac{rf} amplifiers (commercial readers can read up to $10m$, depending on implementations, might only be required reads up to $1m$); lower requirements of reads speeds allows cheaper \ac{epc} Class 1 \ac{gen2} SMD or chip solutions, like handheld \acs{ic}.
+Custom designs for smart shelves can be much cheaper: less features translate to few hardware requirements; lower power transmission allows cheaper \ac{rf} amplifiers (commercial readers can read up to $10m$, and depending on shelve implementations, we might only require reads up to $1m$); lower requirements in reads speeds allow cheaper \ac{epc} Class 1 \ac{gen2} SMD or chip solutions, like \acp{ic} designed for handheld readers, which tend to be less powerful but cheaper.
 On top of being cheaper, custom readers allow developers to implement features otherwise nonexistent. Many readers expose interfaces mainly through Java and C\# SDKs. Open standards like \ac{llrp} are usually provided only in few high-end commercial readers. The stagnant condition of commercial readers, also does not keep up with new \ac{iot} and \ac{it} technologies, which have showed to be incredible powerful, mainly in the distributed computing, and dismissed in favor of legacy technologies.
 Custom readers can also integrate middleware capabilities (i.g.\ ``smart readers'' conceptualized in the \emph{EPCGlobal Architecture Framework}), and capture application features, encouraging a deprecation of discrete middleware and capture applications in a few contexts.
 On the other hand, the development of such readers is \ac{rnd} intensive. For small and medium companies, such option is not remotely reasonable. 
-For big companies, this kind of project would certainly be approached by consulting companies. \ac{rfid} technologies are not within the expertise of most \ac{scm} and retailers. Although, companies like Nike, Zara and Walmart have built in-house tools and hardware, strengthening the proposition I been presenting.
+For big companies, this kind of project would certainly be approached by consulting companies, since \ac{rfid} hardware is not within the expertise of most \ac{scm} and retailers. Companies like Nike, Zara and Walmart have built in-house tools and outsourced hardware, strengthening the proposition I am presenting.
 
 \subsection{Market Offer}
 
@@ -283,12 +282,12 @@ In the final agreement of this dissertation, it was decided to develop a simple 
 The implementation of the smart shelve had to be simple and cost limited. 
 Due to time constrains, the development of custom hardware had to be avoid in favor of the \emph{EPCGlobal Architecture Framework} implementation.
 
-The shelve used was a $190\times150\times60$cm MDF and metal construction shelve, shown in figure~\ref{fig:commercialshelve}. It was chosen for the similarity with most warehouse storage shelves. Was also interest of this dissertation to evaluate real world performance in shelves with metal structures, to study how it interferes with the \ac{emw} generated by the reader antenna.
+The shelve used was a $176\times160\times60cm$cm MDF and metal construction shelve, shown in figure~\ref{fig:commercialshelve}. It was chosen for the similarity with most warehouse storage shelves. Was also interest of this dissertation to evaluate real world performance in shelves with metal structures, to study how it interferes with the \ac{emw} generated by the reader antenna.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\linewidth]{./figs/estantedemetal.jpg}
-    \caption{Leroy Merlin $190\times150\times60$cm MDF and metal construction shelve~\cite{EstanteMetalSpaceo}} 
+    \includegraphics[width=0.4\linewidth]{./figs/estantedemetal.jpg}
+    \caption{Leroy Merlin $176\times160\times60cm$cm MDF and metal construction shelve~\cite{EstanteMetalStabil}} 
     \label{fig:commercialshelve}
 \end{figure}
 

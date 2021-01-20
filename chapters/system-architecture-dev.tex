@@ -236,7 +236,7 @@ To configure de Fosstrak \ac{fc} middleware we need to define \acp{lrspec} and \
 \acp{lrspec} must identify the reader, its \ac{ip} address, port and type, for abstraction layers required in some proprietary reader communication interfaces.
 For the Impinj Speedway R120, using the \ac{llrp} interface, the configuration can be seen in code~\ref{code:lrspec}.
 
-Following the requirements of the solution, the configuration of the \ac{ecspec} has to provide $2$ \acp{ecreport} to the capture application: one for informing the tag \acp{uri} added to the shelve and another informing tag \ac{uri} removed from the shelve.
+Following the requirements of the solution, the configuration of the \ac{ecspec} has to provide two \acp{ecreport} to the capture application: one for informing the tag \acp{uri} added to the shelve and another informing tag \ac{uri} removed from the shelve.
 The configuration can be seen in code~\ref{code:ecspec}.
 Every $5$ seconds, the middleware will report to the capture application added and removed tag \acp{uri}.
 This configuration can be has complex has the integrator seems required. Since \ac{epc} filtering was achieved through the \ac{c1g2} protocol, no filtering was required in the middleware. For an example of what a more complex shelve middleware would look like for this type of application, consult appendix~\ref{apx:complexecspec}.
@@ -276,9 +276,16 @@ The \ac{epcis} data model in Golang used for this service can be seen in appendi
   \label{fig:epcisadapter}
 \end{figure}
 
-\section{Managements application}
+\section{Management application}
 
-\begin{figure}
+The development of the management application is out of the scope of this dissertation, but will be briefly contextualized.
+
+The application was developed for browsers. This enables most modern internet capable devices to use it.
+It was implemented using ReactJS~\cite{ReactJavaScriptLibrary}, a JavaScript library for building user interfaces, with Ant Design UI components~\cite{AntDesignWorld}. The web application is compiled and minified into static web files which are served by an NGINX static file server instance.
+A picture of the management application can be seen in figure~\ref{fig:webinterface}.
+The application implements only the logic required to show in real-time the inventory information. Disable buttons are provided to show a contextualization of what the full fledge management application would look like.
+
+\begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{figs/webmanagement.png}
   \caption{}
