@@ -2,11 +2,11 @@
 
 In the previous chapter I presented the requirements the solution had to achieve and evaluated different development options, discussing their advantages and disadvantages.
 I closed the chapter with a solution proposition, where I justified hardware and software choices.
-In this chapter I will present the implementation of such solution, going through the architecture design, configuration and development. 
+In this chapter I will present the implementation details of such solution, going through the architecture design, development considerations and configurations. 
 
 \section{Architecture}
 
-The architecture identically follows the EPCGlobal example, presented in figure~\ref{fig:archstructure} on chapter~\ref{sec:epcglobal}.
+The architecture used in this dissertation identically follows the EPCGlobal example, presented in figure~\ref{fig:archstructure} on chapter~\ref{sec:epcglobal}.
 A detailed overview of the architecture is illustrated in figure~\ref{fig:practicalarchitecture}.
 
 \begin{figure}
@@ -17,8 +17,8 @@ A detailed overview of the architecture is illustrated in figure~\ref{fig:practi
 \end{figure}
 
 The Impinj Speedway R120 reader and Keonn Advantenna-p14 are attached behind the bottom shelf, as shown in figure~\ref{fig:shelvephoto}, radiating the entire shelve.
-The reader interrogates the tags, using the \ac{gen2} Tag Air Standard, following the active \acp{rospec} configured prior to the inventory.
-The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages, to the \ac{llrp} interface of the middleware.
+The reader interrogates the tags, using the \ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol, following the active \acp{rospec} configured prior to the inventory.
+The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages to the \ac{llrp} interface of the middleware.
 
 \begin{figure}
     \centering
@@ -27,44 +27,43 @@ The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages, t
     \label{fig:shelvephoto}
 \end{figure}
 
-The Fosstrak \ac{fc} middlware receives the inventory information from the reader, processes it, following the configured \acp{ecspec}, and periodically generates \acp{ecreport}, which are sent to the capture application \ac{ale} capture interface.
+The Fosstrak \ac{fc} middlware receives the inventory information from the reader, processes it, following the configured \acp{ecspec}, and periodically generates \acp{ecreport}, which are sent to the \ac{ale} capture interface of the Capture Application.
 
-The Fosstrak capture application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} event documents, following the \ac{cbv} vocabulary guidelines, and sent to the \ac{epcis} repository.
+The Fosstrak Capture Application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} event documents, following the \ac{cbv} vocabulary guidelines, and sent to the \ac{epcis} repository.
 
 The \ac{epcis} repository permanently saves the \ac{epcis} data in to the \ac{epcis} database. The \ac{epcis} repository exposes the \ac{soap} query interface, which can be used to retrieve information.
 
-The managing application to visualize the smart shelve inventory, was made using web technologies. The application is served to browsers by an NGINX static file server. The browser running the application queries the data in the \ac{epcis} repository.
+The managing application to visualize the smart shelf inventory, was made using web technologies. The application is served to browsers by an NGINX static file server. The browser running the application queries the data in the \ac{epcis} repository.
 Modern browsers do not support \ac{soap} natively. 
-To mitigate this problem, the requests pass through a crude \ac{epcis} web adapter, serving as a proxy between web applications and the \ac{epcis} repository. 
-The proxy adapts the \ac{soap} \ac{xml} requests into \ac{http} and \ac{json} endpoints, which modern browsers understand.
+To mitigate this problem, the requests pass through a crude \ac{epcis} Web Adapter, serving as proxy between web applications and the \ac{epcis} repository. 
+The proxy converts the \ac{soap} \ac{xml} requests into \ac{http} and \ac{json} endpoints, which modern browsers natively support.
 
-All client requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between the services, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
+All client requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between services instances, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
 
-All services in the platform infrastructure are containerized using Docker, and orchestrated using Docker Compose. The yaml compose file, containing the description of  can be consulted in appendix~\ref{apx:composefile}.
-All the code, configurations, dockerfiles and such can be consulted in the Github dissertation repository at \url{https://github.com/dvcorreia/epc-smart-shelve}~\cite{DvcorreiaEpcsmartshelve}.
+All services in the platform infrastructure are containerized using Docker, and orchestrated using Docker Compose. The yaml compose file, containing the description and configuration of the platform services can be consulted in appendix~\ref{apx:composefile}.
+All the code, configurations, dockerfiles and other dissertation related code and information can be consulted in the Github repository at \url{https://github.com/dvcorreia/epc-smart-shelve}~\cite{DvcorreiaEpcsmartshelve}.
 
 \section{\acs{epc} Serialization Plan}
 
-When companies adhere to the EPCGlobal framework, there are a few things that have to be deliberated.
+When companies adhere to the EPCGlobal framework, there are a few things they have to deliberate.
 One of those is delineating the \acs{epc} serialization plan, where an evaluation of unique products and serial numbers is made.
 The plan has to ensure that a company has enough unique product numbers to identify current and future products.
 
 In the case of this dissertation, the serialization plan was already performed by Nespresso.
-Each of their products has already an assigned \ac{gtin}, including the cardboard case for transport.
-
-From the product cases for transport are identified by the GS1-$128$ barcode, and sleeves by \acs{ean}-$13$ barcode. From those used for testing, two Nespresso company prefixes were present: $76300544$ and $76300396$ respectively. Nestlé Nespresso SA has many more registered. Searching in GS1 Company Database (GEPIR), I found $18$ more, registered in Switzerland.
+Each of their products has already an assigned \ac{gtin}, including the cardboard cases for transport.
+The product cardboard cases for transport are identified by GS1-$128$ barcodes, and sleeves by \acs{ean}-$13$ barcodes.
 From the \acs{ean}-$13$ barcode in sleeves, the \acs{gtin}-$13$ can be inferred and converted to \acs{gtin}-$14$ for \ac{sgtin}-$96$ encoding on \ac{gen2} \ac{epc} \acs{rfid} tags, which was covered in section~\ref{sec:sgtin}.
 For the GS1-$128$ barcode in product cases for transport, an example of the barcode deconstruction is illustrated in figure~\ref{fig:gs1-128barcode}.
+From sleeves and boxes used for testing, only two Nespresso company prefixes were present: ``$76300544$'' and ``$76300396$'' respectively. Nestlé Nespresso SA has many more registered. Searching in GS1 Company Database (GEPIR), it was found $18$ more, registered in Switzerland.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figs/gs1-128barcode.pdf}
-    \caption{Deconstruction of a GS1-$128$ barcode from a Volluto coffee cardboard case for transport used in this dissertation has a test product (GS1 AI IDs on \acs{tds} Section F.1~\cite{EPCTagData})}
+    \caption{Deconstruction of a GS1-$128$ barcode from a Volluto coffee cardboard case for transport used in this dissertation as a test product (GS1 AI IDs on \acs{tds} Section F.1~\cite{EPCTagData})}
     \label{fig:gs1-128barcode}
 \end{figure}
 
-With the \acs{gtin}-$14$, it is possible to encode \ac{sgtin}-$96$ in \ac{gen2} tags. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code, adapted with the \ac{tdt} engine. Instead of generating a random \ac{epc}, the Fosstrak \ac{tdt} engine was used to encode a valid \ac{epc} with the correspondent company prefix, item reference and serial in to hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader and program the tag.
-
+With the \acs{gtin}-$14$, it is possible to encode \ac{sgtin}-$96$ in \ac{gen2} tags. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code, adapted with the Fosstrak \ac{tdt} engine. Instead of generating a random \ac{epc}, the \ac{tdt} engine encodes a valid \ac{epc} with the correspondent \ac{sgtin} - company prefix, item reference and serial - in to hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader and program the tag.
 A tag was attached to each sleeve and transport box, with their correspondent \ac{gtin} and unique serial number as a \ac{sgtin}-$96$.
 
 \section{Reader} \label{sec:readerconfiguration}
@@ -72,21 +71,21 @@ A tag was attached to each sleeve and transport box, with their correspondent \a
 Throughout this dissertation, the reader was configured employing three approaches: using the Impinj Octane Java SDK~\cite{OctaneSDK}, the Impinj LTK using \ac{xml} configuration files~\cite{LTKXMLJava} and with Fosstrak \ac{llrp}Comander client software~\cite{FosstrakLLRPCommander}.
 Each one has their advantages and disadvantages.
 
-In section~\ref{sec:llrp}, I mentioned that \ac{xml} is used to provide a human readable and abstract the \ac{llrp} standard.
+In section~\ref{sec:llrp}, I mentioned that \ac{xml} is used to provide a human readability and abstract the \ac{llrp} standard.
 In fact, it can be used to describe messages like the \textit{ADD\_ROSPEC} and \textit{SET\_READER\_CONFIG}.
-This makes it easy to create and manage configuration files compared to code, which requires knowledge of each reader manufactured SDK and referent programming language, to to maintain.
+This makes it easy to create and manage configuration files compared to code, which requires knowledge of each reader manufactured SDK and referent programming language, to maintain the configurations options.
 
-When configuring the reader with the \acs{llrp}Commander or LTK-\ac{xml}, the configurations can be interchangeable, sharing the same \ac{xml} file. These methods have a few flaws. From what I experienced, \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ 2007 build, which is old and not maintained.
+Reader configuration files can be shared between the \acs{llrp}Commander and LTK-\ac{xml}, sharing the same \ac{xml} file. These configuration methods have a few flaws. From what I experienced, the \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ (2007 build), which is old and not maintained.
 The Impinj LTK-\ac{xml} configuration method also seems to have some problems dealing with Impinj extensions~\footnote{Example: specifying \texttt{ImpinjInventorySearchMode} returns unable to convert LTK-XML to Internal Object. \texttt{C1G2InventoryCommand} has unknown element \texttt{ImpinjInventorySearchMode} which exists and is documented~\cite{ImpinjLTKProgrammers}}.
-Other problem is the \ac{xml} parser which seems to require fields, ignored Impinj reader in certain conditions, which have to be present in order to validate de \ac{xsd} schema for the configuration to be validated (e.g\ \texttt{TagInventoryStateAware}, \texttt{Tari}).
+The \ac{xml} parser of the LTK-\acs{xml} also seems to require fields, ignored Impinj reader in certain conditions, which have to be present in order to validate de \ac{xsd} schema for the configuration to be validated (e.g\ \texttt{TagInventoryStateAware}, \texttt{Tari}).
 
-The suggested approach is using the Octane SKD. It forfeits the advantages of a \ac{xml} configuration file, but it provides all the features expected from the reader, and is reliable and fast to configure.
-Octane 6.2.0, last version at the time of this dissertation, is based on \ac{llrp} version 1.0.1, which does not support some Class 1 \ac{gen2} version 1.2.0 features natively in the \ac{llrp} LTK implementation~\cite{ImpinjOctaneLLRP}. Octane includes vendor extensions in the SDK to expose the underlying air protocol features.
+The approach suggested to configure the reader is using the Octane SKD. It forfeits the advantages of a \ac{xml} configuration file, but provides all the features expected from the reader, and is reliable and fast to configure.
+Octane 6.2.0, last version at the time of this dissertation, is based on \ac{llrp} version 1.0.1 and does not support some \ac{c1g2} v1.2.0 features natively in the \ac{llrp} LTK implementation~\cite{ImpinjOctaneLLRP}. Octane includes vendor extensions in the SDK to expose the underlying air protocol features.
 The reader firmware used was version 5.12.2.240 (Build cbc9ad1d0d1).
 
 The full code used to configure the reader can be consulted in appendix~\ref{apx:octanereaderconfig}.
 The \ac{xml} configuration files used with \ac{llrp}Commander and LTK-\acs{xml} program can be consulted in appendix~\ref{apx:xmlreaderconfig}.
-The parameters configuration will be discussed in the next section.
+The parameters configuration will be discussed in the next sections.
 
 \subsection{Antenna and \acs{gen2} Settings}
 
