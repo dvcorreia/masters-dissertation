@@ -68,16 +68,16 @@ A tag was attached to each sleeve and transport box, with their correspondent \a
 
 \section{Reader} \label{sec:readerconfiguration}
 
-Throughout this dissertation, the reader was configured employing three approaches: using the Impinj Octane Java SDK~\cite{OctaneSDK}, the Impinj LTK using \ac{xml} configuration files~\cite{LTKXMLJava} and with Fosstrak \ac{llrp}Comander client software~\cite{FosstrakLLRPCommander}.
+Throughout this dissertation, the reader was configured employing three approaches: using the Impinj Octane Java SDK~\cite{OctaneSDK}, the Impinj LTK using \ac{xml} configuration files~\cite{LTKXMLJava} and the Fosstrak \ac{llrp}Comander client software~\cite{FosstrakLLRPCommander}.
 Each one has their advantages and disadvantages.
 
-In section~\ref{sec:llrp}, I mentioned that \ac{xml} is used to provide a human readability and abstract the \ac{llrp} standard.
-In fact, it can be used to describe messages like the \textit{ADD\_ROSPEC} and \textit{SET\_READER\_CONFIG}.
-This makes it easy to create and manage configuration files compared to code, which requires knowledge of each reader manufactured SDK and referent programming language, to maintain the configurations options.
+In section~\ref{sec:llrp} I specified that \ac{xml} is used to provide a human readability and abstract the \ac{llrp} standard.
+In fact, it can be used to describe \ac{llrp} messages like the \textit{ADD\_ROSPEC} and \textit{SET\_READER\_CONFIG}.
+This makes it easy to create and manage configuration files compared to program code, which requires knowledge of each reader manufactured SDK and referent programming language, to maintain the configurations options.
 
-Reader configuration files can be shared between the \acs{llrp}Commander and LTK-\ac{xml}, sharing the same \ac{xml} file. These configuration methods have a few flaws. From what I experienced, the \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ (2007 build), which is old and not maintained.
+Reader configuration \ac{xml} files can be shared between the \acs{llrp}Commander and LTK-\ac{xml}. These configuration methods have a few flaws. From what I experienced, the \ac{llrp}Commander has some problems dealing with Impinj extensions and filter parameters, and requires Eclipse $3.3$ (2007 build), which is old and not maintained.
 The Impinj LTK-\ac{xml} configuration method also seems to have some problems dealing with Impinj extensions~\footnote{Example: specifying \texttt{ImpinjInventorySearchMode} returns unable to convert LTK-XML to Internal Object. \texttt{C1G2InventoryCommand} has unknown element \texttt{ImpinjInventorySearchMode} which exists and is documented~\cite{ImpinjLTKProgrammers}}.
-The \ac{xml} parser of the LTK-\acs{xml} also seems to require fields, ignored Impinj reader in certain conditions, which have to be present in order to validate de \ac{xsd} schema for the configuration to be validated (e.g\ \texttt{TagInventoryStateAware}, \texttt{Tari}).
+The \ac{xml} parser of the LTK-\acs{xml} requires fields, ignored Impinj reader in certain conditions, which have to be present in order to validate de \ac{xsd} schema for the configuration to be validated (e.g\ \texttt{TagInventoryStateAware}, \texttt{Tari}).
 
 The approach suggested to configure the reader is using the Octane SKD. It forfeits the advantages of a \ac{xml} configuration file, but provides all the features expected from the reader, and is reliable and fast to configure.
 Octane 6.2.0, last version at the time of this dissertation, is based on \ac{llrp} version 1.0.1 and does not support some \ac{c1g2} v1.2.0 features natively in the \ac{llrp} LTK implementation~\cite{ImpinjOctaneLLRP}. Octane includes vendor extensions in the SDK to expose the underlying air protocol features.
@@ -85,80 +85,79 @@ The reader firmware used was version 5.12.2.240 (Build cbc9ad1d0d1).
 
 The full code used to configure the reader can be consulted in appendix~\ref{apx:octanereaderconfig}.
 The \ac{xml} configuration files used with \ac{llrp}Commander and LTK-\acs{xml} program can be consulted in appendix~\ref{apx:xmlreaderconfig}.
-The parameters configuration will be discussed in the next sections.
 
-\subsection{Antenna and \acs{gen2} Settings}
+In section~\ref{sec:llrpspecs} I presented the \ac{rospec} wich are used to control the reader operation through the \ac{llrp} protocol. The \ac{rospec} defined for this solution will be discussed in detail in this section.
+Use appendix~\ref{apx:xmlreaderconfig} \ac{xml} configuration files as reference for the following discussions.
 
-In section~\ref{sec:llrpspecs} I presented the \ac{rospec} used to control the reader operation through the \ac{llrp} protocol. The \ac{rospec} defined for this solution will be discussed in detail in this section.
-Use appendix~\ref{apx:xmlreaderconfig} \ac{xml} configuration files as reference.
+\subsection{Antenna and \acs{c1g2} Settings}
 
 It is good practice in \ac{uhf} \ac{rfid} systems to configure antennas aside from the \ac{rospec} definition. \ac{rf} antenna parameters are dependent on \ac{rfid} hardware and environment in which the system is deployed. \acp{rospec} allow antenna configuration, but should only specify reader control operation, namely inventory logic operations. This ensures configuration interoperability between same logic deployments in disparate \ac{rf} environments.
 
-\subsubsection{Power}
+\subsubsection{Power parameters}
 
-To do so, \ac{llrp} defines the \textit{SET\_READER\_CONFIG} message with the \texttt{AntennaConfiguration} parameter.
-This parameter contains a few important parameters and fields:
+To configure the antenna and \ac{c1g2} parameters, the \ac{llrp} protocol defines the \textit{SET\_READER\_CONFIG} message. The message contains the \texttt{AntennaConfiguration} parameter with a few important fields and parameters:
 
-\texttt{ReceiverSensitivity} specifies the effective receive sensitivity level in dBm. While testing the solution, the \ac{rf} environment conditions were optimal, which allowed setting the reader to the maximum sensitivity of $-80$dBm. This sensitivity is index $1$ on the \texttt{ReceiveSensitivityTableEntry}. For the R120 reader capabilities consult appendix~\ref{apx:readercapabilities}.
-\texttt{TransmitPower} specifies the transmission power provided to the antennas as an offset into the \texttt{TransmitPowerLevelTableEntry}. For the Speedway R120 reader power with PoE, the maximum transmission power is $30$ dBm, which is index of $81$, used in this dissertation tests~\cite{ImpinjOctaneLLRP, SettingReceiveSensitivity}.
+\texttt{ReceiverSensitivity} specifies the effective receive sensitivity level in dBm. While testing the solution, the \ac{rf} environment conditions were optimal, as it did not existed interference from other \ac{uhf} \ac{rfid} deployments, which allowed setting the reader to the maximum sensitivity of $-80$dBm. This sensitivity is index $1$ on the \texttt{ReceiveSensitivityTableEntry}. For the R120 reader capabilities consult appendix~\ref{apx:readercapabilities}.
+\texttt{TransmitPower} specifies the transmission power provided to the antennas as an offset into the \texttt{TransmitPowerLevelTableEntry}. For the Speedway R120 reader power with PoE, the maximum transmission power is $30$ dBm, which is index $81$, used in this dissertation for all test~\cite{ImpinjOctaneLLRP, SettingReceiveSensitivity}.
 
 \subsubsection{Class 1 \ac{gen2} Settings}
 
-The \texttt{C1G2InventoryCommand} parameter is were the Class 1 \ac{gen2} air protocol is tunned.
-\texttt{TagInventoryStateAware} flag is used to determine how to process all the \texttt{C1G2Filter} and \texttt{C1G2Singulation} parameters in this command~\footnote{At a functional level, if the Client is managing the tag states during an inventory operation (i.e\ the Client is specifying Class1 \ac{gen2} tag Select command Target and Action values), then it will set that flag to true and pass the appropriate fields in the C1G2 Filter and C1G2 Singulation parameters. If a reader set \texttt{CanDoTagInventoryStateAwareSingulation} to False in LLRPCapabilities, then the Reader shall ignore the \texttt{TagInventoryStateAware} flag~\cite{LowLevelReader}}.
+The \texttt{C1G2InventoryCommand} parameter is where the \ac{c1g2} air protocol can be tunned.
+\texttt{TagInventoryStateAware} flag is used to determine how to process all the \texttt{C1G2Filter} and \texttt{C1G2Singulation} parameters in this command~\footnote{At a functional level, if the Client is managing the tag states during an inventory operation (i.e\ the Client is specifying \ac{c1g2} tag Select command Target and Action values), then it will set that flag to true and pass the appropriate fields in the \ac{c1g2} Filter and \ac{c1g2} Singulation parameters. If a reader sets \texttt{CanDoTagInventoryStateAwareSingulation} to False in \texttt{LLRPCapabilities}, then the Reader shall ignore the \texttt{TagInventoryStateAware} flag~\cite{LowLevelReader}}.
 
-The \texttt{C1G2RFControl} parameter specifies Speedway Gen2 modes selected by Impinj system engineering to provide the best performance. No Tari adjustment is necessary. Tari values passed by the client will be ignored~\cite{ImpinjOctaneLLRP}.
-
-\texttt{ModeIndex} selects the operation mode~\cite{ReaderModesMade, ImpinjOctaneLLRP}. For the use case of this dissertation, it can be one of the three bellow, depending on the \ac{rf} environment in which the system is deployed: 
+The \texttt{C1G2RFControl} parameter specifies Speedway Gen2 modes selected by Impinj system engineering to provide the best \ac{rf} performance in different environments. No Tari adjustment is necessary and any value passed by the client will be ignored in favor of Impinj mode value~\cite{ImpinjOctaneLLRP}.
+\texttt{ModeIndex} selects the operation mode~\cite{ReaderModesMade, ImpinjOctaneLLRP}. For the use case of this dissertation, it can be one of the three bellow, depending on the \ac{rf} environment in which the system is deployed:
 
 \begin{itemize}
-    \item $1002$ (AutoSet Dense Reader Deep Scan) configures the Reader to choose the best \ac{gen2} link parameters for the environments where the tag population is relatively static and we wish to attempt to search for the weakest tag~\cite{ReaderMode1002};
-    \item $1003$ (Autoset Static Fast) is an adaptation of Autoset Dense Reader Deep Scan for good \ac{rf} environments;
-    \item $1004$ (AutoSet Static Dense Reader) is an adaptation of Autoset Dense Reader Deep Scan for difficult \ac{rf} environments.
+    \item ``$1002$'' (AutoSet Dense Reader Deep Scan) configures the Reader to choose the best \ac{gen2} link parameters for the environments where the tag population is relatively static and we wish to attempt to search for the weakest tag~\cite{ReaderMode1002};
+    \item ``$1003$'' (Autoset Static Fast) is an adaptation of Autoset Dense Reader Deep Scan for good \ac{rf} environments;
+    \item ``$1004$'' (AutoSet Static Dense Reader) is an adaptation of Autoset Dense Reader Deep Scan for difficult \ac{rf} environments.
 \end{itemize}
 
-The option used was \texttt{ModeIndex} $1002$. The $1004$ is not currently available for the R120 in the ETSI european \ac{uhf} band. The $1003$ does not provide confidence in warehouse malls, where other readers systems can operate and create poor \ac{rf} environment conditions.
+The option used in this dissertation was \texttt{ModeIndex} ``$1002$''. The $``1004$'' is not currently available for the R120 in the ETSI european \ac{uhf} band. The ``$1003$'' does not provide assurance in warehouse malls, where other readers systems can operate and create poor \ac{rf} environment conditions.
 
 \subsubsection{Singulation Configuration}
 
-Impinj offers a few custom parameters supported in Octane \ac{llrp}, namely the \texttt{ImpinjInventorySearchMode}, a Impinj-specific inventory search mode. 
-To understand search modes, we have to understand sessions. This thematic goes deep in to the \ac{gen2} air protocol and will only briefly contextualized. \ac{gen2} defines up to four tag sessions. Sessions are states tags can transit to, in order to help the reader attempt to singulate, i.g\ read, tags.
-Sessions can be used to determine when a tag will respond to a query from the reader, and/or allow tags to maintain independent states when communicating with multiple readers at the same time. 
+Impinj offers a few custom parameters supported in Octane \ac{llrp} vendor extensions, namely the \texttt{ImpinjInventorySearchMode}, a Impinj-specific inventory search mode. 
+To understand search modes, we have to understand sessions. This thematic goes deep in to the \ac{c1g2} air protocol and will only briefly contextualized. \ac{gen2} defines up to four tag sessions. Sessions are states tags can transit to, in order to help the reader attempt to singulate, i.g\ read, each tag in the inventory.
+When many tags are read at the same time, tag-to-tag interference can prevent certain tags to be read properly.
+Sessions can be used to determine when a tag will respond to a query from the reader, and/or allow tags to maintain independent states when communicating with multiple readers at the same time.
+As an example, a reader can query tags in state ``A''. If tags are properly read by the reader, they transit to state ``B''. The reader follows with another query of tags in state ``A''. Tags which were not previously read due to tag-to-tag interference, have not better \ac{rf} environment conditions to do so.
 
 Impinj readers implement state unaware singulation, in that they provide a high-level control over the search algorithm, through \texttt{ImpinjInventorySearchMode} parameter, not interfering with any of the standard \ac{llrp}/\ac{gen2} settings~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
 Impinj search modes can be consulted in appendix~\ref{apx:searchmodes}.
-In this dissertation we used Tag Focus to make sure every tag was read. This was possible only because we used HID 6H2E43 tags with use Monza chips in this dissertation. For generic tags I recommend using Dual Target Inventory search mode.
+In this dissertation we used Tag Focus to make sure every tag was read. This was possible only because we used HID 6H2E43 tags with use Monza chips in this dissertation. For generic tags I recommend using Dual Target Inventory search mode. These algorithms will be described further in this dissertation.
 
-Using purely \ac{llrp} settings for configuration interchangeability with other reader manufacturers, \ac{gen2} provides the \texttt{C1G2SingulationControl} to control the singulation process in the Class 1 \ac{gen2} air protocol:
+Using purely \ac{llrp} settings configuration, for  interchangeability with other reader manufacturers, \ac{gen2} provides the \texttt{C1G2SingulationControl} parameter to command the singulation process in the \ac{c1g2} air protocol:
 
 \begin{itemize}
-    \item \texttt{TagTransitTime}: This is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
-    \item \texttt{TagPopulation}: This is the expected tag population in the field of view of the antenna.
-    \item Session ID: This is the C1G2 session number that the tags use to update the inventory state upon successful singulation.
-    \item \texttt{TagInventoryStateAwareSingulationAction}: used if the \texttt{TagInventoryStateAware} flag is set to true in the \texttt{InventoryParameterSpec}. It is used to query, select and deselect target tag population in the a selected session.
+    \item \texttt{TagTransitTime} is the measure of expected tag mobility in the field of view of the antenna where this inventory operation is getting executed.
+    \item \texttt{TagPopulation} is the expected tag population in the field of view of the antenna.
+    \item Session ID is the C1G2 session number that the tags use to update the inventory state upon successful singulation.
+    \item \texttt{TagInventoryStateAwareSingulationAction} is used if the \texttt{TagInventoryStateAware} flag is set to true in the \texttt{InventoryParameterSpec}. It is used to query, select and deselect target tag population in a selected session.
 \end{itemize}
 
-Configurations with tunning of these setting were done for testing, but were not used in the final prototype presented in this dissertation, so no further detail will be done.
+Configurations with tunning of these setting were done for testing, but were not used in the final prototype presented in this dissertation, so no further configuration details will be done.
 
 \subsubsection{\ac{gen2} \ac{epc} Filtering}
 
-In the \ac{llrp} and LTK-\ac{xml} configurations I could not make it work, but in the Java Octane reader configuration, used to configure the reader in the shelve solution, it was possible to implement \ac{epc} filtering directly through the Class 1 \ac{gen2} protocol.
+In the \ac{llrp} and LTK-\ac{xml} configurations I could not make it work, but with the Java Octane reader configuration, it was possible to implement \ac{epc} filtering directly through the \ac{c1g2} protocol.
 
-The filtering works by defining a mask, which is sent in the air protocol in the query process, for tags to evaluate if they correspond to the desired population to be inventoried. Only tags corresponding to such filter answer back.
+The filtering works by defining filter parameters, which are sent in the air protocol, in the query process, for tags to evaluate if they correspond to the desired population to be inventoried. Only tags corresponding to such filter specifications answer back.
 The \ac{c1g2} filter can be used to match any \ac{gen2} tag memory data, not \ac{epc} exclusively.
-Air protocol filtering greatly reduces tag-to-tag interference, decreases environment \ac{rf} noise, lowers networking traffic in pin-point singulation inventories, and removes filtering work otherwise made by the middleware.
+Air protocol filtering greatly reduces tag-to-tag interference, decreases \ac{rf} environment noise, lowers traffic in the network infrastructure and removes filtering work otherwise accomplished by the middleware.
 
 The \ac{c1g2} protocol provides tree parameters which can be used to specify the filter: 
 
 \begin{itemize}
-  \item \texttt{setBitPointer} (integer): corresponds to the start bit position to apply the tag mask when performing tag filtering;
-  \item \texttt{setBitCount} (integer): defines the number of bits to compare against the mask, starting with the bit pointer;
-  \item \texttt{mask}: is the mask to be compared. It must be of a bit length divisible by $8$, begin usually defined in hexadecimal~\cite{LowLevelReader}.
+  \item \texttt{BitPointer} (integer): corresponds to the start bit position to apply the tag mask when performing tag filtering;
+  \item \texttt{BitCount} (integer): defines the number of bits to compare against the mask;
+  \item \texttt{mask}: is the mask to be compared. It must be of a bit length divisible by $8$, being usually represented in hexadecimal~\cite{LowLevelReader}.
 \end{itemize}
 
-In figure~\ref{fig:c1g2filter} It can be observed a deduction of the parameters presented previously.
-To match to both company prefixes found in the test products, the bit pointer should point to the first bit of the company prefix, which will be the pointer to the \ac{epc} memory plus $14$ bits.
-The bit count should be the size of the company prefix, $27$ bits. The mask has to be at least $32$ bits, which for company prefix of ``$76300544$'' the mask could be \texttt{91882001} and for ``$76300396$'' \texttt{91880D82}.
+In figure~\ref{fig:c1g2filter} can be observed a deduction of the parameters presented previously for an \ac{epc} example extracted from the platform.
+To match both company prefixes found in the test products, the bit pointer should point to the first bit of the company prefix \ac{epc} memory, which will be the pointer to the \ac{epc} memory bank plus $14$ bits.
+The bit count should be the size of the company prefix, $27$ bits. The mask has to be at least $32$ bits, which for company prefix of ``$76300544$'' the mask can be \texttt{91882001} and for ``$76300396$'' \texttt{91880D82}.
 
 \begin{figure}
   \centering
