@@ -42,6 +42,7 @@ All client requests hitting the platform go through an NGINX reverse proxy. This
 
 All services in the platform infrastructure are containerized using Docker, and orchestrated using Docker Compose. The yaml compose file, containing the description and configuration of the platform services can be consulted in appendix~\ref{apx:composefile}.
 All the code, configurations, dockerfiles and other dissertation related code and information can be consulted in the Github repository at \url{https://github.com/dvcorreia/epc-smart-shelve}~\cite{DvcorreiaEpcsmartshelve}.
+Fosstrak services configurations procedures will not be described in the following sections, as they are documented in their website~\cite{FosstrakWelcome}.
 
 \section{\acs{epc} Serialization Plan}
 
@@ -169,22 +170,22 @@ The bit count should be the size of the company prefix, $27$ bits. The mask has 
 \subsection{Operation Configuration}
 
 With the antenna and \ac{gen2} protocol configured, we can focus on the operations the reader has no perform on the tag population.
-
-In this dissertation we want to perform an inventory of the products stored in the shelve. Reader inventory operations are described in a \ac{rospec}.
-In section~\ref{sec:llrpspecs}, I described the parameters composing an \ac{rospec} document. Particularly, the \texttt{ROBoundarySpec}, \texttt{\acs{aispec}} and \texttt{ROReportSpec} are interesting to be discussed.
+In this dissertation we want to perform an inventory of the products stored in the shelve. Reader inventory operations are described in \acp{rospec}.
+In section~\ref{sec:llrpspecs}, I described the parameters composing an \ac{rospec} document, particularly, the \texttt{ROBoundarySpec}, \texttt{\acs{aispec}} and \texttt{ROReportSpec} which will be discussed next.
 
 \subsubsection{ROBoundarySpec}
 
-The \texttt{ROBoundarySpec} parameter describes the lifetime of the Reader inventory and survey operations.
-The lifetime can be configured in different ways, with no clear superior choice, being to the integrator engineer sensibility to project and evaluate an effective \ac{spec}.
+The \texttt{ROBoundarySpec} parameter describes the lifetime of the reader inventory and survey operations.
+The lifetime can be configured in different ways, with no clear preferable method, being to the integrator engineer to sensible evaluate an effective \ac{spec} to the project at hands.
 
-In designing this \ac{spec} solution, the configuration made previously, regarding the search singulation algorithm mode, had to be accounted.
-For the Tag Focus search mode, the reader inventories tags in state A, transitioning the tags to state B upon singulation. Tags transition back to state A in less than $5$ seconds, when de-energized~\cite{ImpinjOctaneLLRP}.
-Dual Target search mode inventories tags in state A, transitioning the tags to state B. Them inventories tags in state B, transitioning the tags back to state A.
-Evaluating both search modes, the solution used consisted in periodically inventor the tags, every $5$ seconds with a $2$ seconds inventory exercitation time~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
+In designing this \ac{spec}, the configurations made previously to the antenna and \ac{c1g2} protocol should be accounted, namely the search singulation algorithm mode.
+For the Tag Focus search mode, the reader inventories tags in state ``A'', transitioning the tags to state ``B'' upon singulation. Tags transition back to state ``A'' in less than $5$ seconds, when de-energized~\cite{ImpinjOctaneLLRP}.
+Dual Target search mode inventories tags in state ``A'', transitioning the tags to state ``B''. Them inventories tags in state ``B'', transitioning the tags back to state ``A''.
+Evaluating both search modes, the solution used consisted in periodically inventor the tags, every $5$ seconds with a $2$ seconds inventory time~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
 This allowed a full Tag Focus search inventory search cycle while providing enough time for the Dual Target search mode.
 
-Translating the lifetime plan to the \ac{spec} parameters, it should look like code~\ref{code:boudaryspec}. The \texttt{ROSpecStartTrigger} should be periodic, with a period of $5000$ milliseconds, and no offset. The \texttt{ROSpecStopTrigger} triggers $2000$ milliseconds after receiving the trigger to start the \ac{rospec}. 
+Translating the lifetime plan to the \ac{spec} parameters, the \texttt{ROBoundarySpec} parameter should look like code~\ref{code:boudaryspec}. The \texttt{ROSpecStartTrigger} should be periodic, with a period of $5000$ milliseconds, and no offset. The \texttt{ROSpecStopTrigger} triggers $2000$ milliseconds after receiving the trigger to start the \ac{rospec}, effectively stopping the \ac{rospec}.
+These values can be changed to match the requirements of shelf clients.
 
 \begin{listing}
     \begin{minted}[linenos]{xml}
@@ -208,69 +209,77 @@ Translating the lifetime plan to the \ac{spec} parameters, it should look like c
 
 \subsubsection{\acl{aispec}}
 
-For the \ac{aispec} parameters, most of the configuration was already done in through the \textit{SET\_READER\_CONFIG} message, presented in the previous section.
+For the \ac{aispec} parameters, most of the configuration were already done through the \textit{SET\_READER\_CONFIG} message, presented in the previous section.
 
-It is important to specify the air protocol, namely EPCGlobalClass1Gen2, inside the \texttt{InventoryParameterSpec}.
-The \texttt{AISpecStopTrigger} parameter defines the terminating boundary of an antenna inventory operation~\cite{LowLevelReader}, which was set to Null to stop when \ac{rospec} is terminated.
+Although, it is necessary to specify, in the \ac{xml} configuration files, the \ac{rfid} air protocol, namely \texttt{EPCGlobalClass1Gen2}, inside the \texttt{InventoryParameterSpec}.
+The \texttt{AISpecStopTrigger} parameter defines the terminating boundary of an antenna inventory operation, which was set to Null to stop when \ac{rospec} is terminated~\cite{LowLevelReader}.
 
 \subsubsection{Report Operation Report Spec (ROReportSpec)}
 
 The \texttt{ROReportSpec} parameter describes the messages and parameters used in reports, event notifications and keepalives that are generated by the Reader and sent to the Client.
 
-Important to consider, evaluating systems, is when reports are generated and sent to the Client. 
-In the use case in this dissertation we are not concerned with near real-time updates on the state of the inventory. We are interested in the networking infrastructure in which the system is deployed. In mall warehouses, this infrastructure is most likely shared with other companies. The traffic generated by readers should be controlled to not overburden the network.
+Important to consider, evaluating \ac{rfid} event based systems, is when reports are generated and sent to the Client.
+In the use case of this dissertation we are not concerned with near real-time updates on the state of the inventory. We are more interested in the networking infrastructure health in which the system is deployed. In mall warehouses, this infrastructure is most likely shared with other companies. Traffic generated by readers needs to be controlled to not overburden the network infrastructure.
 
-With that in mind, the report generation is triggered by the end of the \ac{rospec}. This will generate a report periodically every $5$ seconds.
-For this behavior \texttt{ROReportTrigger} should be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} with N$=0$, meaning unlimited tag in the field of view of the antenna~\cite{LowLevelReader}.
+With this in mind, the report generation is triggered by the end of the \ac{rospec}. This will generate a report periodically every $5$ seconds.
+For this behavior \texttt{ROReportTrigger} should be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} with $N=0$, meaning unlimited tag in the field of view of the antenna, as it can be set to send a report upon singulation of $N$ tags~\cite{LowLevelReader}.
 
-The \texttt{ROReportSpec} also selects which content the report sent to the client should include.
+The \texttt{ROReportSpec} also selects which content which reports sent to the client include.
 The \ac{epc} is always delivered by default.
 In terms of the content useful to retrieve from the reader inventory singulation, the \texttt{ROSpecID}, \texttt{FirstSeenTimestamp} and \texttt{LastSeenTimestamp} are in the interests of the application. 
-This content allows the middleware to generated accurate tag time information without real-time report delivery, which will be discussed next.
+This content allows the middleware to generate accurate tag timestamp information without real-time report delivery.
 
 \section{\acs{fc} Middleware}
 
-To configure de Fosstrak \ac{fc} middleware we need to define \acp{lrspec} and \acp{ecspec}.
-\acp{lrspec} must identify the reader, its \ac{ip} address, port and type, for abstraction layers required in some proprietary reader communication interfaces.
-For the Impinj Speedway R120, using the \ac{llrp} interface, the configuration can be seen in code~\ref{code:lrspec}.
+To configure the Fosstrak \ac{fc} middleware we need to define \acp{lrspec} and \acp{ecspec}.
+\acp{lrspec} identifies the reader, its \ac{ip} address, port number and type, which is required for abstraction layers used with proprietary communication interfaces in some readers.
+The \acp{lrspec} for the Impinj Speedway R120 reader, using the \ac{llrp} interface, was already presented in the state of the art as an example, which can be seen in code~\ref{code:lrspec}.
 
-Following the requirements of the solution, the configuration of the \ac{ecspec} has to provide two \acp{ecreport} to the capture application: one for informing the tag \acp{uri} added to the shelve and another informing tag \ac{uri} removed from the shelve.
-The configuration can be seen in code~\ref{code:ecspec}.
+Following the requirements of the solution, the configuration of the \ac{ecspec} has to provide two \acp{ecreport} to the capture application: one informing the tag \acp{uri} added to the shelf and another informing tag \acp{uri} removed from the shelf.
+The \ac{ecspec} can also be seen in state of the art in code~\ref{code:ecspec}.
 Every $5$ seconds, the middleware will report to the capture application added and removed tag \acp{uri}.
-This configuration can be has complex has the integrator seems required. Since \ac{epc} filtering was achieved through the \ac{c1g2} protocol, no filtering was required in the middleware. For an example of what a more complex shelve middleware would look like for this type of application, consult appendix~\ref{apx:complexecspec}.
+This configuration can be has complex has the integrator engineer seems fit. Since \ac{epc} filtering was achieved through the \ac{c1g2} protocol, no filtering was required in the middleware. For an example of what a more complex shelve middleware configuration for this application would look like, I defined a \ac{ecspec} which can be consulted in appendix~\ref{apx:complexecspec}.
 
 \section{Capture application}
 
-The Fosstrak Capture application allows the definition of business logic through the Drools engine, a business rules management system.
-
-For the requirements for this solutions, it were defined two rules: one for added items and another for removed items. Each generates a single \ac{epcis} ObjectEvent document following \ac{cbv} guidelines. The ObjectEvent contains:
+The Fosstrak Capture application allows the definition of business logic through the Drools engine, a Java business rules management system.
+For the requirements of this solutions, it were defined two rules: one for added items and another for removed items. Each generates a single \ac{epcis} ObjectEvent document following \ac{cbv} documents and guidelines~\cite{CoreBusinessVocabulary}. The ObjectEvent contains:
 
 \begin{itemize}
-  \item \textbf{\ac{epc} List}: containing the tag \acp{uri}.
+  \item \textbf{\ac{epc} List}: containing a list of tag \acp{uri}.
   \item \textbf{Action type}: \texttt{OBSERVED}.
   \item \textbf{Event time}: ISO 8601 generated automatically by the capture application software.
   \item \textbf{Event Time Zone Offset}: ISO 8601 generated automatically by the capture application software.
-  \item \textbf{Read Point}: ``\texttt{urn:epc:id:sgln:76300544.00000.1}'', a fictitious read point created for test purposes. It identifies the shelve within the business location.
+  \item \textbf{Read Point}: ``\texttt{urn:epc:id:sgln:76300544.00000.1}'', a fictitious read point created for test purposes. It identifies the shelf within the business location.
   \item \textbf{Business Location}: ``\texttt{urn:epc:id:sgln:76300544.00000.0}'', a fictitious business location created for test purposes. Identifies the Nespresso boutique store in Aveiro. 
-  \item \textbf{Business Step}: ``\texttt{urn:epcglobal:cbv:bizstep:storing}'' for added items; ``\texttt{urn:epcglobal:cbv:bizstep:unpacking}'' for removed items. 
-  \item \textbf{Disposition}: ``\texttt{urn:epcglobal:cbv:disp:sellable\_not\_accessible}'' for added items; ``\texttt{urn:epcglobal:cbv:disp:partially\_dispensed}'' for removed items.
+  \item \textbf{Business Step}:
+    \begin{itemize}
+      \item For added items ``\texttt{urn:epcglobal:cbv:bizstep:storing}'': denotes a business process where an object is moved into and out of storage within a location.
+      \item For removed items ``\texttt{urn:epcglobal:cbv:bizstep:unpacking}'': denotes a business process that includes removing products (individuals, inners, cases, pallets) from a larger container (it is not the best description of the event, but the most similar provided in the \ac{cbv}).
+    \end{itemize}
+  \item \textbf{Disposition}:
+    \begin{itemize}
+      \item For added items ``\texttt{urn:epcglobal:cbv:disp:sellable\_not\_accessible}'': product can be sold as is, but customer cannot access product for purchase.
+      \item For removed items ``\texttt{urn:epcglobal:cbv:disp:partially\_dispensed}'': a portion of a product is distributed to a customer, while additional product is retained for subsequent distribution.
+    \end{itemize}
 \end{itemize}
 
-The capture application, in a real world context, could implement much more complex business logic, to provide information to other inventory data services, process data, and present better context regarding the \ac{cbv}. 
+The capture application, in a real world context, could implement much more complex business logic: provide information to other inventory data services, process data, and present better context regarding the \ac{cbv}. 
 
 \section{\acs{epcis} repository and Adapter}
 
-The \ac{epcis} repository does not require any configuration, except for containerizing the service and provide a SQL database instance configured with the \ac{epcis} schema.
+The \ac{epcis} repository does not require any configuration except for containerizing the service and provide a SQL database instance configured with the \ac{epcis} schema and user privileges.
 
-To facilitate the interaction with the \ac{epcis} repository by modern web browsers, an adapter service was developed in the Golang programming language. The service implements a crude and partial adapter for the \ac{epcis} Query Interface. A functional block illustration can be seen in figure~\ref{fig:epcisadapter}. It implements endpoints for the \texttt{poll} \texttt{SimpleEventQuery} and \texttt{subscribe} operations.
+To facilitate the interaction with the \ac{epcis} repository by modern web browsers, the \ac{epcis} Adapter service was developed with the Golang programming language. There is an available \ac{epcis} Webadapter by the Fosstrak team~\cite{FosstrakEPCISEPCIS}, but I could not get it to work. The service implements a crude and partial adaption of the \ac{epcis} \ac{soap} Query Interface. A functional block illustration of the service can be seen in figure~\ref{fig:epcisadapter}. It implements endpoints for the \ac{soap} \texttt{poll} \texttt{SimpleEventQuery} and \texttt{subscribe} operations through the \texttt{/query/location} and \texttt{/ws} endpoints respectively.
 
-For the \texttt{poll} operation, the service translates \ac{http} queries in to \ac{soap} envelopes, which are sent to the \ac{epcis} repository. Response data is translated form \ac{xml} in to \ac{json} and sent back to the web client. 
-For the \texttt{subscribe} operation, the subscription endpoint converts the query into \ac{soap} and registers the subscription in the \ac{epcis} repository. The event data is sent by the \ac{epcis} repository to the adapter, were is delivered in \ac{json} using websockets.
-The \ac{epcis} data model in Golang used for this service can be seen in appendix~\ref{apx:epcisgolang}. The full service code can be consulted in the dissertation Github repository~\cite{DvcorreiaEpcsmartshelve}.
+For the \texttt{poll} operation, the service translates \ac{http} queries in to \ac{soap} envelopes, which are sent to the \ac{epcis} repository. Response data is translated from \ac{xml} in to \ac{json}, and sent back to the web client. 
+For the \texttt{subscribe} operation, the subscription endpoint converts the query into \ac{soap} and registers the subscription in the \ac{epcis} repository~\footnote{The \texttt{/subscribe} endpoint exists but it not implemented. Tests with manual set of subscriptions used to test the websockets proxy showed some bugs regarding subscription event delivery, whereby dropped and not implemented. The service proxy implementation can still receive subscription data event and deliver them using websockets, being to the client to register the subscription directly with the \ac{epcis} repository.}. The event data is sent by the \ac{epcis} repository to the root endpoint of the adapter, were is delivered in \ac{json} to the client, using websockets in the \texttt{/ws} \ac{http} upgraded endpoint connection.
+The \ac{epcis} data model used to convert \ac{xml} in to \ac{json} and \ac{json} in to\ac{xml} can be seen in appendix~\ref{apx:epcisgolang}. The full service code can be consulted in the dissertation Github repository~\cite{DvcorreiaEpcsmartshelve}.
 
 \begin{figure}
   \centering
-  \caption{Functional block illustration of the \acs{epcis}-adapter developed in this dissertation}
+  \includegraphics[width=\textwidth]{figs/epcis-adapter.pdf}
+  \caption{Functional block illustration with endpoints of the \acs{epcis}-adapter developed in this dissertation}
   \label{fig:epcisadapter}
 \end{figure}
 
@@ -278,14 +287,16 @@ The \ac{epcis} data model in Golang used for this service can be seen in appendi
 
 The development of the management application is out of the scope of this dissertation, but will be briefly contextualized.
 
-The application was developed for browsers. This enables most modern internet capable devices to use it.
+The application was developed for browsers as a web application. This enables most modern internet browser capable devices to use it.
 It was implemented using ReactJS~\cite{ReactJavaScriptLibrary}, a JavaScript library for building user interfaces, with Ant Design UI components~\cite{AntDesignWorld}. The web application is compiled and minified into static web files which are served by an NGINX static file server instance.
 A picture of the management application can be seen in figure~\ref{fig:webinterface}.
+
+The application shows the date and time of the event, the \ac{epc} serial numbers, the coffee name and a count of those items. If the item is a trading box for transportation it shows a ``box'' icon next to the coffee name.
 The application implements only the logic required to show in real-time the inventory information. Disable buttons are provided to show a contextualization of what the full fledge management application would look like.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{figs/webmanagement.png}
-  \caption{}
+  \caption{Web management application running on the OSX Safari browser}
   \label{fig:webinterface}
 \end{figure}
