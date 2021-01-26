@@ -16,7 +16,7 @@ A detailed overview of the architecture is illustrated in figure~\ref{fig:practi
     \label{fig:practicalarchitecture}
 \end{figure}
 
-The Impinj Speedway R120 reader and Keonn Advantenna-p14 are attached behind the bottom shelf, as shown in figure~\ref{fig:shelvephoto}, radiating the entire shelve.
+The Impinj Speedway R120 reader and Keonn Advantenna-p14 are attached behind the bottom shelf, as shown in figure~\ref{fig:shelvephoto}, radiating the entire shelf.
 The reader interrogates the tags, using the \ac{epc} \ac{uhf} \ac{gen2} Air Interface Protocol, following the active \acp{rospec} configured prior to the inventory.
 The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages to the \ac{llrp} interface of the middleware.
 
@@ -29,9 +29,9 @@ The inventory information is sent inside \texttt{RO\_ACCESS\_REPORT} messages to
 
 The Fosstrak \ac{fc} middlware receives the inventory information from the reader, processes it, following the configured \acp{ecspec}, and periodically generates \acp{ecreport}, which are sent to the \ac{ale} capture interface of the Capture Application.
 
-The Fosstrak Capture Application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} event documents, following the \ac{cbv} vocabulary guidelines, and sent to the \ac{epcis} repository.
+The Fosstrak Capture Application receives the \acp{ecreport}, contextualizes them and runs additional business logic. The contextualized data is aggregated in \acs{epcis} event documents, following the \ac{cbv} vocabulary guidelines, and is sent to the \ac{epcis} repository.
 
-The \ac{epcis} repository permanently saves the \ac{epcis} data in to the \ac{epcis} database. The \ac{epcis} repository exposes the \ac{soap} query interface, which can be used to retrieve information.
+The \ac{epcis} repository permanently saves the \ac{epcis} data into the \ac{epcis} database. The \ac{epcis} repository exposes the \ac{soap} query interface, which can be used to retrieve information.
 
 The managing application to visualize the smart shelf inventory, was made using web technologies. The application is served to browsers by an NGINX static file server. The browser running the application queries the data in the \ac{epcis} repository.
 Modern browsers do not support \ac{soap} natively. 
@@ -64,7 +64,7 @@ From sleeves and boxes used for testing, only two Nespresso company prefixes wer
     \label{fig:gs1-128barcode}
 \end{figure}
 
-With the \acs{gtin}-$14$, it is possible to encode \ac{sgtin}-$96$ in \ac{gen2} tags. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code, adapted with the Fosstrak \ac{tdt} engine. Instead of generating a random \ac{epc}, the \ac{tdt} engine encodes a valid \ac{epc} with the correspondent \ac{sgtin} - company prefix, item reference and serial - in to hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader and program the tag.
+With the \acs{gtin}-$14$, it is possible to encode \ac{sgtin}-$96$ in \ac{gen2} tags. To write the \acp{epc} in the testing tags, it was used the Impinj Octane Java SKD \texttt{WriteEpc.java} sample code, adapted with the Fosstrak \ac{tdt} engine. Instead of generating a random \ac{epc}, the \ac{tdt} engine encodes a valid \ac{epc} with the correspondent \ac{sgtin} - company prefix, item reference and serial - into hexadecimal, which can be passed to the \texttt{TagWriteOp} class to configure the reader and program the tag.
 A tag was attached to each sleeve and transport box, with their correspondent \ac{gtin} and unique serial number as a \ac{sgtin}-$96$.
 
 \section{Reader} \label{sec:readerconfiguration}
@@ -80,7 +80,7 @@ Reader configuration \ac{xml} files can be shared between the \acs{llrp}Commande
 The Impinj LTK-\ac{xml} configuration method also seems to have some problems dealing with Impinj extensions~\footnote{Example: specifying \texttt{ImpinjInventorySearchMode} returns unable to convert LTK-XML to Internal Object. \texttt{C1G2InventoryCommand} has unknown element \texttt{ImpinjInventorySearchMode} which exists and is documented~\cite{ImpinjLTKProgrammers}}.
 The \ac{xml} parser of the LTK-\acs{xml} requires fields, ignored Impinj reader in certain conditions, which have to be present in order to validate de \ac{xsd} schema for the configuration to be validated (e.g\ \texttt{TagInventoryStateAware}, \texttt{Tari}).
 
-The approach suggested to configure the reader is using the Octane SKD. It forfeits the advantages of a \ac{xml} configuration file, but provides all the features expected from the reader, and is reliable and fast to configure.
+The approach suggested to configure the reader is using the Octane SDK. It forfeits the advantages of a \ac{xml} configuration file, but provides all the features expected from the reader, and is reliable and fast to configure.
 Octane 6.2.0, last version at the time of this dissertation, is based on \ac{llrp} version 1.0.1 and does not support some \ac{c1g2} v1.2.0 features natively in the \ac{llrp} LTK implementation~\cite{ImpinjOctaneLLRP}. Octane includes vendor extensions in the SDK to expose the underlying air protocol features.
 The reader firmware used was version 5.12.2.240 (Build cbc9ad1d0d1).
 
@@ -98,7 +98,7 @@ It is good practice in \ac{uhf} \ac{rfid} systems to configure antennas aside fr
 
 To configure the antenna and \ac{c1g2} parameters, the \ac{llrp} protocol defines the \textit{SET\_READER\_CONFIG} message. The message contains the \texttt{AntennaConfiguration} parameter with a few important fields and parameters:
 
-\texttt{ReceiverSensitivity} specifies the effective receive sensitivity level in dBm. While testing the solution, the \ac{rf} environment conditions were optimal, as it did not existed interference from other \ac{uhf} \ac{rfid} deployments, which allowed setting the reader to the maximum sensitivity of $-80$dBm. This sensitivity is index $1$ on the \texttt{ReceiveSensitivityTableEntry}. For the R120 reader capabilities consult appendix~\ref{apx:readercapabilities}.
+\texttt{ReceiverSensitivity} specifies the effective receive sensitivity level in dBm. While testing the solution, the \ac{rf} environment conditions were optimal, as it did not exist interference from other \ac{uhf} \ac{rfid} deployments, which allowed setting the reader to the maximum sensitivity of $-80$dBm. This sensitivity is index $1$ on the \texttt{ReceiveSensitivityTableEntry}. For the R120 reader capabilities consult appendix~\ref{apx:readercapabilities}.
 \texttt{TransmitPower} specifies the transmission power provided to the antennas as an offset into the \texttt{TransmitPowerLevelTableEntry}. For the Speedway R120 reader power with PoE, the maximum transmission power is $30$ dBm, which is index $81$, used in this dissertation for all test~\cite{ImpinjOctaneLLRP, SettingReceiveSensitivity}.
 
 \subsubsection{Class 1 \ac{gen2} Settings}
@@ -120,7 +120,7 @@ The option used in this dissertation was \texttt{ModeIndex} ``$1002$''. The $``1
 \subsubsection{Singulation Configuration}
 
 Impinj offers a few custom parameters supported in Octane \ac{llrp} vendor extensions, namely the \texttt{ImpinjInventorySearchMode}, a Impinj-specific inventory search mode. 
-To understand search modes, we have to understand sessions. This thematic goes deep in to the \ac{c1g2} air protocol and will only briefly contextualized. \ac{gen2} defines up to four tag sessions. Sessions are states tags can transit to, in order to help the reader attempt to singulate, i.g\ read, each tag in the inventory.
+To understand search modes, we have to understand sessions. This thematic goes deep in to the \ac{c1g2} air protocol and will only be briefly contextualized. \ac{gen2} defines up to four tag sessions. Sessions are states tags can transit to, in order to help the reader attempt to singulate, i.g\ read, each tag in the inventory.
 When many tags are read at the same time, tag-to-tag interference can prevent certain tags to be read properly.
 Sessions can be used to determine when a tag will respond to a query from the reader, and/or allow tags to maintain independent states when communicating with multiple readers at the same time.
 As an example, a reader can query tags in state ``A''. If tags are properly read by the reader, they transit to state ``B''. The reader follows with another query of tags in state ``A''. Tags which were not previously read due to tag-to-tag interference, have not better \ac{rf} environment conditions to do so.
@@ -158,7 +158,7 @@ The \ac{c1g2} protocol provides tree parameters which can be used to specify the
 
 In figure~\ref{fig:c1g2filter} can be observed a deduction of the parameters presented previously for an \ac{epc} example extracted from the platform.
 To match both company prefixes found in the test products, the bit pointer should point to the first bit of the company prefix \ac{epc} memory, which will be the pointer to the \ac{epc} memory bank plus $14$ bits.
-The bit count should be the size of the company prefix, $27$ bits. The mask has to be at least $32$ bits, which for company prefix of ``$76300544$'' the mask can be \texttt{91882001} and for ``$76300396$'' \texttt{91880D82}.
+The bit count should be the size of the company prefix, $27$ bits. The mask has to be at least $32$ bits, which for company prefix of ``$76300544$'' the mask can be \texttt{91882001} and for ``$76300396$'' can be \texttt{91880D82}.
 
 \begin{figure}
   \centering
@@ -169,18 +169,18 @@ The bit count should be the size of the company prefix, $27$ bits. The mask has 
 
 \subsection{Operation Configuration}
 
-With the antenna and \ac{gen2} protocol configured, we can focus on the operations the reader has no perform on the tag population.
+With the antenna and \ac{gen2} protocol configured, we can focus on the operations the reader has to perform on the tag population.
 In this dissertation we want to perform an inventory of the products stored in the shelve. Reader inventory operations are described in \acp{rospec}.
 In section~\ref{sec:llrpspecs}, I described the parameters composing an \ac{rospec} document, particularly, the \texttt{ROBoundarySpec}, \texttt{\acs{aispec}} and \texttt{ROReportSpec} which will be discussed next.
 
 \subsubsection{ROBoundarySpec}
 
 The \texttt{ROBoundarySpec} parameter describes the lifetime of the reader inventory and survey operations.
-The lifetime can be configured in different ways, with no clear preferable method, being to the integrator engineer to sensible evaluate an effective \ac{spec} to the project at hands.
+The lifetime can be configured in different ways, with no clear preferable method. The \ac{rfid} integrator engineers have to evaluate a sensible and effective \ac{spec} to met the requirements of the project at hands.
 
 In designing this \ac{spec}, the configurations made previously to the antenna and \ac{c1g2} protocol should be accounted, namely the search singulation algorithm mode.
 For the Tag Focus search mode, the reader inventories tags in state ``A'', transitioning the tags to state ``B'' upon singulation. Tags transition back to state ``A'' in less than $5$ seconds, when de-energized~\cite{ImpinjOctaneLLRP}.
-Dual Target search mode inventories tags in state ``A'', transitioning the tags to state ``B''. Them inventories tags in state ``B'', transitioning the tags back to state ``A''.
+Dual Target search mode inventories tags in state ``A'', transitioning the tags to state ``B''. Then inventories tags in state ``B'', transitioning the tags back to state ``A''.
 Evaluating both search modes, the solution used consisted in periodically inventor the tags, every $5$ seconds with a $2$ seconds inventory time~\cite{ImpinjOctaneLLRP, UnderstandingEPCGen2}.
 This allowed a full Tag Focus search inventory search cycle while providing enough time for the Dual Target search mode.
 
@@ -224,7 +224,7 @@ In the use case of this dissertation we are not concerned with near real-time up
 With this in mind, the report generation is triggered by the end of the \ac{rospec}. This will generate a report periodically every $5$ seconds.
 For this behavior \texttt{ROReportTrigger} should be set to \texttt{Upon\_N\_Tags\_Or\_End\_Of\_ROSpec} with $N=0$, meaning unlimited tag in the field of view of the antenna, as it can be set to send a report upon singulation of $N$ tags~\cite{LowLevelReader}.
 
-The \texttt{ROReportSpec} also selects which content which reports sent to the client include.
+The \texttt{ROReportSpec} also selects which content of each report sent to the client includes.
 The \ac{epc} is always delivered by default.
 In terms of the content useful to retrieve from the reader inventory singulation, the \texttt{ROSpecID}, \texttt{FirstSeenTimestamp} and \texttt{LastSeenTimestamp} are in the interests of the application. 
 This content allows the middleware to generate accurate tag timestamp information without real-time report delivery.
@@ -238,7 +238,7 @@ The \acp{lrspec} for the Impinj Speedway R120 reader, using the \ac{llrp} interf
 Following the requirements of the solution, the configuration of the \ac{ecspec} has to provide two \acp{ecreport} to the capture application: one informing the tag \acp{uri} added to the shelf and another informing tag \acp{uri} removed from the shelf.
 The \ac{ecspec} can also be seen in state of the art in code~\ref{code:ecspec}.
 Every $5$ seconds, the middleware will report to the capture application added and removed tag \acp{uri}.
-This configuration can be has complex has the integrator engineer seems fit. Since \ac{epc} filtering was achieved through the \ac{c1g2} protocol, no filtering was required in the middleware. For an example of what a more complex shelve middleware configuration for this application would look like, I defined a \ac{ecspec} which can be consulted in appendix~\ref{apx:complexecspec}.
+This configuration can be as complex as the \ac{rfid} integrator engineer seems fit for the solution at hands. Since \ac{epc} filtering was achieved through the \ac{c1g2} protocol, no filtering was required in the middleware. For an example of what a more complex shelf middleware configuration for this application would look like, I defined a \ac{ecspec} which can be consulted in appendix~\ref{apx:complexecspec}.
 
 \section{Capture application}
 
@@ -270,11 +270,11 @@ The capture application, in a real world context, could implement much more comp
 
 The \ac{epcis} repository does not require any configuration except for containerizing the service and provide a SQL database instance configured with the \ac{epcis} schema and user privileges.
 
-To facilitate the interaction with the \ac{epcis} repository by modern web browsers, the \ac{epcis} Adapter service was developed with the Golang programming language. There is an available \ac{epcis} Webadapter by the Fosstrak team~\cite{FosstrakEPCISEPCIS}, but I could not get it to work. The service implements a crude and partial adaption of the \ac{epcis} \ac{soap} Query Interface. A functional block illustration of the service can be seen in figure~\ref{fig:epcisadapter}. It implements endpoints for the \ac{soap} \texttt{poll} \texttt{SimpleEventQuery} and \texttt{subscribe} operations through the \texttt{/query/location} and \texttt{/ws} endpoints respectively.
+To facilitate the interaction with the \ac{epcis} repository by modern web browsers, the \ac{epcis} Adapter service was developed with the Go programming language. There is an available \ac{epcis} Webadapter by the Fosstrak team~\cite{FosstrakEPCISEPCIS}, but I could not get it to work. The service implements a crude and partial adaption of the \ac{epcis} \ac{soap} Query Interface. A functional block illustration of the service can be seen in figure~\ref{fig:epcisadapter}. It implements endpoints for the \ac{soap} \texttt{poll} \texttt{SimpleEventQuery} and \texttt{subscribe} operations through the \texttt{/query/location} and \texttt{/ws} endpoints respectively.
 
-For the \texttt{poll} operation, the service translates \ac{http} queries in to \ac{soap} envelopes, which are sent to the \ac{epcis} repository. Response data is translated from \ac{xml} in to \ac{json}, and sent back to the web client. 
+For the \texttt{poll} operation, the service translates \ac{http} queries into \ac{soap} envelopes, which are sent to the \ac{epcis} repository. Response data is translated from \ac{xml} into \ac{json}, and sent back to the web client. 
 For the \texttt{subscribe} operation, the subscription endpoint converts the query into \ac{soap} and registers the subscription in the \ac{epcis} repository~\footnote{The \texttt{/subscribe} endpoint exists but it not implemented. Tests with manual set of subscriptions used to test the websockets proxy showed some bugs regarding subscription event delivery, whereby dropped and not implemented. The service proxy implementation can still receive subscription data event and deliver them using websockets, being to the client to register the subscription directly with the \ac{epcis} repository.}. The event data is sent by the \ac{epcis} repository to the root endpoint of the adapter, were is delivered in \ac{json} to the client, using websockets in the \texttt{/ws} \ac{http} upgraded endpoint connection.
-The \ac{epcis} data model used to convert \ac{xml} in to \ac{json} and \ac{json} in to\ac{xml} can be seen in appendix~\ref{apx:epcisgolang}. The full service code can be consulted in the dissertation Github repository~\cite{DvcorreiaEpcsmartshelve}.
+The \ac{epcis} data model used to convert \ac{xml} into \ac{json} and \ac{json} into\ac{xml} can be seen in appendix~\ref{apx:epcisgolang}. The full service code can be consulted in the dissertation Github repository~\cite{DvcorreiaEpcsmartshelve}.
 
 \begin{figure}
   \centering

@@ -1,7 +1,7 @@
 \chapter{Test and Evaluation} \label{sec:tests}
 
 The conceptualization of the tests focused in evaluating how well the solution performs with the constrains made in the hardware and software choices. It aims at testing the \ac{rf} solution performance and validate the platform data flow from tag to client.
-The moment the final design of the smart shelf was settled, it was evident that two problems could compromise the performance of the solution: the metal structure of shelve and the old, not maintained, Fosstrak open-source software.
+The moment the final design of the smart shelf was settled, it was evident that two problems could compromise the performance of the solution: the metal structure of the shelf and the old, not maintained, Fosstrak open-source software.
 
 In this chapter will be presented a few tests designed to hint and show how these problems compromise the solution. Throughout the tests, the tags were attached to empty sleeves and boxes, representing an ideal test environment with no \ac{rf} quality compromising materials~\footnote{It was not possible to attain sleeves with aluminum capsules for testing. They would certainty interfere with the following test results, but not accounted in the work of this dissertation.}.
 The reader configuration used for the tests maintains the same power transmission ($30dBm$) and sensibility ($-80dBm$) configurations.
@@ -20,12 +20,12 @@ Tags were tested in tree different orientations, illustrated in figure~\ref{fig:
 \end{figure}
 
 
-This test was executed solely on the bottom shelve, since the results could be inferred to the others. The bottom shelve also presented the major apparent challenges: it had to operate in the \emph{near-field} and was too close to the antenna, which could cause miss readings in the outer laterals due to the beam width not being wide enough.
+This test was executed solely on the bottom shelf, since the results could be inferred to the others. The bottom shelf also presented the major apparent challenges: it had to operate in the \emph{near-field} and was too close to the antenna, which could cause miss readings in the outer laterals due to the beam width not being wide enough.
 
-The test was conducted by dividing the bottom shelve into $18$ quadrants ($26.6\times20$cm quadrants) and measure \ac{rssi} values, referent to a single tag, within those quadrants, with a transmission power of $30$dBm and maximum sensitivity of $-80$dBm. The \ac{rssi} results are a mean value calculated from $1000$ values sampled from each quadrant in a uniform motion across the area, repeated in same manner between for each quadrant.
+The test was conducted by dividing the bottom shelf into $18$ quadrants ($26.6\times20$cm quadrants) and measure \ac{rssi} values, referent to a single tag, within those quadrants, with a transmission power of $30$dBm and maximum sensitivity of $-80$dBm. The \ac{rssi} results are a mean value calculated from $1000$ values sampled from each quadrant in a uniform motion across the area, repeated in same manner for each quadrant.
 
 The results are shown in figure~\ref{fig:tagorientationsresults} in heatmap plots.
-They do not represent the obstructions spread across the shelve. These obstructions prevent tag readings, which were not accounted in this test. Obstructions will be evaluated in the next test.
+They do not represent the obstructions spread across the shelf. These obstructions prevent tag readings, which were not accounted in this test. Obstructions will be evaluated in the next test.
 
 From the results obtained, there was no clear superior orientation. The circular Keonn Advantenna-p14 in conjunction with the \ac{rf} signal deformations caused by the metal structure, make a good job in providing orientation independence.
 
@@ -40,7 +40,7 @@ A few peculiar observations from the tests were observed and are described next:
 
 \begin{itemize}
     \item Horizontal orientated tags have reading problems near the shelf outside metal structure;
-    \item Vertical orientated tags, in contrast with horizontal orientated ones, have good reading values near the shelf outside metal structure. They present problems placed on top of the metal bars used to support the shelves.
+    \item Vertical orientated tags, in contrast with horizontal orientated ones, have better reading values near the shelf outside metal structure. They present problems placed on top of the metal bars used to support the shelves.
     \item Lateral orientated tags present reading difficulty when placed on top of the support metal bars and really close to conners.
 \end{itemize}
 
@@ -50,12 +50,12 @@ In order to test the system in the most extreme conditions, the lateral orientat
 
 \section{Shelf \acs{rf} Survey}
 
-The objective of this test was to study and evaluate the certainty and quality of tag readings, by making an \ac{rf} survey of the shelve, with the lateral tag orientation defined previously.
+The objective of this test was to study and evaluate the certainty and quality of tag readings, by making an \ac{rf} survey of the shelf, with the lateral tag orientation defined previously.
 It aims at evaluating the \ac{rf} obstructions present in the solution, which were not considered in the first test.
-The results should offer a good representation of the \ac{rf} environment in the shelve and what it could be expected from tag readings in certain locations. 
+The results should offer a good representation of the \ac{rf} environment in the shelf and what it could be expected from tag readings in certain locations. 
 From the previous test, it was observed that the \ac{rssi} does not change in time when a single tag is placed in one specific location, allowing the sampling of a single \ac{rssi} value per location. 
 
-The test consisted, once again, in dividing the shelves into quadrants and measure \ac{rssi} values within those quadrants. This time, each shelve was divided in $140$ quadrants ($20\times7$ grid, $8\times8.6$cm quadrants) to have a better perspective of \ac{rf} obstructions. Measurements were also taken in between shelves. The transmission power and sensitivity were maintained from the previous test.
+The test consisted, once again, in dividing the shelves into quadrants and measure \ac{rssi} values within those quadrants. This time, each shelf was divided in $140$ quadrants ($20\times7$ grid, $8\times8.6$cm quadrants) to have a better perspective of \ac{rf} obstructions. Measurements were also taken in between shelves. The transmission power and sensitivity were maintained from the previous test.
 The results can be seen in figure~\ref{fig:rfsurvey}.
 
 \begin{figure}
@@ -82,7 +82,7 @@ The test method consisted of selecting locations were obstructions were prevalen
 
 From this test it was possible to retrieve some interesting observations. 
 As expected, \ac{rf} obstructions cause miss readings, but the phenomenon is not as linear as the previous tests, which used a single tag. 
-Some obstruction locations did not present miss readings. In those locations, when a sleeve was removed from the case for transport, a tag would miss read, illustrated in figure~\ref{fig:missreading}. The ``disappearing'' tag could be right next to the removed one or in other box, not being evident the obstruction phenomenon happening.
+Some obstruction locations did not present miss readings. In those locations, when a sleeve was removed from the case for transport, a tag would miss read, as illustrated in figure~\ref{fig:missreading}. The ``disappearing'' tag could be right next to the removed one or in other box, not being evident the obstruction phenomenon happening.
 The phenomenon can be linked to:
 
 \begin{itemize}
@@ -99,8 +99,8 @@ The phenomenon can be linked to:
 \end{figure}
 
 More research and tests have to be performed in order to confirm these hypotheses.
-To complement the observations in these tests, a few metal objects were placed on the shelve, namely an aluminum notebook computer, an aluminum window frame, and a steel oil heater placed near the shelf.
-The aluminum notebook and window placed in different locations, would interfere with the tag readings. The steel oil heater placed leaning on the shelve did not seem to interfere in any way, indicating a good and confined to the shelf \ac{rf} radiation.
+To complement the observations in these tests, a few metal objects were placed on the shelf, namely an aluminum notebook computer, an aluminum window frame, and a steel oil heater placed near the shelf.
+The aluminum notebook and window placed in different locations, would interfere with the tag readings. The steel oil heater placed leaning on the shelf did not seem to interfere in any way, indicating a good and confined shelf \ac{rf} radiation.
 
 \section{Operational test}
 
@@ -114,7 +114,7 @@ The platform was able to adequately read the inventory changes, publish them to 
 Some problems of the software platform were already hinted throughout this dissertation, namely in section~\ref{sec:softwareplatformoptions}.
 The Fosstrak software components used in this dissertation are not maintained. The problems caused by bugs, confusion in outdated documentation and runtime errors were the issues that took most working hours in this dissertation, many which could not be solved.
 Modern Java and Tomcat versions created breaking changes in the code, which forced the use of old versions. 
-These old versions also did not solve all the problems, but reduced the amount of bugs to a point were the platform was working. A few major problems presented in the final platform solution will be described next.
+These old versions also did not solve all the problems, but reduced the amount of bugs to a point where the platform was working. A few major problems presented in the final platform solution will be described next.
 
 Starting with the \ac{fc} middleware, it presents multiple problems. 
 The web-based client is broken. The static logical reader definitions are broken.
@@ -125,6 +125,6 @@ The connection between the \ac{ale} interface of the capture application and the
 Further inspection on the capture application can not be done due to inexistent log files of the service.
 The Drools engine used by the capture application is also old with complex mechanism. Development of complex business logic was a challenge, even with support of experienced Drools users.
 
-Regarding the \ac{epcis} repository, the subscriptions drop \ac{epcis} data for no apparent reason, requests are delivered in random time frames and there is problems fetching them the current active subscriptions. The \ac{epcis} database also has some problems with modern versions of the MySQL image.
+Regarding the \ac{epcis} repository, the subscriptions drop \ac{epcis} data for no apparent reason, requests are delivered in random time frames and there are problems fetching them from the current active subscriptions. The \ac{epcis} database also has some problems with modern versions of the MySQL image.
 
 These were the issues present in the final build of the platform. The most time consuming, by far, in this dissertation, was to fix these type of problems, changing Java and Tomcat versions, docker images, containerization configurations, analyzing log files, configurations, to say a few.

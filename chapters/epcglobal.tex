@@ -9,7 +9,7 @@ An infrastructure that bridges the gap between the physical and the digital worl
 Furthermore, the instant share of information between intervening companies increases supply chain visibility, resulting in reduced uncertainty in operational and tactical supply chain planning.
 Stock levels could be precisely controlled and shared with trading partners, which in turn reduces inventory costs and optimizes intra-company operations~\cite{lorenzDiscoveryServicesEPC2011, simchi-leviCadeiasSuprimentosProjeto2003}.
 
-It was an utopia ahead of is time. The technology was not mature enough, the return on investment was not appealing and cloud computing had just started to get traction.
+It was an utopia ahead of its time. The technology was not mature enough, the return on investment was not appealing and cloud computing had just started to get traction.
 
 This did not stop the conceptualization and development of architectures capable of delivering the promises we were hoping for.
 The architecture that stood relevant through out these uncertain times is the \emph{EPCglobal Architecture Framework}.
@@ -21,10 +21,10 @@ The architecture shows on paper an appealing concept of a network capable of doi
 
 Standardization of \acs{uhf}~\acs{rfid} for item level tagging and supply chain, by organizations like GS1, provided a common language to identify, capture and share supply chain data, ensuring important information is accessible, accurate and easy to understand~\cite{anonymousStandardsGS12014}.
 
-The first prominent adoption was by the \ac{dod} with a policy released on July 30th 2004. The policy stated that contracts issued for material delivery would require the use of \ac{uhf} tags. The policy was later extended to all commodities and commodities pallets shipped to any \ac{dod} facility~\cite{DoDSuppliersPassive, DODReleasesFinal}.
+The first prominent adoption was by the \ac{us} \ac{dod} with a policy released on July 30th 2004. The policy stated that contracts issued for material delivery would require the use of \ac{uhf} tags. The policy was later extended to all commodities and commodities pallets shipped to any \ac{dod} facility~\cite{DoDSuppliersPassive, DODReleasesFinal}.
 
 In 2014, Impinj, Intel, Google and Smartrac, joined forces to create the RAIN RFID alliance after the ratification of GS1's \acs{uhf}~\acs{rfid} Generation 2 version 2 standard in November of 2013. The alliance promotes the universal adoption of GS1's Gen2 \acs{uhf}~\acs{rfid} technologies and cloud computing, where \ac{rfid}-based data can be stored, managed and shared via the Internet~\cite{WhatRAINRFID}.
-The alliance fortified the adoption of GS1's standards and traced a common path for the the industry to progress~\cite{TechnologyCompaniesCreate}.
+The alliance fortified the adoption of GS1's standards and traced a common path for the industry to progress~\cite{TechnologyCompaniesCreate}.
 
 On October 11th 2018 the European Commission published their positive implementation of the upper band for European countries~\cite{302208v030101pPdf}.
 It extended the power levels to $2W$ in the lower band and added the requested global band from $915$MHz to $921$MHz with power levels up to $4W$. 
@@ -38,7 +38,7 @@ These closed practices and struggle for market supremacy around \acs{uhf}~\acs{r
 Even in global standards, the adoption depends on the company and field of business. Usually one identification standard is already being used, and the migration cost for supporting multi-code integration can be high.
 
 The information around global standards is also limited and hard to get through. It is divided in multiple specifications, identified with number notation and codification nomenclature. 
-The ISO standards, in specific, are closed and have to be payed before even see it's contents.
+The ISO standards, in specific, are closed and have to be payed before even see its contents.
 These specifications are extensive and don't provide newcomers a good experience. 
 Companies planning to implement \acs{uhf}~\acs{rfid} systems following legitimate global standardization resort to consultants who have a deep knowledge on the standards complexity.
 
@@ -73,7 +73,7 @@ They are operated by GS1, its delegates and others to provide automatic, real-ti
 The framework defines information systems, interface standards and data models. This approach frees the market of \ac{it} systems to create custom business solutions. Manufacturing can have their custom business logic closed, and expose production state information to the clients through the \emph{EPCglobal Network} with the EPCglobal interface standards.
 
 The existence of these standards promote not only the global adoption of \ac{epc}, but also the exchange of information between business partners.
-Even doe the network was design primarily for \ac{rfid} \ac{epc} data sharing, the network does not exclusively runs on \ac{rfid} data carriers. The Network can also be fed \ac{epc} data through data carriers like 1D and 2D barcodes. The interoperability with the barcode was one of the most important considerations during the planning of the network~\cite{RFIDBarcodeInteroperability}.
+Even though the network was designed primarily for \ac{rfid} \ac{epc} data sharing, the network does not exclusively run on \ac{rfid} data carriers. The Network can also be fed \ac{epc} data through data carriers like 1D and 2D barcodes. The interoperability with the barcode was one of the most important considerations during the planning of the network~\cite{RFIDBarcodeInteroperability}.
 
 \subsection{Activities} \label{sec:activities}
 
@@ -92,7 +92,7 @@ The architecture must be designed to ensure that when one \emph{End User} delive
 \subsubsection{Infrastructure for Data Capture} 
 
 \emph{Capture data} about the movement of physical assets to create supply chain visibility.
-In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. Those can be: the creation of \acp{epc} for new objects, follow the movements of objects by sensing their \acp{epc}; and gather that information into systems of record within the organization~\cite{GS1EPCglobalArchitecture}.
+In order to gather \ac{epc} data, each \emph{End User} carries out operations within its environment. Those can be: the creation of \acp{epc} for new objects, follow the movements of objects by sensing their \acp{epc}; and gather that information into recording systems within the organization~\cite{GS1EPCglobalArchitecture}.
 
 \subsubsection{Data Sharing} 
 
@@ -109,7 +109,7 @@ The \emph{EPCglobal Architecture Framework} standards provide a means for \emph{
 
 % This standard defines EPC tag data formats for Generation 2 tags. It defines how the EPC is encoded on the tag and how it is encoded for use in the information systems layers of the EPC Systems Network. The standard includes specific encoding schemes for EPC General Identifier (GID).
 
-The \emph{EPCGlobal Architecture Framework} can be taxing to get to know. It is separated in multiple specifications and shows inconsistencies between documents, making the introduction to the framework fairly hard.
+The \emph{EPCGlobal Architecture Framework} can be difficult to analyse and use. It is separated in multiple specifications and shows inconsistencies between documents, making the introduction to the framework fairly hard.
 Throughout this section I will introduce the baseline implementation of the \emph{EPCGlobal Architecture}, introducing each intervening member and their role within the framework. This brief searches to provide a technical contextualization of the architecture for the next sections, where it will be thoroughly explained.
 
 The \emph{Architecture Framework} provides detailed specifications for three technologies developed by EPCGlobal: the \acf{epc}, components of the \emph{EPCGlobal Network™} and standards for \ac{rfid} readers and tags.
@@ -117,7 +117,7 @@ The \emph{Architecture Framework} provides detailed specifications for three tec
 The \ac{epc} is a unique \acs{id} used to identify an object. This \ac{epc} can be stored in different physical formats, including in \ac{rfid} tags. 
 These \ac{epc} enabled \ac{rfid} tags can be attached to objects, and inspected throughout the supply chain by a network connected by services and readers.
 The simplest implementation of the \emph{EPCGlobal Framework} can be structured like shown in figure~\ref{fig:archstructure}.
-I will starting on the bottom and go up in the architecture structure.
+I will start on the bottom and go up in the architecture structure.
 
 \begin{figure}[!ht]
     \centering
@@ -126,11 +126,11 @@ I will starting on the bottom and go up in the architecture structure.
     \label{fig:archstructure}
 \end{figure}
 
-The \ac{gen2} \ac{rfid} Tag is latest generation of \ac{uhf} tag standard design by EPCGlobal. \ac{gen2} tags communicate with readers through the \ac{gen2} Air Interface. The physical memory map of \ac{gen2} tags is standardized in the \ac{tds}~\cite{EPCTagData}, in conjunction with the binary encoding of \acp{epc}. The \ac{rf} communication link, signaling and commands between \ac{gen2} tags and readers is defined in the \ac{gen2} \ac{uhf} \ac{rfid} Standard~\cite{UHFGen2Tag}.
+The \ac{gen2} \ac{rfid} Tag is the latest generation of the \ac{uhf} tag standard design by EPCGlobal. \ac{gen2} tags communicate with readers through the \ac{gen2} Air Interface. The physical memory map of \ac{gen2} tags is standardized in the \ac{tds}~\cite{EPCTagData}, in conjunction with the binary encoding of \acp{epc}. The \ac{rf} communication link, signaling and commands between \ac{gen2} tags and readers is defined in the \ac{gen2} \ac{uhf} \ac{rfid} Standard~\cite{UHFGen2Tag}.
 
 Readers communicate with clients through the \ac{llrp} standard~\cite{LowLevelReader}. \ac{gen2} readers can generate large amounts of network traffic and data, which needs to be processed. For that, \emph{EPCGlobal Architecture Framework} defines \acf{fc} middleware, to translate binary \acs{epc} into human readable format, and filter/aggregate data. \ac{fc} can be implemented in the same physical device as the reader, being called a ``smart reader''. 
 
-Middlewares then send the processed data to Capture Applications, where \ac{epc} data is contextualized with business logic. Middlewares send this data through an \ac{ale} interface. The \ac{ale} interface allows Capture applications to register and subscribe to their interested \ac{epc} patters and request strategies in an high-level declarative way. The interface is defined in its two documents~\cite{ApplicationLevelEvents} and \cite{ApplicationLevelEventsa}.
+Middlewares then send the processed data to Capture Applications, where \ac{epc} data is contextualized with business logic. Middlewares send this data through an \ac{ale} interface. The \ac{ale} interface allows Capture applications to register and subscribe to their interested \ac{epc} patterns and request strategies in a high-level declarative way. The interface is defined in its two documents~\cite{ApplicationLevelEvents} and \cite{ApplicationLevelEventsa}.
 
 Capture Applications send the contextualized data to Business Applications or data repositories.
 This data is sent following strict rules to ensure data is created and shared in a conformable and standardized way. The \emph{EPCGlobal Architecture Framework} defines the \ac{epcis}~\cite{EPCInformationServices} and \ac{cbv}~\cite{CoreBusinessVocabulary} Standards, containing data models, vocabulary and communication interfaces required to create and share \ac{epc} related data with trading partners.
@@ -196,20 +196,20 @@ Figure~\ref{fig:logicalmemorymap} depicts the logical memory layout in \ac{epc} 
 
 Reserved Memory (Bank $00$) holds the Access and Kill passwords, if implemented by the manufacturer of the Tag. 
 The \emph{Kill password} is a 32-bit value used in the \emph{Kill Command} to render a tag non-responsive thereafter. The \emph{Kill Command} only executes if the password has been set to a value different from the default all-zero password.
-The \emph{Access password} is a 32-bit value which allows a tag to transition in to the Secure state. In the Secure state all Access commands can executed, including writing to locked blocks. The default password is all zeros and must be changed if access protection is desirable~\cite{RFIDEPCGen2,UHFGen2Tag}.
+The \emph{Access password} is a 32-bit value which allows a tag to transit in to the Secure state. In the Secure state all Access commands can be executed, including writing to locked blocks. The default password is all zeros and must be changed if access protection is desirable~\cite{RFIDEPCGen2,UHFGen2Tag}.
 
 \subsubsection{\ac{epc} Memory}
 
-The \ac{epc} Memory (Bank $01$) contains a 16-bit \ac{crc} for error correction, a 16-bit \ac{pc} and a \ac{epc}.
+The \ac{epc} Memory (Bank $01$) contains a 16-bit \ac{crc} for error correction, a 16-bit \ac{pc} and an \ac{epc}.
 
-\ac{epc} binary encoding will be further discussed in section~\ref{sec:binencoding}, it is the \ac{id} in which the \emph{EPCGlobal Framework} revolves around to identify every item in the world. The \ac{epc} is by design extensible, being that depending on the application requirements, it can be between $96$ bits and the maximum \ac{epc} size supported by the tag (some tags can have \ac{epc} memory up to $496$ bits). Important to refer, tag cost rises with the amount of \ac{epc} bits. Companies planning on implementing \ac{epc} must devise a serialization plan where a estimate of serial numbers and unique products is done. This will influence the requirements in \ac{epc} memory and consequently tag price.
+\ac{epc} binary encoding will be further discussed in section~\ref{sec:binencoding}, it is the \ac{id} in which the \emph{EPCGlobal Framework} revolves around to identify every item in the world. The \ac{epc} is by design extensible, being that, depending on the application requirements, it can be between $96$ bits and the maximum \ac{epc} size supported by the tag (some tags can have \ac{epc} memory up to $496$ bits). Important to refer, tag cost rises with the amount of \ac{epc} bits. Companies planning on implementing \ac{epc} must devise a serialization plan where a estimate of serial numbers and unique products is done. This will influence the requirements in \ac{epc} memory and consequently tag price.
 The encoding of \ac{epc} is not defined in the \ac{gen2} air protocol standard, but in the \emph{\ac{epc} Tag Data Standard} which will be further discussed with detail on section~\ref{sec:epc}.
 
 The standard also defines \ac{xpc} words, \acs{xpc}\_W1 and \acs{xpc}\_W2 respectively. These words are optional and usually not implemented by tag manufacturers. In fact, the tags used in this dissertation - with \textit{Impinj's Monza} chips - are widely used in all kinds of tag applications around the globe, and don't implement \ac{xpc} words. These words contain bit indicators for settings like hazardous materials and intractability to say a few.
 
 The \ac{pc} word contains metadata used to interpret the \ac{epc}. A more detailed representation of the \ac{pc} can be seen in table~\ref{tab:pcbits}.
 From $10_h-14_h$, 4 bits with the length of the \ac{epc}/\ac{id} in words, at $15_h$ a toggle bit called \ac{umi} which indicates if \emph{User Bank $11$} has any data in it, and at $16_h$ a toggle bit to indicate if the tag has extended \ac{pc}.
-To distinguish an GS1 from an ISO standard \ac{id}, the most reasonable way is to look at bit $17_h$, which contains a toggle bit to indicate whether the \ac{id} is GS1 or non-GS1 family.
+To distinguish a GS1 from an ISO standard \ac{id}, the most reasonable way is to look at bit $17_h$, which contains a toggle bit to indicate whether the \ac{id} is GS1 or non-GS1 family.
 From bit $18_h$ to $1F_h$ is reserved for future use under the \emph{EPCGlobal} specification. Under some circumstances GS1 EPCglobal may permit other standard body or organization to use one or more of these RFU values for standardization purposes. Also to note, on ISO 18000-6, these bits are used for \ac{id}'s supplementary meta data called Application Family Identifier.
 
 \begin{table}
@@ -224,15 +224,15 @@ From bit $18_h$ to $1F_h$ is reserved for future use under the \emph{EPCGlobal} 
 \ac{tid} Memory (Bank $10$) holds chip manufactured information and tag capability indicators. This memory bank is permalocked at the time of manufacture, in that it can not be changed.
 
 The \ac{tid} Memory bank contains two fields - \ac{mdid} and \ac{tmn} - which are commonly associated together and called \ac{tid}.
-\ac{mdid} encodes the tag chip manufacturer \ac{id} which is assign by GS1 as a unique identifier.
+\ac{mdid} encodes the tag chip manufacturer \ac{id} which is assigned by GS1 as a unique identifier.
 The \ac{tmn} is attributed by the manufacturer of the chip and describes the chip identification number.
 
-In the \ac{tds}, where the encoding of \ac{tid} is specified, it is often referred has as \emph{Short} Tag Identification, because the \ac{tid} can be extended.
+The \ac{tds}, where the encoding of \ac{tid} is specified, is often referred as \emph{Short} Tag Identification, because the \ac{tid} can be extended.
 
 The \ac{tid} extension is called \ac{xtid} and is intended to provide more information about the capabilities of tags. It adds support for serialization and information about key features implemented by the tag~\cite{EPCTagData}.
 Serialization is unique number generated by the tag manufacturer and can be used to uniquely identify one tag from another.
 This identifies the tag itself, rather than item it is applied to.
-\ac{xtid} implementations are common among tag manufactures. So common in fact, people started referring to the \ac{mdid}, \ac{tmn} and serialization  combination has \emph{\ac{tid} number}.
+\ac{xtid} implementations are common among tag manufactures. So common in fact, people started referring to the \ac{mdid}, \ac{tmn} and serialization  combination as \emph{\ac{tid} number}.
 The \ac{xtid} is specially useful in cases where the \ac{epc} is not serialized or invalid.
 An example of a \ac{tid} memory bank with \ac{xtid} can be seen in figure~\ref{fig:tid}.
 
@@ -297,13 +297,13 @@ A deep analysis of the binary \ac{epc} encoding will be presented in section~\re
     \label{fig:epcbinencoding}
 \end{figure}
 
-\subsection{Relationship between EPCs and GS1 keys}
+\subsection{Relationship between \acsp{epc} and GS1 keys}
 
 Before going into the encoding of \ac{epc} in \ac{gen2} \ac{rfid} tags, lets understand the underlying concepts of \ac{epc} and its schemes.
 
 Previously, I mentioned that the \ac{epc} was designed to identify every physical object in the world.
 The \emph{EPCGlobal Framework} uses this concept to its very extent.
-A physical object in a \ac{scm} can be a broad term that does not provides much information regarding the object itself.
+A physical object in a \ac{scm} can be a broad term that does not provide much information regarding the object itself.
 To contextualize the objects, the architecture defines GS1 keys and corresponding \ac{epc} schemes.
 Each GS1 key denotes a class or grouping of physical objects. These classes encompass trade items, locations, assets, logistic units, transport groupings to say a few.
 GS1 keys add valuable information to \ac{scm} operations by allowing intervening entities in the supply chain and logistics, to retrieve class context information regarding the tagged objects.
@@ -311,9 +311,9 @@ GS1 keys add valuable information to \ac{scm} operations by allowing intervening
 For each GS1 key there is a corresponding \ac{epc} scheme, including encoding specifications for both \ac{epc} representation: \ac{uri} and a binary encoding, for use in \ac{rfid} tags.
 Each \ac{epc} scheme and corresponding GS1 key can be seen in Appendix~\ref{anx:epccodingschemes}.
 
-\subsection{SGTIN} \label{sec:sgtin}
+\subsection{\acs{sgtin}} \label{sec:sgtin}
 
-In the scope of this dissertation, the \ac{sgtin} scheme might the most important encoding scheme to look at.
+In the scope of this dissertation, the \ac{sgtin} scheme is the most important encoding scheme to look at.
 The \ac{sgtin} encodes a \ac{gtin} plus a unique product or serial number.
 
 \begin{figure}[!ht]
@@ -340,7 +340,7 @@ Depending on that, GS1 attributes a prefix with a length adjusted to company req
 Companies requiring high quantities of unique item are given a shorter Company Prefix, accommodating more digits for item identification.
 Also worth mentioning, the attribution of \emph{Company Prefixes} is made by one of the GS1 branches. Each branch has a prefix which uses to assign \emph{Company Prefixes} (e.g.\ GS1 Portugal has $560$, GS1 Schweiz, Suisse and Svizzera have $760$-$769$)~\cite{anonymousGS1CompanyPrefix2014}.
 
-\emph{Item References} are assign by the managing entity of the product.
+\emph{Item References} are assigned by the managing entity of the product.
 The item reference must be concatenated with the \emph{Company Prefix} to calculate the Check Digit, forming a \ac{gtin}.
 From a \ac{gtin}, an \ac{sgtin} can be commissioned~\footnote{``Commisioning'' is the technical term used when creating new \acp{epc} for objects}, allowing to uniquely identify a product within its product grouping.
 Important to clarify, when a \ac{gtin} is stored in \ac{rfid} tags, as in \ac{sgtin} coding schemes, the Check Digit has no purpose, so it is dropped. The Check Digit exists for error checking in barcodes. When converting barcode \ac{gtin} to \ac{epc} \ac{sgtin} encoding scheme, the Check digit must be dropped.
