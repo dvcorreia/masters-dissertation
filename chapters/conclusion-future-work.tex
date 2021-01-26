@@ -1,40 +1,40 @@
-\chapter{Conclusion and Future Work}
+\chapter{Conclusion and Future Work} \label{sec:conclusion}
 
 % Retell the story from motivation to results
 
 This work presented the development of a smart shelf based on \ac{uhf} \ac{rfid} technology, intended to be deployed in stock rooms and warehouses, which follows GS1's EPCGlobal group of technologies, protocols and standards, to seemly integrate in global supply chain systems deployed around the globe.
 
 The advance of cloud computing, \ac{iot} and \emph{Indrustry 4.0} encouraged the supply chain and logistics industries to digitize their operations and further optimise their resources. 
-\ac{uhf} \ac{rfid} provided the tools to wirelessly identify physical objects, like products and assets, which in cooperation with the \emph{EPCGlobal Architecture Framework}, allowed the identification of every item in the world and share of strategic logistic information, automatically and consistently between trading partners, to empower production and distribution across businesses.
+\ac{uhf} \ac{rfid} provided the tools to wirelessly identify physical objects, like products and assets, which in cooperation with the \emph{EPCGlobal Architecture Framework}, allowed the identification of every item anywhere in the world and share of strategic logistic information, automatically and consistently between trading partners, to empower production and distribution across businesses.
 
 The dissertation started by outlining important aspects regarding \ac{rfid} technologies and the \emph{EPCGlobal Architecture Framework}.
-It followed with a discussion where it was presented multiple hardware architectural designs, \ac{rnd} resources required to implement those and an evaluation of development options, costs and time.
+It followed by discussing and presenting multiple hardware architectural designs, \ac{rnd} resources required to implement those and an evaluating each development option in regard to costs and time.
 
-The discussion was followed by the developed of a prototype employing commercial hardware and a generic warehouse shelf, in a design devised to alleviate cost. This hardware was connected to a platform of services orchestrated to operate in modern cloud deployments in the current containerization of services paradigm. 
-The platform employed Fosstrak components for EPCGlogal services, namely \ac{fc} Middleware, Capture Application and \ac{epcis} Repository. 
-To complement the product, it was implemented a custom \ac{epcis} Adapter and a web management application to visualize inventory changes.
+The discussion was followed by the development of a prototype, employing commercial hardware and a generic warehouse shelf, in a design devised to alleviate cost. The hardware was connected to a platform of services orchestrated to operate in modern cloud deployments, using the current paradigm of service containerization. 
+The platform uses Fosstrak components for EPCGlogal services, namely \ac{fc} Middleware, Capture Application and \ac{epcis} Repository. 
+To meet the requirements of the product, it was implemented a custom \ac{epcis} Adapter and a web management application to visualize inventory changes.
 
-The \ac{rfid} hardware solution was tested for performance, evaluating tag optimal orientation, \ac{rf} surveying the shelve and stress test poor \ac{rf} condition zones. The shelf showed good performance compared to the initial assessment of problems it could present.
+The \ac{rfid} hardware solution was tested for performance, evaluating tag optimal orientation, performing an \ac{rf} survey the shelve and stress testing poor \ac{rf} condition zones. The shelf showed good performance compared to the initial assessment of problems it could present.
 The platform was also tested for validation of operation and data consistency.
 
 \section{Main achievements}
 
 Based on these facts, it is possible to affirm that the objectives of this dissertation were meet.
-The smart shelf based on \ac{uhf} \ac{rfid} was capable of correctly identifying added and removed products, and publishing those events using EPCGlobal technologies, in a platform capable of integrate most \ac{scm} systems around the globe.
+The smart shelf was capable of correctly identifying added and removed products, and publishing those events using EPCGlobal technologies, to a platform capable of integrate most \ac{scm} systems around the globe.
 
-The dissertation documents not only the development of this shelf, but a rationalization of different approaches and options regarding the development of \ac{uhf} \ac{rfid}-based smart shelves, which show how companies can commence such endeavor.
+The dissertation not only shows the development of this shelf, but also a rationalization of different approaches and options regarding the development of \ac{uhf} \ac{rfid}-based smart shelves, which can be consulted for further investigation by companies and researchers interested in pursuing such endeavor.
 
-From what I could find, it might be the first dissertation of this kind, in that the \emph{EPCGlobal Architecture Framework} was directly applied to a product from hardware to application, implementing the all stack of services required to a functional \ac{epc}-enabled product.
+From what I could find, it might be the first dissertation of this kind, in that the \emph{EPCGlobal Architecture Framework} was directly applied to a product from hardware to user application, implementing the all stack of services required of a functional \ac{epc}-enabled product.
 
 \section{Future Work}
 
-The smart shelf solution is far from a commercial viable solution.
+The smart shelf solution is far from being a commercial viable solution.
 Future tasks regarding the improvement of the solution:
 
 \begin{itemize}
-    \item Amend the \ac{rf} coverage in the shelf by reducing obstruction locations: use shelves without support metal bars, employ a second antenna, improve the \ac{rf} design or event design custom antennas;
+    \item Amend the \ac{rf} coverage in the shelf by reducing obstruction locations: use shelves without support metal bars, employ a second antenna, improve the \ac{rf} design or even design custom antennas;
     \item Fix bugs on the Fosstrak services or implement modern solutions for the EPCGlobal technologies. Tune the platform and add mechanisms for high horizontal scalability;
-    \item Finish the implementation of the \ac{epcis} Adapter and enhance management application logic and features. Add features like: automatic request of new stock, warnings on low product stock, sessions for users, to say a few;
+    \item Finish the implementation of the \ac{epcis} Adapter and enhance the management application logic and features (e.g\ automatic request of new stock, warnings on low product stock, sessions for users, to say a few);
     \item Design a ``smart reader'' for shelf systems, encompassing \ac{c1g2} reader capabilities, \ac{fc} middleware and capture application in one hardware solution;
-    \item Add features to the shelf system: better contextualization of \ac{epc} data and capture application business logic.
+    \item Add features to the shelf system: better contextualization of \ac{epc} data and improve capture application business logic.
 \end{itemize}
