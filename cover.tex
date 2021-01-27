@@ -7,7 +7,7 @@
 %% Modified by João Paulo Barraca <jpbarraca@ua.pt>
 %% Modified by Filipe Manco <filipe.manco@ua.pt>
 
-\documentclass[11pt,twoside,a4paper]{report}
+\documentclass[11pt,twoside,a4paper,final]{report}
 
 %%% This file is a template for the cover of your
 %%%  thesis.
@@ -98,8 +98,7 @@
 
 %%% OPTIONAL: add a quotation if you like.
 %% Optional Quotation
-\Quote{\selectlanguage{english}The greatest challenge to any thinker is stating
-the problem in a way that will allow a solution}{Bertrand Russell}
+\Quote{\selectlanguage{english}Science is what we have learned about how to keep from fooling ourselves}{David Deutsch}
 
 %%% Edit your supervisor's information.
 %%%
@@ -118,7 +117,7 @@ the problem in a way that will allow a solution}{Bertrand Russell}
 %%% | auxiliar convidado     |
 %%% --------------------------
 %% Supervisor information
-\Supervisor{(nome do orientador)}{associado}
+\Supervisor{José Alberto Gouveia Fonseca}{associado}
 
 %%% OPTIONAL: you can add a second supervisor.
 %%%
@@ -134,7 +133,7 @@ the problem in a way that will allow a solution}{Bertrand Russell}
 %%% school    : University/Scholl name; Choose the
 %%%             preposition accordingly.
 %% Optional SecondSuperviser information
-\SecondSupervisor{(co-orientador)}{auxiliar convidado}{do Departamento de Matemática}{da Universidade de Aveiro}
+%\SecondSupervisor{(co-orientador)}{auxiliar convidado}{do Departamento de Matemática}{da Universidade de Aveiro}
 
 %%% Edit your degree information.
 %%%
@@ -143,30 +142,30 @@ the problem in a way that will allow a solution}{Bertrand Russell}
 %%% title: Degree title (Mestre or Doutor)
 %%% name : Degree name
 %% Degree title and name
-\Degree{Mestre}{Engenharia de Computadores e Telemática}
+\Degree{Mestre}{Engenharia Eletrónica e Telecomunicações}
 
 %%% OPTIONAL: edit grant support texts where
 %%%  appropriate. Maximum two.
 %%%
 %%% \GrantText{grant1}{grant2}
 %% Optional Grant support texts
-\GrantText{Texto Apoio financeiro do POCTI no âmbito do III Quadro Comunitário de Apoio.}
-          {Texto Apoio financeiro da FCT e do FSE no âmbito do III Quadro Comunitário de Apoio.}
+%\GrantText{Texto Apoio financeiro do POCTI no âmbito do III Quadro Comunitário de Apoio.}
+%          {Texto Apoio financeiro da FCT e do FSE no âmbito do III Quadro Comunitário de Apoio.}
 
 %%% OPTIONAL: Add a dedication text.
 %% Optional Dedication text
-\Dedication{Dedico este trabalho à minha esposa e filho pelo incansável apoio.}
+\Dedication{Dedico este trabalho aos meus pais, que me possibilitaram tudo ao seu alcance.}
 
 %%% OPTIONAL: Add an acknowledgement text
 %% Optional Acknowledgement text
-\Acknowledgements{Agradeço toda a ajuda a todos os meus colegas e companheiros.}
+\Acknowledgements{\input{acknowledgements.tex}}
 
 %%% Edit the keywords and abstract in Portuguese
 %%% Don't forget to remove the \blindtext[3]
 %%%  declaration.
 %%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation
 %% Mandatory Keywords and Abstract in Portuguese
-\Abstract{Palavras Chave}{RFID, UHF, estante, inteligente, EPCGlobal, EPC.}
+\Abstract{Palavras Chave}{RFID, UHF, estante, inteligente, EPCGlobal, EPC, Fosstrak.}
          {Resumo}{\selectlanguage{portuguese}\include{abstract_pt}}
 
 %%% OPTIONAL: you can write the keywords and
@@ -176,22 +175,21 @@ the problem in a way that will allow a solution}{Bertrand Russell}
 %%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation.
 %%% You can modify the language to any other supported by Latex
 %% Optional Keywords and Abstract in additional languages.
-\Abstract{Keywords}{RFID, UHF, smart, shelf, EPCGlobal, EPC.}
+\Abstract{Keywords}{RFID, UHF, smart, shelf, EPCGlobal, EPC, Fosstrak.}
          {Abstract}{\selectlanguage{english}\include{abstract_en}}
 
 %%% Edit the Jury President information.
 %% First Member will be the President of the Jury
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
+\JuriMember{Professor Doutor António Guilherme Rocha Campos}{Professor Auxiliar do Departamento de Eletrónica, Telecomunicações e Informática da Universidade de Aveiro}
 
 %%% Repeat the above declaration for additional
 %%%  members of the jury as many times as necessary.
 %% Additional members of the Jury
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
+\JuriMember{Professor Doutor António João Nunes Serrador}{Professor Adjunto do Departamento de Engenharia Eletrónica e Telecomunicações e de Computadores do ISE de Lisboa (arguente)}
 
+\JuriMember{Professor Doutor José Alberto Gouveia Fonseca}{Professor Associado do Departamento de Eletrónica, Telecomunicações e Informática da Universidade de Aveiro (orientador)}
+
+%\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%       DEFINE THESIS COVER FIELDS

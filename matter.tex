@@ -1,7 +1,7 @@
 %%!TEX encoding = UTF-8 Unicode
 
 % According to UA rules, font size should range from 10 to 12pt.
-\documentclass[11pt,a4paper,openright,final,twoside,onecolumn]{memoir}
+\documentclass[11pt,a4paper,openright,twoside,onecolumn,final]{memoir}
 
 \listfiles
 \fixpdflayout
@@ -18,7 +18,7 @@
 
 % For Overleaf support
 \usepackage{ifthen}
-\def\useoverleaf{1}  % change to non-zero (for instance, 1) to enable it
+\def\useoverleaf{0}  % change to non-zero (for instance, 1) to enable it
 
 \makeatletter
 \newcommand{\makecoverfile}[0]{%
@@ -304,8 +304,8 @@
 \include{chapters/smart-shelves}
 \include{chapters/requirements-options}
 \include{chapters/system-architecture-dev}
-%\include{chapters/test-evaluation}
-%\include{chapters/conclusion-future-work}
+\include{chapters/test-evaluation}
+\include{chapters/conclusion-future-work}
 
 % End of Thesis text ---------------------------------------------------------
 % Including files is advised:

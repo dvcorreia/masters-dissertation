@@ -275,8 +275,8 @@
 \def\ua@above#1#2{\rlap{\smash{\raise 10pt\hbox{\ua@font@size1\textsf{#1}}}}\hbox{\ua@font@size1\textsf{#2}}}
 \def\ua@below#1#2{\rlap{\smash{\lower 10pt\hbox{\ua@font@size1\textsf{#2}}}}\hbox{\ua@font@size1\textsf{#1}}}
 \long\def\HEADER#1#2{\vspace*{5mm}\noindent\ua@font@size1\rlap{\parbox{\textwidth}{%
-    \ua@font@size1\hspace*{77mm}#1\textsf{\textbf{Universidade de Aveiro}}\space\space
-      \ua@above{\ua@textA}{\ua@textB}%
+    \ua@font@size1\hspace*{77mm}#1\textsf{\vspace*{0.7mm}\textbf{Universidade de Aveiro}}\space\space
+      %\ua@above{\ua@textA}{\ua@textB}
     \iffalse
       \hrule width \textwidth height .3pt depth 0mm\relax
     \else
@@ -297,8 +297,9 @@
 
 
 \long\def\INNERHEADER#1#2{\vspace*{5mm}\noindent\ua@font@size1\rlap{\parbox{\textwidth}{%
-    \ua@font@size1\hspace*{77mm}#1\textsf{\textbf{Universidade de Aveiro}}\space\space
-      \ua@above{\ua@textA}{\ua@textB}%
+    \ua@font@size1\hspace*{77mm}#1\textsf{\vspace*{0.7mm}\textbf{Universidade de Aveiro}}\space\space
+      %\ua@above{\ua@textA}{\ua@textB}%
+      %\ua@above{}{} % New rules for thesis
     \iffalse
       \hrule width \textwidth height .3pt depth 0mm\relax
     \else
