@@ -400,7 +400,7 @@ Referencing table~\ref{tab:sgtinfiltervalues}, with a filter value of $``1"$, it
 The \emph{Partition} value encodes a pair of variable-length numeric fields referent to the \emph{Company Prefix} and \emph{Item Reference} memory partition. Previously we mentioned that \emph{Company Prefixes} can vary in length depending on company requirements for unique \emph{Item References}. 
 In barcodes the \emph{Company Prefix} and \emph{Item Reference} are encoded together in a \ac{gtin} value. 
 In \ac{gen2} tags, although there is fixed size memory shared between \emph{Company Prefix} and \emph{Item Reference}, there is also the \emph{Partition} value, which specifies the distribution of that partition between booth fields.
-In the case of the \emph{Tag \ac{uri}} example, \emph{Company prefix} has $27$ bits ($8$ digits) and \emph{Item reference} has $17$ bits ($5$ digits). Referring to table~\ref{tab:partitiontable} with the pair of variable-lengths, the \emph{Partition Value} is $``4"$ encoded has $``100"$.
+In the case of the \emph{Tag \ac{uri}} example, \emph{Company prefix} has $27$ bits ($8$ digits) and \emph{Item reference} has $17$ bits ($5$ digits). Referring to table~\ref{tab:partitiontable} showing the pair of variable-lengths, the \emph{Partition Value} is $``4"$ encoded has $``100"$.
 
 \begin{table}[]
     \centering
@@ -437,10 +437,10 @@ This declarative operation method allows Readers to achieve peak performance wit
 \subsection{Connection Details}
 
 \ac{llrp} is a binary protocol which runs over the \acs{tcp}/\acs{ip} internet transport protocols.
-It is an asymmetric protocol where the \ac{llrp} client send commands to the Reader.
+It is an asymmetric protocol where the \ac{llrp} client sends commands to the Reader.
 
 The protocol supports both reader and client initiated connections. By default, \ac{llrp} clients connect to \acs{tcp} port $5084$. In reader initiated connections, the Reader will actively try to establish a connection with the host application.
-\ac{llrp} does not specify the behavior delivering data when a connection if broken. The reader used in this dissertation and others I've seen will continue to collect tag data and optionally deliver upon resumption of the connection.
+\ac{llrp} does not specify the behavior delivering data when a connection is broken. The reader used in this dissertation will continue to collect tag data and optionally deliver upon resumption of the connection.
 
 Readers only allow one \ac{llrp} connection at any time. The \ac{tcp} connection between reader and client stays open until the client closes it or connection drops.
 
@@ -449,12 +449,12 @@ Readers only allow one \ac{llrp} connection at any time. The \ac{tcp} connection
 The primary function of the \ac{llrp} interface is to allow a client to finely tune the \ac{gen2} Tag Air Standard parameters, and command the reader to perform an inventory and otherwise access tags for read, write, lock, and kill.
 
 To meet these requirements, \ac{llrp} defines \acp{spec}, containing descriptions of ``what, how and when'' the Reader should perform certain operations.
-\acp{spec} are run when triggered. The trigger range from boundary trigger information defined in the \ac{spec} itself, \acp{gpi}, or by immediate triggers from applications for a more imperative behavior.
+\acp{spec} are only run when triggered. The trigger ranges from boundary trigger information defined in the \ac{spec} itself, \acp{gpi}, or by immediate triggers from applications for a more imperative behavior.
 \acp{spec} are sent inside of messages, which are the unit of communication between client and Reader.
 \ac{llrp} contains forty basic messages which range from commands, responses, events and a \textit{CUSTOM\_MESSAGE} for vender extensions. A list and description of every message can be found in Appendix~\ref{anx:llrpmessages}.
 
 In figure~\ref{fig:ROACCESSREPORTbin} we observe an example of binary encoding of the \textit{RO\_ACCESS\_REPORT} message.
-Inside the message there is a \ac{spec}, and inside a \ac{spec}, data is sent as \emph{parameters} and \emph{fields}.
+Inside the message there is a \ac{spec}, and inside data is sent as \emph{parameters} and \emph{fields}.
 \emph{Fields} are individual data elements with a known basic format.
 \emph{Parameters} are named data elements that contain other parameters and/or fields, much like structures in programming languages.
 Inside the \textit{RO\_ACCESS\_REPORT} message, in figure~\ref{fig:ROACCESSREPORTbin}, it can be observed the memory allocated for a list of a parameter called \texttt{TagReportData}. \texttt{TagReportData} is then encoded following figure~\ref{fig:TagReportDatabin}, which inside encodes an \texttt{EPCData} or \texttt{EPC-96} parameter, where the binary encoded \ac{epc} is allocated.
@@ -510,7 +510,7 @@ In the \textit{ADD\_ROSPEC} \ac{xml} message we observe one \ac{rospec} and cons
 \item[\texttt{CurrentState}] describes the current state of the \ac{rospec} - \emph{disabled}, \emph{inactive}, \emph{active}. When adding and \ac{rospec} the state must be set to \emph{disable}.
 
 \item[\texttt{ROBoundarySpec}] is a parameter containing a description of the start and stop conditions for the \ac{spec}. 
-These conditions can be, for the start trigger:
+These are the conditions available for the start trigger:
 \begin{itemize}
     \item \texttt{None/Null} - \ac{rospec} will not start unless indicated by the client application through an \textit{START\_ROSPEC} message;
     \item \texttt{Immediate} - the \ac{rospec} will start immediately after enabled, and will continuously restart itself until disabled;
@@ -518,7 +518,7 @@ These conditions can be, for the start trigger:
     \item \texttt{\ac{gpi}} - the enabled \ac{rospec} will start when the \ac{gpi} event enters a certain state.
 \end{itemize}
 
-For the stop triggers:
+Available stop triggers:
 \begin{itemize}
     \item \texttt{None/Null} - the \ac{rospec} only stops when stopped by the client through the \textit{STOP\_ROSPEC};
     \item \texttt{Duration} - \ac{rospec} stops when it has been active for a specified duration;
@@ -538,7 +538,7 @@ For the stop triggers:
 
 \subsection{Application Flow}
 
-A typical \ac{llrp} application flow can be seen in figure~\ref{fig:llrpflow}. Upon establishing a \ac{tcp} connection, a Client add and enables an \ac{rospec}, containing information about the inventory procedures. The Client can also register a \ac{aispec} for \ac{gen2} commands, like writing \acp{epc}.
+A typical \ac{llrp} application flow can be seen in figure~\ref{fig:llrpflow}. Upon establishing a \ac{tcp} connection, a Client add and enables an \ac{rospec} containing information about the inventory procedures. The Client can also register an \ac{aispec} for \ac{gen2} commands, like writing \acp{epc} and lock tags.
 The Reader, upon trigger, executes the \acp{spec}, performing \ac{epc} inventory and tag operations, which are reported back to the Client.
 
 \begin{figure}[!ht]
@@ -557,10 +557,10 @@ These will not be directly used in the practical context of this dissertation, s
 
 \section{\acf{fc}}
 
-\ac{fc} is a specification for middlewares operating between readers and client applications, to receive, filter, translate and deliver data to client applications.
+\ac{fc} is a specification for middlewares operating between readers and client, to receive, filter, translate and deliver data to client applications.
 
 \ac{gen2} \ac{rfid} readers can generate large amounts of network traffic. The amount of requests generated, containing reports with \ac{epc} raw data, can bottleneck most networks, being unsuited for internet data exchanges. 
-Often, client applications are hosted in different networks and even different physical places. With the current paradigm of cloud computing, the interest in processing data on data centers only seems to be growing.
+Often, client applications are hosted in different networks and even different physical places. With the current paradigm of cloud computing, the interest in processing application data on data centers only seems to be growing.
 Furthermost, raw \ac{epc} data is not ``high-level'' compared to the paradigm of most business logic in client applications.
 Client applications, without any middleware, have to process and contextualize huge amounts of data, overburdening services with workloads that are not in their scope of work.
 
@@ -569,15 +569,15 @@ Client applications, without any middleware, have to process and contextualize h
 In the standard specification, EPCGlobal defines responsibilities and interfaces for \ac{fc} middlewares. Companies are free to extended these responsibilities and add features in their own implementations.
 
 A \ac{fc} middlewares must be able to receive raw tag reads from one or multiple \ac{rfid} readers through an \ac{llrp} client interface.
-These raw tags, in binary encoding, must be decoded and translated in to \ac{uri} representations, used in client applications.
+These raw tags, in binary encoding format, must be decoded and translated in to \ac{uri} representations, used in client applications.
 
-Tag reads must all be processed to reduce the \ac{epc} data volume: this includes filtering, by ignoring \acp{epc} according to subscription patterns; 
+Tag reads must be processed to reduce the \ac{epc} data volume, this includes: filtering, by ignoring \acp{epc} according to subscription patterns; 
 aggregate \acp{epc} over time intervals, eliminating duplicate reads within that interval;
 summarize and count \acp{epc} in specific object classes;
 and differential analysis, by reporting which \acp{epc} have been added or removed.
 
 \ac{fc} must be able to invoke \ac{gen2} commands on the reader, required by applications to write, lock, kill, and otherwise operate upon tags.
-\ac{fc} should also map readers by \textit{logical reader names} defined in the configurations commands and/or file.
+\ac{fc} should also map readers by \textit{logical reader names} defined by configuration commands and/or files.
 
 Lastly, \ac{fc} middleware must expose an \ac{ale} interface to provide means for client applications to request \ac{epc} data, reader information, control information and configure all \ac{fc} aspects described previously.
 
@@ -589,7 +589,7 @@ Succinctly, the interface allows client applications to register and subscribe t
 
 \ac{ale} uses a \ac{wsdl}, an \ac{xml} based interface used to describe functionality offered by web services, to define, configure and request reports from middlwares and smart readers.
 The \ac{xml} schema is defined in a \ac{xsd} file. The \ac{xsd} file expresses a set of rules to which \ac{xml} documents must conform in order to be considered valid. 
-The interface also defines \ac{soap} bindings on top of the \ac{wsdl} for the callback interface for reading and writing \acp{api}.
+The interface also defines \ac{soap} bindings on top of the \ac{wsdl}, for the callback interfaces of the reading and writing \acp{api}.
 
 \subsection{Specifications and Reports}
 
@@ -603,7 +603,7 @@ To configure and subscribe to interested \ac{epc} patterns, client applications 
 
 To subscribe to \ac{epc} data, clients register \emph{\acp{ecspec}}. 
 \acp{ecspec} take inspiration from the same ideas as in \ac{llrp}, by describing event boundaries, filtering and subscription patterns, aggregation rules and differential analysis report options in a truly high-level form.
-One example can be seen in Code~\ref{code:ecspec}. The example subscribes to \ac{epc} data from the logical reader \textit{Reader\_Shelve1}. The middleware should send back to the client two types of reports every $5$ seconds: one reporting all \ac{epc} tag-\acp{uri} added to the reading zone of the reader; and other reporting all \ac{epc} tag-\acp{uri} removed from the reading zone and a count of total removed tags.
+One example can be seen in Code~\ref{code:ecspec}. The example subscribes to \ac{epc} data from the logical reader \textit{Reader\_Shelve1}. The middleware should send back to the client two types of reports every $5$ seconds: one reporting all \ac{epc} tag-\acp{uri} added to the reading zone of the reader; and other reporting all \ac{epc} tag-\acp{uri} removed from the reading zone with a count of total removed tags.
 A complex \emph{\ac{ecspec}} with subscription patterns will be presented in next chapters, in the practical implementation sections of this dissertation.
 
 \begin{listing}
@@ -637,7 +637,7 @@ The standard was conceived as part of a broader effort to enhance collaboration 
 
 \subsection{Data Model and \acf{cbv}}
 
-To ensure conformity in data shared across systems, the \ac{epcis} standard defines a data model. This allows disparate application to operate under coherent data structures capable of being providing visibility in relevant business operations.
+To ensure conformity in data shared across systems, the \ac{epcis} standard defines a data model. This allows disparate application to operate under coherent data structures capable of provide visibility in relevant business operations.
 
 \ac{epcis} structures the real-world business information as a sequence of individual business processes.
 Business processes can vary. From packaging product, packing into a shipping container, shipping, receiving, and so forth.
@@ -648,12 +648,12 @@ It provides a detailed picture of a business processes by organizing its content
 
 The \emph{What} dimension identifies the physical and digital objects involved in the event. It uses the \ac{epc} \ac{tds} schemes, seen previously, to do so.  On section~\ref{sec:epc}, we talked about \ac{epc} and how it encodes information about the physical object it refers to. We focused on \ac{sgtin} for item level identification, but different GS1 Keys exit to identify a multitude of \ac{scm} assets: like pallets, batches and lots, returnable assets, to say a few (see Appendix~\ref{anx:epccodingschemes}).
 
-\emph{When} dimension records when the event took place. It contains three elements: \texttt{Event Time} contains the date and time at with the event took place; \texttt{Event Time Zone Offset} indicates the time zone at the place and time of the event; and \texttt{Record Time} which saves the date and time when the \ac{epcis} event was recorded into an \ac{epcis} repository.
+\emph{When} dimension records when the event took place. It contains three elements: \texttt{Event Time} containing the date and time at with the event took place; \texttt{Event Time Zone Offset} indicating the time zone at the place and time of the event; and \texttt{Record Time} which saves the date and time of when the \ac{epcis} event was recorded into an \ac{epcis} repository.
 
 \emph{Where} dimension, as it implies, captures where the event physically took place and/or where are the objects following the event. The dimension allows for two location types: \texttt{Read Point} and \texttt{Business Location}.
 The \texttt{Read Point} is the location where the event took place. The \texttt{Business Location} is the location where the objects reside after the event.
 
-Locations are preferably identified by a \ac{gln}. A \ac{gln} is a GS1 Identification Key used to identify physical location like factories, businesses and facilities~\cite{GS1KeysImplementation}. \acp{gln} are often accompanied by an extension used to identify internal physical locations within a location identified by the \ac{gln}. An example of a \ac{gln} can be seen in figure~\ref{fig:gln}. 
+Locations are preferably identified by a \ac{gln}. A \ac{gln} is a GS1 Identification Key used to identify physical location like factories, businesses and facilities~\cite{GS1KeysImplementation}. \acp{gln} are often accompanied by an extension used to identify internal physical locations within a location already identified by a \ac{gln}. An example of a \ac{gln} can be seen in figure~\ref{fig:gln}. 
 
 \begin{figure}[]
     \centering
@@ -668,7 +668,7 @@ This dimension includes a multitude of parameters, which are included in the \ac
 \begin{itemize}
     \item \textbf{Business Step} identifies what was taking place from a business context (e.g.\ \texttt{packing}, \texttt{shipping}, \texttt{inspecting}, \texttt{retail\_selling}).
     \item \textbf{}{Disposition} identifies the business condition ensuing the event of the object (e.g.\ \texttt{recalled}, \texttt{retail\_sold}, \texttt{in\_transit}, \texttt{stolen}).
-    \item \textbf{Business Transaction List} identifies business transactions relevant to an event. It is described by a pair of identifiers: \texttt{Business transaction type} which identifies the type of transaction; and \texttt{Business transaction ID}, and \ac{id} that identifies a specific transaction.
+    \item \textbf{Business Transaction List} identifies business transactions relevant to an event. It is described by a pair of identifiers: \texttt{Business transaction type} which identifies the type of transaction; and \texttt{Business transaction ID}, an \ac{id} that identifies a specific transaction.
     \item \textbf{Source} and \textbf{Destination} are used to provide additional business context when the event is part of a business transfer of ownership, responsibility or custody.
 \end{itemize}
 
@@ -687,7 +687,7 @@ An example of a populated \ac{epcis} Event can be seen in table~\ref{tab:epcisev
 To allow for more flexibility and variations in the structure of the \emph{What} dimension, \ac{epcis} defines a few variations of the basic \ac{epcis} Event:
 
 \begin{itemize}
-    \item \textbf{ObjectEvent} is the most simple commonly used. It represents an event that happened to one of more objects (e.g.\ shipping a pallet using a \ac{sscc}).
+    \item \textbf{ObjectEvent} is the most simple and commonly used. It represents an event that happened to one of more objects (e.g.\ shipping a pallet using a \ac{sscc}).
     \item \textbf{AggregationEvent} represents an event that happened to physically aggregated objects (e.g.\ aggregating cases in to a pallet, or removing cases from a pallet).
     \item \textbf{TrasformationEvent} represents an event in which the input objects are fully or partially consumed to produce output objects (e.g.\ processing raw materials in a product to be commercialized).
     \item \textbf{TransactionEvent} represents an event in which one or more objects become associated or disassociated with one or more business transactions (e.g.\ linking a pallet and cases to a commercial invoice)
