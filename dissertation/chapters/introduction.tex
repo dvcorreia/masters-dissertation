@@ -1,0 +1,62 @@
+% To talk:
+% - Nespresso, their logistics and how can RFID help
+% - grab nespresso example e estrapolar para outros markets
+% - CTT, logistica, integração com amazon, how can RFID help
+% - *escolas/hospitais: controlo de material disponível
+% - Necessity of RFID globaly: optimizar transporte (contentores de transporte maritimo), data analisys for predictions, um tecnologia que unifica APIs de todas as empresas 
+% - Benefícios de smart shelves e de que forma se encaixa no environment  
+
+\chapter{Introduction}
+
+\section{Background and Motivation}
+
+The new industrial revolution is centered around data. Yet, the true extension of this reformation might not be fully understood.
+
+From manufacturing to retail, information and communication technologies disrupted the understanding of what could be improved through the supply chain~\footnote{the sequence of processes involved in the production and distribution of a commodity~\cite{OxfordLanguagesGoogle}}. 
+To grasp the advantages of \ac{rfid}, we have to understand its place with other technologies and how it can empower the relationship between manufacturing, transportation, logistics and retail.
+
+The introduction of information and communication technologies in the manufacturing process, has been the foundation of Industry 4.0, which some people refer as the fourth industrial revolution~\cite{marrWhatIndustryHere}. It expanded the cyber-physical systems \footnote{a system in which a mechanism is controlled or monitored by computer-based algorithms} of the third industrial revolution and introduced \ac{iot}, cloud and cognitive computing.
+The rise of wireless communications and the massification of data sensing in the manufacturing processes, allowed these technologies to enhance and optimize production processes, logistics operations and marketing strategies.
+
+Adding \ac{iot} provided the network infrastructure for data transfer. Cloud computing enabled on-demand availability of \ac{it} resources, fast deployment times and more efficient management strategies. Cognitive computing contributed with computer vision, signal processing and tools to analyze and process large amounts of data for operational optimizations and pattern recognition.
+These technologies support the modern digital end-to-end system of a business and its manufacturing processes.
+
+\ac{uhf} \ac{rfid} improves the developments made in \emph{Industry 4.0} by adding digital visibility of physical assets. But visibility inside a company is opaque to trading partners and vice versa. Visibility both inside and outside of the company is desirable. With \ac{epc} that is possible. Inside the company, physical objects can be digitalized, identified and wirelessly tracked. Outside, frontiers between company methods of operations and tools, can be abstracted in a common set of interfaces and standards that allows visibility of products outside company bounds and share of information between trading partners.
+This achieves an end-to-end integration of the complete commercialization process, where data from billions of physical items can be shared through the internet, enabling businesses and consumers to identify, locate and engage each item.
+
+% Santos: parece meio solto (se calhar meter um gráfico ou algo do género)
+The future of \ac{rfid} seems promising. In 2016, 96\% of apparel retailers had plans to deploy tags on their products~\cite{hardgrave2016StateRFID}. The \ac{dod} requires that all contractors must use \ac{uhf} \ac{rfid} identification since 2005~\cite{DODReleasesFinal}.In 2014, Impinj, Intel, Google and Smartrac teamed up to form RAIN RFID, an organization whose mission is to promote the adoption of \acs{epc} \ac{uhf} \ac{rfid}. \ac{uhf} \ac{rfid} can greatly improve transport systems with cost reductions, smaller inventory, faster transportation and routing troubleshooting, lower insurance rates and greater efficiency~\cite{oanaRFIDTechnologyContainers2013}.
+
+% Santos: Isto não soa bem a acabar a secção
+Development and standardization of \ac{uhf} \ac{rfid} enables a symbiotic relation across the chain, connecting production, logistics, retail and client.
+
+\section{Scope}
+
+This dissertation explores the implementation of an \ac{uhf} \ac{rfid} smart shelf and software for retail inventory management, following EPCGlobal supply chain standards. 
+
+This smart shelf integrates the last stage of the supply chain and logistic industries, storing products in warehouses and stockrooms. It is the last life cycle of the product before selling to customers.
+The solution was designed to integrate Nespresso boutique stores in malls, with the objective of managing in real time the state of the warehouse product stock.
+These products would be tagged at the manufacturing facility and traced along the supply chain, ending up in these EPCGlogal-enabled shelves.
+
+This work addresses basic \ac{rf} notions, product design, implementation options, \ac{rfid} air interface protocol tunning, EPCGlobal standards, interfaces and services configuration, using modern containerization technologies of cloud computing.
+
+\section{Outline}
+
+The dissertation is divided in eight distinct chapters. The current introduces the motivation and background behind this work.
+
+Chapter~\ref{chapter:rfidprinciples} presents basic knowledge required to understand \ac{rfid} technologies and \ac{rf} phenomenon. Starts by describing the components of \ac{rfid} systems, addresses \ac{em} and \acp{emw} theoretical concepts, it looks into tags and coupling techniques, readers, and ending with antenna notions.
+
+Chapter~\ref{sec:epcglobal} explores \emph{EPCGlobal Architecture Framework} technologies required for the understanding of this dissertation.
+The chapter starts by contextualizing the standardization of the \ac{uhf} \ac{rfid} technologies, followed by a description of the framework activities. It continues by addressing and explaining all the EPCGlobal technologies used.
+
+Chapter~\ref{sec:smartshelves} introduces the state of the art of smart shelves. It goes through commercial available solutions, ending with the academic research in the area.
+
+Chapter~\ref{sec:developmentplan} contextualizes and presents the requirements of the solution. It elaborates on design, hardware and software options, discussing these approaches in regard to \ac{rnd} time and cost.
+
+Chapter~\ref{sec:systemdevelopment} describes the architecture, configurations and choices in respect to the smart shelf prototyped in this dissertation.
+
+Chapter~\ref{sec:tests} concludes the practical work with the presentation of a set of tests designed to infer the smart shelf \ac{rf} performance and ability to operate within the defined requirements.
+
+Chapter~\ref{sec:conclusion} concludes this dissertation with a brief recapitulation of the work, supplementing it with a description of the main achievements and future work.
+
+\cleardoublepage

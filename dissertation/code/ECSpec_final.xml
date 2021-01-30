@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:ECSpec xmlns:ns2="urn:epcglobal:ale:xsd:1">
+    <logicalReaders>
+        <logicalReader>Reader</logicalReader>
+    </logicalReaders>
+    <boundarySpec>
+        <repeatPeriod unit="MS">20000</repeatPeriod>
+        <duration unit="MS">5000</duration>
+        <stableSetInterval unit="MS">0</stableSetInterval>
+    </boundarySpec>
+    <!--3 ECReports delieved to the capture application-->
+    <reportSpecs>
+        <!--Sends a report informing the added trading cases for transport (filter = 2) with filter rules for nespresso company prefixes (76300544 and 76300396)-->
+        <reportSpec reportName="additions">
+            <reportSet set="ADDITIONS" />
+            <filterSpec>
+                <extension>
+                    <filterList>
+                        <filter>
+                            <includeExclude>INCLUDE</includeExclude>
+                            <fieldspec>
+                                <fieldname>epc</fieldname>
+                            </fieldspec>
+                            <patList>
+                                <pat>urn:epc:tag:sgtin-96:2:76300544.*.*</pat>
+                                <pat>urn:epc:tag:sgtin-96:2:76300396.*.*</pat>
+                            </patList>
+                        </filter>
+                    </filterList>
+                </extension>
+            </filterSpec>
+            <output includeTag="true" />
+        </reportSpec>
+        <!--Sends a report informing the removed trading cases for transport (filter = 2) with filter rules for nespresso company prefixes (76300544 and 76300396)-->
+        <reportSpec reportName="deletions">
+            <reportSet set="DELETIONS" />
+            <filterSpec>
+                <extension>
+                    <filterList>
+                        <filter>
+                            <includeExclude>INCLUDE</includeExclude>
+                            <fieldspec>
+                                <fieldname>epc</fieldname>
+                            </fieldspec>
+                            <patList>
+                                <pat>urn:epc:tag:sgtin-96:2:76300544.*.*</pat>
+                                <pat>urn:epc:tag:sgtin-96:2:76300396.*.*</pat>
+                            </patList>
+                        </filter>
+                    </filterList>
+                </extension>
+            </filterSpec>
+            <output includeTag="true" />
+        </reportSpec>
+        <!--Sends a report informing the current state of sleeves inventory (filter = 1 point of sale) with filter rules for nespresso company prefixes (76300544 and 76300396)-->
+        <!--The report aggregates the tags based on unique products and countS them. The report only contains an inventory of how many sleeves of each coffee type are in inventory-->
+        <reportSpec reportName="inventory">
+            <reportSet set="CURRENT" />
+            <filterSpec>
+                <extension>
+                    <filterList>
+                        <filter>
+                            <includeExclude>INCLUDE</includeExclude>
+                            <fieldspec>
+                                <fieldname>epc</fieldname>
+                            </fieldspec>
+                            <patList>
+                                <pat>urn:epc:tag:sgtin-96:1:76300544.*.*</pat>
+                                <pat>urn:epc:tag:sgtin-96:1:76300396.*.*</pat>
+                            </patList>
+                        </filter>
+                    </filterList>
+                </extension>
+            </filterSpec>
+            <groupSpec>
+                <pattern>urn:epc:tag:sgtin-96:1.X.X.*</pattern>
+            </groupSpec>
+            <output includeCount="true" />
+        </reportSpec>
+    </reportSpecs>
+</ns2:ECSpec>

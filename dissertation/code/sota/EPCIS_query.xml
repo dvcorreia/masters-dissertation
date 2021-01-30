@@ -1,0 +1,21 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <epcisq:Poll xmlns:epcisq="urn:epcglobal:epcis-query:xsd:1">
+            <queryName>SimpleEventQuery</queryName>
+            <params>
+                <param>
+                    <name>eventType</name>
+                    <value>
+                        <string>ObjectEvent</string>
+                    </value>
+                </param>
+                <param>
+                    <name>EQ_bizLocation</name>
+                    <value>
+                        <string>urn:epc:id:sgln:76300544.00000.1</string>
+                    </value>
+                </param>
+            </params>
+        </epcisq:Poll>
+    </soap:Body>
+</soap:Envelope>

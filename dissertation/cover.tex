@@ -1,0 +1,211 @@
+%!TEX encoding = UTF-8 Unicode
+
+%% Thesis cover pages
+%%
+%% Based on the example.tex file provided by Tomás Oliveira e Silva
+%%
+%% Modified by João Paulo Barraca <jpbarraca@ua.pt>
+%% Modified by Filipe Manco <filipe.manco@ua.pt>
+
+\documentclass[11pt,twoside,a4paper,final]{report}
+
+%%% This file is a template for the cover of your
+%%%  thesis.
+%%% Lines like this one, starting with %%% , are
+%%%  instructions. Search them to know where and
+%%%  how to edit this file. After editing the
+%%%  document you can delete them.
+%%% Items marked with OPTIONAL can be removed.
+%%% Most of the lines you will have to change
+%%%  already have examples to help you understand.
+%%% The complete list of options and commands can
+%%%  be found in uaThesisTemplate.sty
+
+
+%%% Select your area of study and department from
+%%%  the following lists and replace them in the
+%%%  \usepackage declaration ([area,department]).
+%%%
+%%% | area        |   | department |
+%%% ---------------   --------------
+%%% | arts        |   | dao        |
+%%% | sciences    |   | dbio       |
+%%% | education   |   | dcspt      |
+%%% | economy     |   | deca       |
+%%% | engineering |   | degeit     |
+%%% | humanities  |   | de         |
+%%% | health      |   | deti       |
+%%% |             |   | demac      |
+%%% |             |   | decivil    |
+%%% |             |   | dem        |
+%%% |             |   | fis        |
+%%% |             |   | dlc        |
+%%% |             |   | dmat       |
+%%% |             |   | dq         |
+%%% |             |   | dcm        |
+%%% |             |   | geo        |
+%%% ---------------   --------------
+%% Import the UA thesis template
+\usepackage[engineering,deti]{uaThesisTemplate}
+
+
+%% Optional packages for utf8 encoding and T1 fonts
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% For prettier pages
+\usepackage{lmodern}
+
+%% We will use english and portuguese
+\usepackage[english,portuguese]{babel}
+
+\usepackage{xspace}% used by \sigla
+
+%%% This package is only used to create a dummy
+%%%  text for the abstract. You can remove the
+%%%  following line in the final document.
+\usepackage{blindtext}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       DEFINE THESIS COVER FIELDS
+%%                  START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Edit thesis year
+%% Thesis Year
+\ThesisYear{\the\year}
+
+
+%%% Uncomment one of the following
+%\DocumentTypeThesis
+\DocumentTypeDissertation
+
+%%% Edit author's name
+%% Author's full name
+\Author{Diogo Vala\\Correia}
+
+%%% Edit thesis title in Portuguese
+%% Thesis Mandatory Title in Portuguese
+\Title{\selectlanguage{portuguese}Arquitetura EPCGlobal: Implementação de Estante Inteligente para Gestão de Inventário}
+
+%%% OPTIONAL: you can write your thesis title in
+%%%  other languages. You can repeat the following
+%%%  line as many times as you want, or remove it
+%%%  if you only want the portuguese title.
+%% Optional Titles in additional languages.
+\Title{\selectlanguage{english}EPCGlobal Architecture: Smart Shelf Implementation for Retail Inventory Management}
+
+%%% OPTIONAL: add a quotation if you like.
+%% Optional Quotation
+\Quote{\selectlanguage{english}Science is what we have learned about how to keep from fooling ourselves}{David Deutsch}
+
+%%% Edit your supervisor's information.
+%%%
+%%% \Supervisor{name}{category}
+%%%
+%%% name   : Supervisor's name
+%%% categoy: One of the following list
+%%%
+%%% | category               |
+%%% --------------------------
+%%% | catedrático            |
+%%% | catedrático convidado  |
+%%% | associado c/ agregação |
+%%% | associado              |
+%%% | auxiliar               |
+%%% | auxiliar convidado     |
+%%% --------------------------
+%% Supervisor information
+\Supervisor{José Alberto Gouveia Fonseca}{associado}
+
+%%% OPTIONAL: you can add a second supervisor.
+%%%
+%%% \SecondSupervisor{name}{category}
+%%%  {[preposition: (at, in, no, da)] department}
+%%%  {[preposition: (at, in, do, na)] school}
+%%%
+%%% name      : See above.
+%%% category  : See above.
+%%% department: Can be a department, faculty or
+%%%             other; Choose the preposition
+%%%             accordingly.
+%%% school    : University/Scholl name; Choose the
+%%%             preposition accordingly.
+%% Optional SecondSuperviser information
+%\SecondSupervisor{(co-orientador)}{auxiliar convidado}{do Departamento de Matemática}{da Universidade de Aveiro}
+
+%%% Edit your degree information.
+%%%
+%%% \Degree{title}{name}
+%%%
+%%% title: Degree title (Mestre or Doutor)
+%%% name : Degree name
+%% Degree title and name
+\Degree{Mestre}{Engenharia Eletrónica e Telecomunicações}
+
+%%% OPTIONAL: edit grant support texts where
+%%%  appropriate. Maximum two.
+%%%
+%%% \GrantText{grant1}{grant2}
+%% Optional Grant support texts
+%\GrantText{Texto Apoio financeiro do POCTI no âmbito do III Quadro Comunitário de Apoio.}
+%          {Texto Apoio financeiro da FCT e do FSE no âmbito do III Quadro Comunitário de Apoio.}
+
+%%% OPTIONAL: Add a dedication text.
+%% Optional Dedication text
+\Dedication{Dedico este trabalho aos meus pais, por tudo o que me possibilitaram.}
+
+%%% OPTIONAL: Add an acknowledgement text
+%% Optional Acknowledgement text
+\Acknowledgements{\input{acknowledgements.tex}}
+
+%%% Edit the keywords and abstract in Portuguese
+%%% Don't forget to remove the \blindtext[3]
+%%%  declaration.
+%%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation
+%% Mandatory Keywords and Abstract in Portuguese
+\Abstract{Palavras Chave}{RFID, UHF, estante, inteligente, EPCGlobal, EPC, Fosstrak.}
+         {Resumo}{\selectlanguage{portuguese}\include{abstract_pt}}
+
+%%% OPTIONAL: you can write the keywords and
+%%%  abstract in other languages. You can repeat
+%%%  the following lines as many times as you want
+%%%  or remove them if you only want portuguese.
+%%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation.
+%%% You can modify the language to any other supported by Latex
+%% Optional Keywords and Abstract in additional languages.
+\Abstract{Keywords}{RFID, UHF, smart, shelf, EPCGlobal, EPC, Fosstrak.}
+         {Abstract}{\selectlanguage{english}\include{abstract_en}}
+
+%%% Edit the Jury President information.
+%% First Member will be the President of the Jury
+\JuriMember{Professor Doutor António Guilherme Rocha Campos}{Professor Auxiliar do Departamento de Eletrónica, Telecomunicações e Informática da Universidade de Aveiro}
+
+%%% Repeat the above declaration for additional
+%%%  members of the jury as many times as necessary.
+%% Additional members of the Jury
+\JuriMember{Professor Doutor António João Nunes Serrador}{Professor Adjunto do Departamento de Engenharia Eletrónica e Telecomunicações e de Computadores do ISE de Lisboa (arguente)}
+
+\JuriMember{Professor Doutor José Alberto Gouveia Fonseca}{Professor Associado do Departamento de Eletrónica, Telecomunicações e Informática da Universidade de Aveiro (orientador)}
+
+%\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Faculdade de Engenharia da Universidade do Porto}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       DEFINE THESIS COVER FIELDS
+%%                  END
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%%% By default we consider portuguese to be the
+%%%  main language (the last one in the usepackage
+%%%  declaration). If you're writing your thesis
+%%%  in english uncomment the following line.
+%%% Set the proper language or you will end with incorrect hyphenation!
+%\selectlanguage{english}
+
+\MakeCover
+
+\end{document}
