@@ -12,7 +12,7 @@
                 <param>
                     <name>EQ_bizLocation</name>
                     <value>
-                        <string>urn:epc:id:sgln:76300544.00000.1</string>
+                        <string>urn:epc:id:sgln:76300544.00000.0</string>
                     </value>
                 </param>
             </params>
