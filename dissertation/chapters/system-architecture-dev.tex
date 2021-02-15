@@ -41,7 +41,7 @@ The proxy converts the \ac{soap} \ac{xml} requests into \ac{http} and \ac{json} 
 All client requests hitting the platform go through an NGINX reverse proxy. This hides the topology and characteristics of the back-end servers, removing the direct internet access to them. The services on the platform are kept inside a non-public subnet and concentrate the access control on that single point. The NGINX server also allows load balancing between services instances, which is useful when there is a need to scale the platform. The proxy also deals with cross-origin resource sharing mechanism, freeing the servers from dealing with it.
 
 All services in the platform infrastructure are containerized using Docker, and orchestrated using Docker Compose. The yaml compose file, containing the description and configuration of the platform services can be consulted in appendix~\ref{apx:composefile}.
-All the code, configurations, dockerfiles and other dissertation related code and information can be consulted in the Github repository at \url{https://github.com/dvcorreia/epc-smart-shelve}~\cite{DvcorreiaEpcsmartshelve}.
+All the code, configurations, dockerfiles and other dissertation related code and information can be consulted in the Github repository at \url{https://github.com/dvcorreia/epc-smart-shelf}~\cite{DvcorreiaEpcsmartshelve}.
 Fosstrak services configurations procedures will not be described in the following sections, as they are documented in their website~\cite{FosstrakWelcome}.
 
 \section{\acs{epc} Serialization Plan}
